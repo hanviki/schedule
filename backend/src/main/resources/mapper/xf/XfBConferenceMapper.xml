@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBConferenceMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBConference">
+                    <id column="id" property="id"/>
+                    <result column="name" property="name"/>
+                    <result column="address" property="address"/>
+                    <result column="meet_date" property="meetDate"/>
+                    <result column="person" property="person"/>
+                    <result column="content" property="content"/>
+                    <result column="remark" property="remark"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, name, address, meet_date, person, content, remark, file_id, file_url, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBConference" parameterType="cc.mrbird.febs.xf.entity.XfBConference">
+        update xf_b_conference
+        <trim prefix="set" suffixOverrides=",">
+<if test="name != null">name=#{name},</if>
+<if test="address != null">address=#{address},</if>
+<if test="meetDate != null">meet_date=#{meetDate},</if>
+<if test="person != null">person=#{person},</if>
+<if test="content != null">content=#{content},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBConference" resultType="cc.mrbird.febs.xf.entity.XfBConference" parameterType="cc.mrbird.febs.xf.entity.XfBConference">
+        select  *  from xf_b_conference
+        where  1=1
+            <if test="xfBConference.name != null and xfBConference.name != ''"> and  xf_b_conference.name like concat('%', #{ xfBConference.name} ,'%')</if>
+            <if test="xfBConference.address != null and xfBConference.address != ''"> and  xf_b_conference.address like concat('%', #{ xfBConference.address} ,'%')</if>
+        <if test="xfBConference.meetDateFrom!= null">
+            AND xf_b_conference.meet_date <![CDATA[ >= ]]>  #{xfBConference.meetDateFrom}
+        </if>
+        <if test="xfBConference.meetDateTo!= null">
+            AND  xf_b_conference.meet_date <![CDATA[ <= ]]>  #{xfBConference.meetDateTo}
+        </if>
+            <if test="xfBConference.person != null and xfBConference.person != ''"> and  xf_b_conference.person like concat('%', #{ xfBConference.person} ,'%')</if>
+            <if test="xfBConference.content != null and xfBConference.content != ''"> and  xf_b_conference.content like concat('%', #{ xfBConference.content} ,'%')</if>
+            <if test="xfBConference.remark != null and xfBConference.remark != ''"> and  xf_b_conference.remark like concat('%', #{ xfBConference.remark} ,'%')</if>
+            <if test="xfBConference.fileId != null and xfBConference.fileId != ''"> and  xf_b_conference.file_id like concat('%', #{ xfBConference.fileId} ,'%')</if>
+            <if test="xfBConference.fileUrl != null and xfBConference.fileUrl != ''"> and  xf_b_conference.file_url like concat('%', #{ xfBConference.fileUrl} ,'%')</if>
+        <if test="xfBConference.state != null"> and  xf_b_conference.state =#{ xfBConference.state} </if>
+        <if test="xfBConference.isDeletemark != null"> and  xf_b_conference.IS_DELETEMARK =#{ xfBConference.isDeletemark} </if>
+        <if test="xfBConference.createTimeFrom!= null">
+            AND xf_b_conference.CREATE_TIME <![CDATA[ >= ]]>  #{xfBConference.createTimeFrom}
+        </if>
+        <if test="xfBConference.createTimeTo!= null">
+            AND  xf_b_conference.CREATE_TIME <![CDATA[ <= ]]>  #{xfBConference.createTimeTo}
+        </if>
+        <if test="xfBConference.modifyTimeFrom!= null">
+            AND xf_b_conference.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBConference.modifyTimeFrom}
+        </if>
+        <if test="xfBConference.modifyTimeTo!= null">
+            AND  xf_b_conference.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBConference.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

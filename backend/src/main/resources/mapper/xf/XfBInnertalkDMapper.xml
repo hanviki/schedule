@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBInnertalkDMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBInnertalkD">
+                    <id column="id" property="id"/>
+                    <result column="base_id" property="baseId"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="sex_name" property="sexName"/>
+                    <result column="birthday" property="birthday"/>
+                    <result column="telephone" property="telephone"/>
+            <result column="dept_new" property="deptNew"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, base_id, user_account_name, user_account, dept_new,sex_name, birthday, telephone, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBInnertalkD" parameterType="cc.mrbird.febs.xf.entity.XfBInnertalkD">
+        update xf_b_innertalk_d
+        <trim prefix="set" suffixOverrides=",">
+<if test="baseId != null">base_id=#{baseId},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="sexName != null">sex_name=#{sexName},</if>
+<if test="birthday != null">birthday=#{birthday},</if>
+<if test="telephone != null">telephone=#{telephone},</if>
+<if test="state != null">state=#{state},</if>
+            <if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBInnertalkD" resultType="cc.mrbird.febs.xf.entity.XfBInnertalkD" parameterType="cc.mrbird.febs.xf.entity.XfBInnertalkD">
+        select  *  from xf_b_innertalk_d
+        where  1=1
+            <if test="xfBInnertalkD.id != null and xfBInnertalkD.id != ''"> and xf_b_innertalk_d.id =#{ xfBInnertalkD.id} </if>
+            <if test="xfBInnertalkD.baseId != null and xfBInnertalkD.baseId != ''"> and xf_b_innertalk_d.base_id like concat('%', #{ xfBInnertalkD.baseId} ,'%')</if>
+            <if test="xfBInnertalkD.userAccountName != null and xfBInnertalkD.userAccountName != ''"> and xf_b_innertalk_d.user_account_name like concat('%', #{ xfBInnertalkD.userAccountName} ,'%')</if>
+            <if test="xfBInnertalkD.userAccount != null and xfBInnertalkD.userAccount != ''"> and xf_b_innertalk_d.user_account like concat('%', #{ xfBInnertalkD.userAccount} ,'%')</if>
+            <if test="xfBInnertalkD.sexName != null and xfBInnertalkD.sexName != ''"> and xf_b_innertalk_d.sex_name like concat('%', #{ xfBInnertalkD.sexName} ,'%')</if>
+            <if test="xfBInnertalkD.birthday != null and xfBInnertalkD.birthday != ''"> and xf_b_innertalk_d.birthday like concat('%', #{ xfBInnertalkD.birthday} ,'%')</if>
+            <if test="xfBInnertalkD.telephone != null and xfBInnertalkD.telephone != ''"> and xf_b_innertalk_d.telephone like concat('%', #{ xfBInnertalkD.telephone} ,'%')</if>
+        <if test="xfBInnertalkD.state != null"> and xf_b_innertalk_d.state =#{ xfBInnertalkD.state} </if>
+        <if test="xfBInnertalkD.isDeletemark != null"> and xf_b_innertalk_d.IS_DELETEMARK =#{ xfBInnertalkD.isDeletemark} </if>
+        <if test="xfBInnertalkD.createTimeFrom!= null">
+            AND xf_b_innertalk_d.CREATE_TIME <![CDATA[ >= ]]>  #{xfBInnertalkD.createTimeFrom}
+        </if>
+        <if test="xfBInnertalkD.createTimeTo!= null">
+            AND xf_b_innertalk_d.CREATE_TIME <![CDATA[ <= ]]>  #{xfBInnertalkD.createTimeTo}
+        </if>
+        <if test="xfBInnertalkD.modifyTimeFrom!= null">
+            AND xf_b_innertalk_d.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBInnertalkD.modifyTimeFrom}
+        </if>
+        <if test="xfBInnertalkD.modifyTimeTo!= null">
+            AND xf_b_innertalk_d.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBInnertalkD.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBErrordeptMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBErrordept">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="year" property="year"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="result" property="result"/>
+                    <result column="feedback_date" property="feedbackDate"/>
+                    <result column="operation_name" property="operationName"/>
+                    <result column="audit_man" property="auditMan"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="archive_id" property="archiveId"/>
+                    <result column="archive_name" property="archiveName"/>
+                    <result column="archive_code" property="archiveCode"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new, year, file_id, file_url, result, feedback_date, operation_name, audit_man, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, archive_id, archive_name, archive_code
+    </sql>
+    <update id="updateXfBErrordept" parameterType="cc.mrbird.febs.xf.entity.XfBErrordept">
+        update xf_b_errordept
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="year != null">year=#{year},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="result != null">result=#{result},</if>
+<if test="feedbackDate != null">feedback_date=#{feedbackDate},</if>
+<if test="operationName != null">operation_name=#{operationName},</if>
+<if test="auditMan != null">audit_man=#{auditMan},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="archiveId != null">archive_id=#{archiveId},</if>
+<if test="archiveName != null">archive_name=#{archiveName},</if>
+<if test="archiveCode != null">archive_code=#{archiveCode},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBErrordept" resultType="cc.mrbird.febs.xf.entity.XfBErrordept" parameterType="cc.mrbird.febs.xf.entity.XfBErrordept">
+        select  *  from xf_b_errordept
+        where  1=1
+            <if test="xfBErrordept.userAccountName != null and xfBErrordept.userAccountName != ''"> and  xf_b_errordept.user_account_name like concat('%', #{ xfBErrordept.userAccountName} ,'%')</if>
+            <if test="xfBErrordept.userAccount != null and xfBErrordept.userAccount != ''"> and  xf_b_errordept.user_account like concat('%', #{ xfBErrordept.userAccount} ,'%')</if>
+            <if test="xfBErrordept.deptNew != null and xfBErrordept.deptNew != ''"> and  xf_b_errordept.dept_new like concat('%', #{ xfBErrordept.deptNew} ,'%')</if>
+            <if test="xfBErrordept.year != null and xfBErrordept.year != ''"> and  xf_b_errordept.year like concat('%', #{ xfBErrordept.year} ,'%')</if>
+            <if test="xfBErrordept.fileId != null and xfBErrordept.fileId != ''"> and  xf_b_errordept.file_id like concat('%', #{ xfBErrordept.fileId} ,'%')</if>
+            <if test="xfBErrordept.fileUrl != null and xfBErrordept.fileUrl != ''"> and  xf_b_errordept.file_url like concat('%', #{ xfBErrordept.fileUrl} ,'%')</if>
+            <if test="xfBErrordept.result != null and xfBErrordept.result != ''"> and  xf_b_errordept.result like concat('%', #{ xfBErrordept.result} ,'%')</if>
+        <if test="xfBErrordept.feedbackDateFrom!= null">
+            AND xf_b_errordept.feedback_date <![CDATA[ >= ]]>  #{xfBErrordept.feedbackDateFrom}
+        </if>
+        <if test="xfBErrordept.feedbackDateTo!= null">
+            AND  xf_b_errordept.feedback_date <![CDATA[ <= ]]>  #{xfBErrordept.feedbackDateTo}
+        </if>
+            <if test="xfBErrordept.operationName != null and xfBErrordept.operationName != ''"> and  xf_b_errordept.operation_name like concat('%', #{ xfBErrordept.operationName} ,'%')</if>
+            <if test="xfBErrordept.auditMan != null and xfBErrordept.auditMan != ''"> and  xf_b_errordept.audit_man like concat('%', #{ xfBErrordept.auditMan} ,'%')</if>
+            <if test="xfBErrordept.remark != null and xfBErrordept.remark != ''"> and  xf_b_errordept.remark like concat('%', #{ xfBErrordept.remark} ,'%')</if>
+        <if test="xfBErrordept.state != null"> and  xf_b_errordept.state =#{ xfBErrordept.state} </if>
+        <if test="xfBErrordept.isDeletemark != null"> and  xf_b_errordept.IS_DELETEMARK =#{ xfBErrordept.isDeletemark} </if>
+        <if test="xfBErrordept.createTimeFrom!= null">
+            AND xf_b_errordept.CREATE_TIME <![CDATA[ >= ]]>  #{xfBErrordept.createTimeFrom}
+        </if>
+        <if test="xfBErrordept.createTimeTo!= null">
+            AND  xf_b_errordept.CREATE_TIME <![CDATA[ <= ]]>  #{xfBErrordept.createTimeTo}
+        </if>
+        <if test="xfBErrordept.modifyTimeFrom!= null">
+            AND xf_b_errordept.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBErrordept.modifyTimeFrom}
+        </if>
+        <if test="xfBErrordept.modifyTimeTo!= null">
+            AND  xf_b_errordept.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBErrordept.modifyTimeTo}
+        </if>
+            <if test="xfBErrordept.archiveName != null and xfBErrordept.archiveName != ''"> and  xf_b_errordept.archive_name like concat('%', #{ xfBErrordept.archiveName} ,'%')</if>
+            <if test="xfBErrordept.archiveCode != null and xfBErrordept.archiveCode != ''"> and  xf_b_errordept.archive_code like concat('%', #{ xfBErrordept.archiveCode} ,'%')</if>
+</select>
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.fs.dao.FsBQuarterMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.fs.entity.FsBQuarter">
+                    <id column="id" property="id"/>
+                    <result column="year" property="year"/>
+                    <result column="quarter" property="quarter"/>
+                    <result column="number" property="number"/>
+            <result column="note" property="note"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, year, quarter, number,note, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateFsBQuarter" parameterType="cc.mrbird.febs.fs.entity.FsBQuarter">
+        update fs_b_quarter
+        <trim prefix="set" suffixOverrides=",">
+<if test="year != null">year=#{year},</if>
+<if test="quarter != null">quarter=#{quarter},</if>
+<if test="number != null">number=#{number},</if>
+<if test="state != null">state=#{state},</if>
+            <if test="note != null">note=#{note},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findFsBQuarter" resultType="cc.mrbird.febs.fs.entity.FsBQuarter" parameterType="cc.mrbird.febs.fs.entity.FsBQuarter">
+        select  *  from fs_b_quarter
+        where  1=1
+            <if test="fsBQuarter.id != null and fsBQuarter.id != ''"> and  fs_b_quarter.id =#{ fsBQuarter.id} </if>
+            <if test="fsBQuarter.year != null and fsBQuarter.year != ''"> and  fs_b_quarter.year like concat('%', #{ fsBQuarter.year} ,'%')</if>
+        <if test="fsBQuarter.quarter != null"> and  fs_b_quarter.quarter =#{ fsBQuarter.quarter} </if>
+            <if test="fsBQuarter.number != null and fsBQuarter.number != ''"> and  fs_b_quarter.number like concat('%', #{ fsBQuarter.number} ,'%')</if>
+        <if test="fsBQuarter.state != null"> and  fs_b_quarter.state =#{ fsBQuarter.state} </if>
+        <if test="fsBQuarter.isDeletemark != null"> and  fs_b_quarter.IS_DELETEMARK =#{ fsBQuarter.isDeletemark} </if>
+        <if test="fsBQuarter.createTimeFrom!= null">
+            AND fs_b_quarter.CREATE_TIME <![CDATA[ >= ]]>  #{fsBQuarter.createTimeFrom}
+        </if>
+        <if test="fsBQuarter.createTimeTo!= null">
+            AND  fs_b_quarter.CREATE_TIME <![CDATA[ <= ]]>  #{fsBQuarter.createTimeTo}
+        </if>
+        <if test="fsBQuarter.displayIndex != null"> and  fs_b_quarter.display_index =#{ fsBQuarter.displayIndex} </if>
+        <if test="fsBQuarter.modifyTimeFrom!= null">
+            AND fs_b_quarter.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBQuarter.modifyTimeFrom}
+        </if>
+        <if test="fsBQuarter.modifyTimeTo!= null">
+            AND  fs_b_quarter.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBQuarter.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

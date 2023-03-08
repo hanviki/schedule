@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.mdl.dao.MdlBPeixunMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.mdl.entity.MdlBPeixun">
+                    <id column="id" property="id"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="paiming" property="paiming"/>
+                    <result column="hospital" property="hospital"/>
+                    <result column="yuanqu" property="yuanqu"/>
+                    <result column="ksssfl" property="ksssfl"/>
+                    <result column="lcksfl" property="lcksfl"/>
+                    <result column="danyuan" property="danyuan"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="telphone" property="telphone"/>
+                    <result column="pernr" property="pernr"/>
+                    <result column="role" property="role"/>
+                    <result column="gangwei" property="gangwei"/>
+                    <result column="hgangweixingzhi" property="hgangweixingzhi"/>
+                    <result column="starttime" property="starttime"/>
+                    <result column="endtime" property="endtime"/>
+                    <result column="kaoshishichang" property="kaoshishichang"/>
+                    <result column="score" property="score"/>
+                    <result column="cishu" property="cishu"/>
+                    <result column="ifhege" property="ifhege"/>
+                    <result column="shebeibianhao" property="shebeibianhao"/>
+                    <result column="idcard" property="idcard"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account, paiming, hospital, yuanqu, ksssfl, lcksfl, danyuan, user_account_name, telphone, pernr, role, gangwei, hgangweixingzhi, starttime, endtime, kaoshishichang, score, cishu, ifhege, shebeibianhao, idcard, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateMdlBPeixun" parameterType="cc.mrbird.febs.mdl.entity.MdlBPeixun">
+        update mdl_b_peixun
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="paiming != null">paiming=#{paiming},</if>
+<if test="hospital != null">hospital=#{hospital},</if>
+<if test="yuanqu != null">yuanqu=#{yuanqu},</if>
+<if test="ksssfl != null">ksssfl=#{ksssfl},</if>
+<if test="lcksfl != null">lcksfl=#{lcksfl},</if>
+<if test="danyuan != null">danyuan=#{danyuan},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="telphone != null">telphone=#{telphone},</if>
+<if test="pernr != null">pernr=#{pernr},</if>
+<if test="role != null">role=#{role},</if>
+<if test="gangwei != null">gangwei=#{gangwei},</if>
+<if test="hgangweixingzhi != null">hgangweixingzhi=#{hgangweixingzhi},</if>
+<if test="starttime != null">starttime=#{starttime},</if>
+<if test="endtime != null">endtime=#{endtime},</if>
+<if test="kaoshishichang != null">kaoshishichang=#{kaoshishichang},</if>
+<if test="score != null">score=#{score},</if>
+<if test="cishu != null">cishu=#{cishu},</if>
+<if test="ifhege != null">ifhege=#{ifhege},</if>
+<if test="shebeibianhao != null">shebeibianhao=#{shebeibianhao},</if>
+<if test="idcard != null">idcard=#{idcard},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findMdlBPeixun" resultType="cc.mrbird.febs.mdl.entity.MdlBPeixun" parameterType="cc.mrbird.febs.mdl.entity.MdlBPeixun">
+        select  *  from mdl_b_peixun
+        where  1=1
+            <if test="mdlBPeixun.userAccount != null and mdlBPeixun.userAccount != ''"> and  mdl_b_peixun.user_account like concat('%', #{ mdlBPeixun.userAccount} ,'%')</if>
+            <if test="mdlBPeixun.paiming != null and mdlBPeixun.paiming != ''"> and  mdl_b_peixun.paiming like concat('%', #{ mdlBPeixun.paiming} ,'%')</if>
+            <if test="mdlBPeixun.hospital != null and mdlBPeixun.hospital != ''"> and  mdl_b_peixun.hospital like concat('%', #{ mdlBPeixun.hospital} ,'%')</if>
+            <if test="mdlBPeixun.yuanqu != null and mdlBPeixun.yuanqu != ''"> and  mdl_b_peixun.yuanqu like concat('%', #{ mdlBPeixun.yuanqu} ,'%')</if>
+            <if test="mdlBPeixun.ksssfl != null and mdlBPeixun.ksssfl != ''"> and  mdl_b_peixun.ksssfl like concat('%', #{ mdlBPeixun.ksssfl} ,'%')</if>
+            <if test="mdlBPeixun.lcksfl != null and mdlBPeixun.lcksfl != ''"> and  mdl_b_peixun.lcksfl like concat('%', #{ mdlBPeixun.lcksfl} ,'%')</if>
+            <if test="mdlBPeixun.danyuan != null and mdlBPeixun.danyuan != ''"> and  mdl_b_peixun.danyuan like concat('%', #{ mdlBPeixun.danyuan} ,'%')</if>
+            <if test="mdlBPeixun.userAccountName != null and mdlBPeixun.userAccountName != ''"> and  mdl_b_peixun.user_account_name like concat('%', #{ mdlBPeixun.userAccountName} ,'%')</if>
+            <if test="mdlBPeixun.telphone != null and mdlBPeixun.telphone != ''"> and  mdl_b_peixun.telphone like concat('%', #{ mdlBPeixun.telphone} ,'%')</if>
+            <if test="mdlBPeixun.pernr != null and mdlBPeixun.pernr != ''"> and  mdl_b_peixun.pernr like concat('%', #{ mdlBPeixun.pernr} ,'%')</if>
+            <if test="mdlBPeixun.role != null and mdlBPeixun.role != ''"> and  mdl_b_peixun.role like concat('%', #{ mdlBPeixun.role} ,'%')</if>
+            <if test="mdlBPeixun.gangwei != null and mdlBPeixun.gangwei != ''"> and  mdl_b_peixun.gangwei like concat('%', #{ mdlBPeixun.gangwei} ,'%')</if>
+            <if test="mdlBPeixun.hgangweixingzhi != null and mdlBPeixun.hgangweixingzhi != ''"> and  mdl_b_peixun.hgangweixingzhi like concat('%', #{ mdlBPeixun.hgangweixingzhi} ,'%')</if>
+            <if test="mdlBPeixun.starttime != null and mdlBPeixun.starttime != ''"> and  mdl_b_peixun.starttime like concat('%', #{ mdlBPeixun.starttime} ,'%')</if>
+            <if test="mdlBPeixun.endtime != null and mdlBPeixun.endtime != ''"> and  mdl_b_peixun.endtime like concat('%', #{ mdlBPeixun.endtime} ,'%')</if>
+            <if test="mdlBPeixun.kaoshishichang != null and mdlBPeixun.kaoshishichang != ''"> and  mdl_b_peixun.kaoshishichang like concat('%', #{ mdlBPeixun.kaoshishichang} ,'%')</if>
+            <if test="mdlBPeixun.score != null and mdlBPeixun.score != ''"> and  mdl_b_peixun.score like concat('%', #{ mdlBPeixun.score} ,'%')</if>
+            <if test="mdlBPeixun.cishu != null and mdlBPeixun.cishu != ''"> and  mdl_b_peixun.cishu like concat('%', #{ mdlBPeixun.cishu} ,'%')</if>
+            <if test="mdlBPeixun.ifhege != null and mdlBPeixun.ifhege != ''"> and  mdl_b_peixun.ifhege like concat('%', #{ mdlBPeixun.ifhege} ,'%')</if>
+            <if test="mdlBPeixun.shebeibianhao != null and mdlBPeixun.shebeibianhao != ''"> and  mdl_b_peixun.shebeibianhao like concat('%', #{ mdlBPeixun.shebeibianhao} ,'%')</if>
+            <if test="mdlBPeixun.idcard != null and mdlBPeixun.idcard != ''"> and  mdl_b_peixun.idcard like concat('%', #{ mdlBPeixun.idcard} ,'%')</if>
+        <if test="mdlBPeixun.state != null"> and  mdl_b_peixun.state =#{ mdlBPeixun.state} </if>
+        <if test="mdlBPeixun.isDeletemark != null"> and  mdl_b_peixun.IS_DELETEMARK =#{ mdlBPeixun.isDeletemark} </if>
+        <if test="mdlBPeixun.createTimeFrom!= null">
+            AND mdl_b_peixun.CREATE_TIME <![CDATA[ >= ]]>  #{mdlBPeixun.createTimeFrom}
+        </if>
+        <if test="mdlBPeixun.createTimeTo!= null">
+            AND  mdl_b_peixun.CREATE_TIME <![CDATA[ <= ]]>  #{mdlBPeixun.createTimeTo}
+        </if>
+        <if test="mdlBPeixun.modifyTimeFrom!= null">
+            AND mdl_b_peixun.MODIFY_TIME <![CDATA[ >= ]]>  #{mdlBPeixun.modifyTimeFrom}
+        </if>
+        <if test="mdlBPeixun.modifyTimeTo!= null">
+            AND  mdl_b_peixun.MODIFY_TIME <![CDATA[ <= ]]>  #{mdlBPeixun.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

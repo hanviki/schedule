@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.fs.dao.FsBChangerecordMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.fs.entity.FsBChangerecord">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="dept_old" property="deptOld"/>
+                    <result column="gwlb_new" property="gwlbNew"/>
+                    <result column="gwlb_old" property="gwlbOld"/>
+                    <result column="number_new" property="numberNew"/>
+                    <result column="number_old" property="numberOld"/>
+                    <result column="state_new" property="stateNew"/>
+                    <result column="state_old" property="stateOld"/>
+                    <result column="change_date" property="changeDate"/>
+                    <result column="is_dept" property="isDept"/>
+                    <result column="is_gwlb" property="isGwlb"/>
+                    <result column="is_number" property="isNumber"/>
+                    <result column="is_state" property="isState"/>
+                    <result column="remark" property="remark"/>
+                    <result column="submit_user" property="submitUser"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new, dept_old, gwlb_new, gwlb_old, number_new, number_old, state_new, state_old, change_date, is_dept, is_gwlb, is_number, is_state, remark, submit_user, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateFsBChangerecord" parameterType="cc.mrbird.febs.fs.entity.FsBChangerecord">
+        update fs_b_changerecord
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="deptOld != null">dept_old=#{deptOld},</if>
+<if test="gwlbNew != null">gwlb_new=#{gwlbNew},</if>
+<if test="gwlbOld != null">gwlb_old=#{gwlbOld},</if>
+<if test="numberNew != null">number_new=#{numberNew},</if>
+<if test="numberOld != null">number_old=#{numberOld},</if>
+<if test="stateNew != null">state_new=#{stateNew},</if>
+<if test="stateOld != null">state_old=#{stateOld},</if>
+<if test="changeDate != null">change_date=#{changeDate},</if>
+<if test="isDept != null">is_dept=#{isDept},</if>
+<if test="isGwlb != null">is_gwlb=#{isGwlb},</if>
+<if test="isNumber != null">is_number=#{isNumber},</if>
+<if test="isState != null">is_state=#{isState},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="submitUser != null">submit_user=#{submitUser},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findFsBChangerecord" resultType="cc.mrbird.febs.fs.entity.FsBChangerecord" parameterType="cc.mrbird.febs.fs.entity.FsBChangerecord">
+        select  *  from fs_b_changerecord
+        where  1=1
+            <if test="fsBChangerecord.userAccountName != null and fsBChangerecord.userAccountName != ''"> and  fs_b_changerecord.user_account_name like concat('%', #{ fsBChangerecord.userAccountName} ,'%')</if>
+            <if test="fsBChangerecord.userAccount != null and fsBChangerecord.userAccount != ''"> and  fs_b_changerecord.user_account like concat('%', #{ fsBChangerecord.userAccount} ,'%')</if>
+            <if test="fsBChangerecord.deptNew != null and fsBChangerecord.deptNew != ''"> and  fs_b_changerecord.dept_new like concat('%', #{ fsBChangerecord.deptNew} ,'%')</if>
+            <if test="fsBChangerecord.deptOld != null and fsBChangerecord.deptOld != ''"> and  fs_b_changerecord.dept_old like concat('%', #{ fsBChangerecord.deptOld} ,'%')</if>
+            <if test="fsBChangerecord.gwlbNew != null and fsBChangerecord.gwlbNew != ''"> and  fs_b_changerecord.gwlb_new like concat('%', #{ fsBChangerecord.gwlbNew} ,'%')</if>
+            <if test="fsBChangerecord.gwlbOld != null and fsBChangerecord.gwlbOld != ''"> and  fs_b_changerecord.gwlb_old like concat('%', #{ fsBChangerecord.gwlbOld} ,'%')</if>
+            <if test="fsBChangerecord.numberNew != null and fsBChangerecord.numberNew != ''"> and  fs_b_changerecord.number_new like concat('%', #{ fsBChangerecord.numberNew} ,'%')</if>
+            <if test="fsBChangerecord.numberOld != null and fsBChangerecord.numberOld != ''"> and  fs_b_changerecord.number_old like concat('%', #{ fsBChangerecord.numberOld} ,'%')</if>
+            <if test="fsBChangerecord.stateNew != null and fsBChangerecord.stateNew != ''"> and  fs_b_changerecord.state_new like concat('%', #{ fsBChangerecord.stateNew} ,'%')</if>
+            <if test="fsBChangerecord.stateOld != null and fsBChangerecord.stateOld != ''"> and  fs_b_changerecord.state_old like concat('%', #{ fsBChangerecord.stateOld} ,'%')</if>
+        <if test="fsBChangerecord.changeDateFrom!= null">
+            AND fs_b_changerecord.change_date <![CDATA[ >= ]]>  #{fsBChangerecord.changeDateFrom}
+        </if>
+        <if test="fsBChangerecord.changeDateTo!= null">
+            AND  fs_b_changerecord.change_date <![CDATA[ <= ]]>  #{fsBChangerecord.changeDateTo}
+        </if>
+            <if test="fsBChangerecord.isDept != null and fsBChangerecord.isDept != ''"> and  fs_b_changerecord.is_dept like concat('%', #{ fsBChangerecord.isDept} ,'%')</if>
+            <if test="fsBChangerecord.isGwlb != null and fsBChangerecord.isGwlb != ''"> and  fs_b_changerecord.is_gwlb like concat('%', #{ fsBChangerecord.isGwlb} ,'%')</if>
+            <if test="fsBChangerecord.isNumber != null and fsBChangerecord.isNumber != ''"> and  fs_b_changerecord.is_number like concat('%', #{ fsBChangerecord.isNumber} ,'%')</if>
+            <if test="fsBChangerecord.isState != null and fsBChangerecord.isState != ''"> and  fs_b_changerecord.is_state like concat('%', #{ fsBChangerecord.isState} ,'%')</if>
+            <if test="fsBChangerecord.remark != null and fsBChangerecord.remark != ''"> and  fs_b_changerecord.remark like concat('%', #{ fsBChangerecord.remark} ,'%')</if>
+            <if test="fsBChangerecord.submitUser != null and fsBChangerecord.submitUser != ''"> and  fs_b_changerecord.submit_user like concat('%', #{ fsBChangerecord.submitUser} ,'%')</if>
+        <if test="fsBChangerecord.state != null"> and  fs_b_changerecord.state =#{ fsBChangerecord.state} </if>
+        <if test="fsBChangerecord.isDeletemark != null"> and  fs_b_changerecord.IS_DELETEMARK =#{ fsBChangerecord.isDeletemark} </if>
+        <if test="fsBChangerecord.createTimeFrom!= null">
+            AND fs_b_changerecord.CREATE_TIME <![CDATA[ >= ]]>  #{fsBChangerecord.createTimeFrom}
+        </if>
+        <if test="fsBChangerecord.createTimeTo!= null">
+            AND  fs_b_changerecord.CREATE_TIME <![CDATA[ <= ]]>  #{fsBChangerecord.createTimeTo}
+        </if>
+        <if test="fsBChangerecord.modifyTimeFrom!= null">
+            AND fs_b_changerecord.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBChangerecord.modifyTimeFrom}
+        </if>
+        <if test="fsBChangerecord.modifyTimeTo!= null">
+            AND  fs_b_changerecord.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBChangerecord.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

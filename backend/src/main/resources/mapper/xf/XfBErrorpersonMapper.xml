@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBErrorpersonMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBErrorperson">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="year" property="year"/>
+                    <result column="is_pass" property="isPass"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="archive_id" property="archiveId"/>
+                    <result column="archive_name" property="archiveName"/>
+                    <result column="archive_code" property="archiveCode"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new, year, is_pass, file_id, file_url, archive_id, archive_name, archive_code, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBErrorperson" parameterType="cc.mrbird.febs.xf.entity.XfBErrorperson">
+        update xf_b_errorperson
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="year != null">year=#{year},</if>
+<if test="isPass != null">is_pass=#{isPass},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="archiveId != null">archive_id=#{archiveId},</if>
+<if test="archiveName != null">archive_name=#{archiveName},</if>
+<if test="archiveCode != null">archive_code=#{archiveCode},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBErrorperson" resultType="cc.mrbird.febs.xf.entity.XfBErrorperson" parameterType="cc.mrbird.febs.xf.entity.XfBErrorperson">
+        select  *  from xf_b_errorperson
+        where  1=1
+            <if test="xfBErrorperson.userAccountName != null and xfBErrorperson.userAccountName != ''"> and  xf_b_errorperson.user_account_name like concat('%', #{ xfBErrorperson.userAccountName} ,'%')</if>
+            <if test="xfBErrorperson.userAccount != null and xfBErrorperson.userAccount != ''"> and  xf_b_errorperson.user_account like concat('%', #{ xfBErrorperson.userAccount} ,'%')</if>
+            <if test="xfBErrorperson.deptNew != null and xfBErrorperson.deptNew != ''"> and  xf_b_errorperson.dept_new like concat('%', #{ xfBErrorperson.deptNew} ,'%')</if>
+            <if test="xfBErrorperson.year != null and xfBErrorperson.year != ''"> and  xf_b_errorperson.year like concat('%', #{ xfBErrorperson.year} ,'%')</if>
+            <if test="xfBErrorperson.isPass != null and xfBErrorperson.isPass != ''"> and  xf_b_errorperson.is_pass like concat('%', #{ xfBErrorperson.isPass} ,'%')</if>
+            <if test="xfBErrorperson.fileId != null and xfBErrorperson.fileId != ''"> and  xf_b_errorperson.file_id like concat('%', #{ xfBErrorperson.fileId} ,'%')</if>
+            <if test="xfBErrorperson.fileUrl != null and xfBErrorperson.fileUrl != ''"> and  xf_b_errorperson.file_url like concat('%', #{ xfBErrorperson.fileUrl} ,'%')</if>
+            <if test="xfBErrorperson.archiveName != null and xfBErrorperson.archiveName != ''"> and  xf_b_errorperson.archive_name like concat('%', #{ xfBErrorperson.archiveName} ,'%')</if>
+            <if test="xfBErrorperson.archiveCode != null and xfBErrorperson.archiveCode != ''"> and  xf_b_errorperson.archive_code like concat('%', #{ xfBErrorperson.archiveCode} ,'%')</if>
+            <if test="xfBErrorperson.remark != null and xfBErrorperson.remark != ''"> and  xf_b_errorperson.remark like concat('%', #{ xfBErrorperson.remark} ,'%')</if>
+        <if test="xfBErrorperson.state != null"> and  xf_b_errorperson.state =#{ xfBErrorperson.state} </if>
+        <if test="xfBErrorperson.isDeletemark != null"> and  xf_b_errorperson.IS_DELETEMARK =#{ xfBErrorperson.isDeletemark} </if>
+        <if test="xfBErrorperson.createTimeFrom!= null">
+            AND xf_b_errorperson.CREATE_TIME <![CDATA[ >= ]]>  #{xfBErrorperson.createTimeFrom}
+        </if>
+        <if test="xfBErrorperson.createTimeTo!= null">
+            AND  xf_b_errorperson.CREATE_TIME <![CDATA[ <= ]]>  #{xfBErrorperson.createTimeTo}
+        </if>
+        <if test="xfBErrorperson.modifyTimeFrom!= null">
+            AND xf_b_errorperson.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBErrorperson.modifyTimeFrom}
+        </if>
+        <if test="xfBErrorperson.modifyTimeTo!= null">
+            AND  xf_b_errorperson.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBErrorperson.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

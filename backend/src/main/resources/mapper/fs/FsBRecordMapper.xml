@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.fs.dao.FsBRecordMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.fs.entity.FsBRecord">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="operation_date" property="operationDate"/>
+                    <result column="state" property="state"/>
+                    <result column="note" property="note"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, operation_date, state, note, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateFsBRecord" parameterType="cc.mrbird.febs.fs.entity.FsBRecord">
+        update fs_b_record
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="operationDate != null">operation_date=#{operationDate},</if>
+<if test="state != null">state=#{state},</if>
+<if test="note != null">note=#{note},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findFsBRecord" resultType="cc.mrbird.febs.fs.entity.FsBRecord" parameterType="cc.mrbird.febs.fs.entity.FsBRecord">
+        select  *  from fs_b_record
+        where  1=1
+            <if test="fsBRecord.id != null and fsBRecord.id != ''"> and  fs_b_record.id =#{ fsBRecord.id} </if>
+            <if test="fsBRecord.userAccountName != null and fsBRecord.userAccountName != ''"> and  fs_b_record.user_account_name like concat('%', #{ fsBRecord.userAccountName} ,'%')</if>
+            <if test="fsBRecord.userAccount != null and fsBRecord.userAccount != ''"> and  fs_b_record.user_account like concat('%', #{ fsBRecord.userAccount} ,'%')</if>
+        <if test="fsBRecord.operationDateFrom!= null">
+            AND fs_b_record.operation_date <![CDATA[ >= ]]>  #{fsBRecord.operationDateFrom}
+        </if>
+        <if test="fsBRecord.operationDateTo!= null">
+            AND  fs_b_record.operation_date <![CDATA[ <= ]]>  #{fsBRecord.operationDateTo}
+        </if>
+        <if test="fsBRecord.state != null"> and  fs_b_record.state =#{ fsBRecord.state} </if>
+            <if test="fsBRecord.note != null and fsBRecord.note != ''"> and  fs_b_record.note like concat('%', #{ fsBRecord.note} ,'%')</if>
+        <if test="fsBRecord.isDeletemark != null"> and  fs_b_record.IS_DELETEMARK =#{ fsBRecord.isDeletemark} </if>
+        <if test="fsBRecord.createTimeFrom!= null">
+            AND fs_b_record.CREATE_TIME <![CDATA[ >= ]]>  #{fsBRecord.createTimeFrom}
+        </if>
+        <if test="fsBRecord.createTimeTo!= null">
+            AND  fs_b_record.CREATE_TIME <![CDATA[ <= ]]>  #{fsBRecord.createTimeTo}
+        </if>
+        <if test="fsBRecord.displayIndex != null"> and  fs_b_record.display_index =#{ fsBRecord.displayIndex} </if>
+        <if test="fsBRecord.modifyTimeFrom!= null">
+            AND fs_b_record.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBRecord.modifyTimeFrom}
+        </if>
+        <if test="fsBRecord.modifyTimeTo!= null">
+            AND  fs_b_record.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBRecord.modifyTimeTo}
+        </if>
+</select>
+    <select id="findFsBRecord2" resultType="cc.mrbird.febs.fs.entity.FsBRecord" >
+        select *  from fs_b_record where operation_date in
+        (SELECT
+        MAX( operation_date ) operation_date
+        FROM
+        fs_b_record b
+        WHERE
+        b.operation_date <![CDATA[ <= ]]> CURRENT_DATE ( )  and fs_b_record.user_account=b.user_account
+        GROUP BY
+        user_account)
+    and user_account in
+    <foreach item="item" index="index" collection="accountList" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+    </select>
+
+</mapper>

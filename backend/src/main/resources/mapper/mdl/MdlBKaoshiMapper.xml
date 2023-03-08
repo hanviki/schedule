@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.mdl.dao.MdlBKaoshiMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.mdl.entity.MdlBKaoshi">
+                    <id column="id" property="id"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="hospital" property="hospital"/>
+                    <result column="yuanqu" property="yuanqu"/>
+                    <result column="ksssfl" property="ksssfl"/>
+                    <result column="lcksfl" property="lcksfl"/>
+                    <result column="danyuan" property="danyuan"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="telphone" property="telphone"/>
+                    <result column="pernr" property="pernr"/>
+                    <result column="role" property="role"/>
+                    <result column="gangwei" property="gangwei"/>
+                    <result column="gangweixingzhi" property="gangweixingzhi"/>
+                    <result column="firstyuedu" property="firstyuedu"/>
+                    <result column="lastyuedu" property="lastyuedu"/>
+                    <result column="leijiyuedu" property="leijiyuedu"/>
+                    <result column="wanchenglv" property="wanchenglv"/>
+                    <result column="lxcs" property="lxcs"/>
+                    <result column="yihuoxuefen" property="yihuoxuefen"/>
+                    <result column="ifjihuannei" property="ifjihuannei"/>
+                    <result column="idcard" property="idcard"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account, hospital, yuanqu, ksssfl, lcksfl, danyuan, user_account_name, telphone, pernr, role, gangwei, gangweixingzhi, firstyuedu, lastyuedu, leijiyuedu, wanchenglv, lxcs, yihuoxuefen, ifjihuannei, idcard, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateMdlBKaoshi" parameterType="cc.mrbird.febs.mdl.entity.MdlBKaoshi">
+        update mdl_b_kaoshi
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="hospital != null">hospital=#{hospital},</if>
+<if test="yuanqu != null">yuanqu=#{yuanqu},</if>
+<if test="ksssfl != null">ksssfl=#{ksssfl},</if>
+<if test="lcksfl != null">lcksfl=#{lcksfl},</if>
+<if test="danyuan != null">danyuan=#{danyuan},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="telphone != null">telphone=#{telphone},</if>
+<if test="pernr != null">pernr=#{pernr},</if>
+<if test="role != null">role=#{role},</if>
+<if test="gangwei != null">gangwei=#{gangwei},</if>
+<if test="gangweixingzhi != null">gangweixingzhi=#{gangweixingzhi},</if>
+<if test="firstyuedu != null">firstyuedu=#{firstyuedu},</if>
+<if test="lastyuedu != null">lastyuedu=#{lastyuedu},</if>
+<if test="leijiyuedu != null">leijiyuedu=#{leijiyuedu},</if>
+<if test="wanchenglv != null">wanchenglv=#{wanchenglv},</if>
+<if test="lxcs != null">lxcs=#{lxcs},</if>
+<if test="yihuoxuefen != null">yihuoxuefen=#{yihuoxuefen},</if>
+<if test="ifjihuannei != null">ifjihuannei=#{ifjihuannei},</if>
+<if test="idcard != null">idcard=#{idcard},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findMdlBKaoshi" resultType="cc.mrbird.febs.mdl.entity.MdlBKaoshi" parameterType="cc.mrbird.febs.mdl.entity.MdlBKaoshi">
+        select  *  from mdl_b_kaoshi
+        where  1=1
+            <if test="mdlBKaoshi.userAccount != null and mdlBKaoshi.userAccount != ''"> and  mdl_b_kaoshi.user_account like concat('%', #{ mdlBKaoshi.userAccount} ,'%')</if>
+            <if test="mdlBKaoshi.hospital != null and mdlBKaoshi.hospital != ''"> and  mdl_b_kaoshi.hospital like concat('%', #{ mdlBKaoshi.hospital} ,'%')</if>
+            <if test="mdlBKaoshi.yuanqu != null and mdlBKaoshi.yuanqu != ''"> and  mdl_b_kaoshi.yuanqu like concat('%', #{ mdlBKaoshi.yuanqu} ,'%')</if>
+            <if test="mdlBKaoshi.ksssfl != null and mdlBKaoshi.ksssfl != ''"> and  mdl_b_kaoshi.ksssfl like concat('%', #{ mdlBKaoshi.ksssfl} ,'%')</if>
+            <if test="mdlBKaoshi.lcksfl != null and mdlBKaoshi.lcksfl != ''"> and  mdl_b_kaoshi.lcksfl like concat('%', #{ mdlBKaoshi.lcksfl} ,'%')</if>
+            <if test="mdlBKaoshi.danyuan != null and mdlBKaoshi.danyuan != ''"> and  mdl_b_kaoshi.danyuan like concat('%', #{ mdlBKaoshi.danyuan} ,'%')</if>
+            <if test="mdlBKaoshi.userAccountName != null and mdlBKaoshi.userAccountName != ''"> and  mdl_b_kaoshi.user_account_name like concat('%', #{ mdlBKaoshi.userAccountName} ,'%')</if>
+            <if test="mdlBKaoshi.telphone != null and mdlBKaoshi.telphone != ''"> and  mdl_b_kaoshi.telphone like concat('%', #{ mdlBKaoshi.telphone} ,'%')</if>
+            <if test="mdlBKaoshi.pernr != null and mdlBKaoshi.pernr != ''"> and  mdl_b_kaoshi.pernr like concat('%', #{ mdlBKaoshi.pernr} ,'%')</if>
+            <if test="mdlBKaoshi.role != null and mdlBKaoshi.role != ''"> and  mdl_b_kaoshi.role like concat('%', #{ mdlBKaoshi.role} ,'%')</if>
+            <if test="mdlBKaoshi.gangwei != null and mdlBKaoshi.gangwei != ''"> and  mdl_b_kaoshi.gangwei like concat('%', #{ mdlBKaoshi.gangwei} ,'%')</if>
+            <if test="mdlBKaoshi.gangweixingzhi != null and mdlBKaoshi.gangweixingzhi != ''"> and  mdl_b_kaoshi.gangweixingzhi like concat('%', #{ mdlBKaoshi.gangweixingzhi} ,'%')</if>
+            <if test="mdlBKaoshi.firstyuedu != null and mdlBKaoshi.firstyuedu != ''"> and  mdl_b_kaoshi.firstyuedu like concat('%', #{ mdlBKaoshi.firstyuedu} ,'%')</if>
+            <if test="mdlBKaoshi.lastyuedu != null and mdlBKaoshi.lastyuedu != ''"> and  mdl_b_kaoshi.lastyuedu like concat('%', #{ mdlBKaoshi.lastyuedu} ,'%')</if>
+            <if test="mdlBKaoshi.leijiyuedu != null and mdlBKaoshi.leijiyuedu != ''"> and  mdl_b_kaoshi.leijiyuedu like concat('%', #{ mdlBKaoshi.leijiyuedu} ,'%')</if>
+            <if test="mdlBKaoshi.wanchenglv != null and mdlBKaoshi.wanchenglv != ''"> and  mdl_b_kaoshi.wanchenglv like concat('%', #{ mdlBKaoshi.wanchenglv} ,'%')</if>
+            <if test="mdlBKaoshi.lxcs != null and mdlBKaoshi.lxcs != ''"> and  mdl_b_kaoshi.lxcs like concat('%', #{ mdlBKaoshi.lxcs} ,'%')</if>
+            <if test="mdlBKaoshi.yihuoxuefen != null and mdlBKaoshi.yihuoxuefen != ''"> and  mdl_b_kaoshi.yihuoxuefen like concat('%', #{ mdlBKaoshi.yihuoxuefen} ,'%')</if>
+            <if test="mdlBKaoshi.ifjihuannei != null and mdlBKaoshi.ifjihuannei != ''"> and  mdl_b_kaoshi.ifjihuannei like concat('%', #{ mdlBKaoshi.ifjihuannei} ,'%')</if>
+            <if test="mdlBKaoshi.idcard != null and mdlBKaoshi.idcard != ''"> and  mdl_b_kaoshi.idcard like concat('%', #{ mdlBKaoshi.idcard} ,'%')</if>
+        <if test="mdlBKaoshi.state != null"> and  mdl_b_kaoshi.state =#{ mdlBKaoshi.state} </if>
+        <if test="mdlBKaoshi.isDeletemark != null"> and  mdl_b_kaoshi.IS_DELETEMARK =#{ mdlBKaoshi.isDeletemark} </if>
+        <if test="mdlBKaoshi.createTimeFrom!= null">
+            AND mdl_b_kaoshi.CREATE_TIME <![CDATA[ >= ]]>  #{mdlBKaoshi.createTimeFrom}
+        </if>
+        <if test="mdlBKaoshi.createTimeTo!= null">
+            AND  mdl_b_kaoshi.CREATE_TIME <![CDATA[ <= ]]>  #{mdlBKaoshi.createTimeTo}
+        </if>
+        <if test="mdlBKaoshi.modifyTimeFrom!= null">
+            AND mdl_b_kaoshi.MODIFY_TIME <![CDATA[ >= ]]>  #{mdlBKaoshi.modifyTimeFrom}
+        </if>
+        <if test="mdlBKaoshi.modifyTimeTo!= null">
+            AND  mdl_b_kaoshi.MODIFY_TIME <![CDATA[ <= ]]>  #{mdlBKaoshi.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

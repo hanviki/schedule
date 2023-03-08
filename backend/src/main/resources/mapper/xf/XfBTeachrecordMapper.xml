@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBTeachrecordMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBTeachrecord">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="content" property="content"/>
+                    <result column="teach_date" property="teachDate"/>
+                    <result column="join_person" property="joinPerson"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new, content, teach_date, join_person, file_id, file_url, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBTeachrecord" parameterType="cc.mrbird.febs.xf.entity.XfBTeachrecord">
+        update xf_b_teachrecord
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="content != null">content=#{content},</if>
+<if test="teachDate != null">teach_date=#{teachDate},</if>
+<if test="joinPerson != null">join_person=#{joinPerson},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBTeachrecord" resultType="cc.mrbird.febs.xf.entity.XfBTeachrecord" parameterType="cc.mrbird.febs.xf.entity.XfBTeachrecord">
+        select  *  from xf_b_teachrecord
+        where  1=1
+            <if test="xfBTeachrecord.userAccountName != null and xfBTeachrecord.userAccountName != ''"> and  xf_b_teachrecord.user_account_name like concat('%', #{ xfBTeachrecord.userAccountName} ,'%')</if>
+            <if test="xfBTeachrecord.userAccount != null and xfBTeachrecord.userAccount != ''"> and  xf_b_teachrecord.user_account like concat('%', #{ xfBTeachrecord.userAccount} ,'%')</if>
+            <if test="xfBTeachrecord.deptNew != null and xfBTeachrecord.deptNew != ''"> and  xf_b_teachrecord.dept_new like concat('%', #{ xfBTeachrecord.deptNew} ,'%')</if>
+            <if test="xfBTeachrecord.content != null and xfBTeachrecord.content != ''"> and  xf_b_teachrecord.content like concat('%', #{ xfBTeachrecord.content} ,'%')</if>
+        <if test="xfBTeachrecord.teachDateFrom!= null">
+            AND xf_b_teachrecord.teach_date <![CDATA[ >= ]]>  #{xfBTeachrecord.teachDateFrom}
+        </if>
+        <if test="xfBTeachrecord.teachDateTo!= null">
+            AND  xf_b_teachrecord.teach_date <![CDATA[ <= ]]>  #{xfBTeachrecord.teachDateTo}
+        </if>
+            <if test="xfBTeachrecord.joinPerson != null and xfBTeachrecord.joinPerson != ''"> and  xf_b_teachrecord.join_person like concat('%', #{ xfBTeachrecord.joinPerson} ,'%')</if>
+            <if test="xfBTeachrecord.fileId != null and xfBTeachrecord.fileId != ''"> and  xf_b_teachrecord.file_id like concat('%', #{ xfBTeachrecord.fileId} ,'%')</if>
+            <if test="xfBTeachrecord.fileUrl != null and xfBTeachrecord.fileUrl != ''"> and  xf_b_teachrecord.file_url like concat('%', #{ xfBTeachrecord.fileUrl} ,'%')</if>
+            <if test="xfBTeachrecord.remark != null and xfBTeachrecord.remark != ''"> and  xf_b_teachrecord.remark like concat('%', #{ xfBTeachrecord.remark} ,'%')</if>
+        <if test="xfBTeachrecord.state != null"> and  xf_b_teachrecord.state =#{ xfBTeachrecord.state} </if>
+        <if test="xfBTeachrecord.isDeletemark != null"> and  xf_b_teachrecord.IS_DELETEMARK =#{ xfBTeachrecord.isDeletemark} </if>
+        <if test="xfBTeachrecord.createTimeFrom!= null">
+            AND xf_b_teachrecord.CREATE_TIME <![CDATA[ >= ]]>  #{xfBTeachrecord.createTimeFrom}
+        </if>
+        <if test="xfBTeachrecord.createTimeTo!= null">
+            AND  xf_b_teachrecord.CREATE_TIME <![CDATA[ <= ]]>  #{xfBTeachrecord.createTimeTo}
+        </if>
+        <if test="xfBTeachrecord.modifyTimeFrom!= null">
+            AND xf_b_teachrecord.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBTeachrecord.modifyTimeFrom}
+        </if>
+        <if test="xfBTeachrecord.modifyTimeTo!= null">
+            AND  xf_b_teachrecord.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBTeachrecord.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

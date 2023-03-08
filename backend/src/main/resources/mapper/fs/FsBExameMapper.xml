@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.fs.dao.FsBExameMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.fs.entity.FsBExame">
+                    <id column="id" property="id"/>
+                    <result column="user_no" property="userNo"/>
+                    <result column="name" property="name"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="number" property="number"/>
+            <result column="file_id" property="fileId"/>
+            <result column="file_url" property="fileUrl"/>
+                    <result column="exame_type" property="exameType"/>
+                    <result column="exame_date" property="exameDate"/>
+                    <result column="exame_num" property="exameNum"/>
+                    <result column="exame_score" property="exameScore"/>
+                    <result column="exame_total" property="exameTotal"/>
+                    <result column="exame_zy" property="exameZy"/>
+                    <result column="valid" property="valid"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_no, name, user_account_name, user_account,file_id, file_url, number, exame_type, exame_date, exame_num, exame_score, exame_total, exame_zy, valid, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateFsBExame" parameterType="cc.mrbird.febs.fs.entity.FsBExame">
+        update fs_b_exame
+        <trim prefix="set" suffixOverrides=",">
+<if test="userNo != null">user_no=#{userNo},</if>
+<if test="name != null">name=#{name},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="number != null">number=#{number},</if>
+<if test="exameType != null">exame_type=#{exameType},</if>
+<if test="exameDate != null">exame_date=#{exameDate},</if>
+<if test="exameNum != null">exame_num=#{exameNum},</if>
+<if test="exameScore != null">exame_score=#{exameScore},</if>
+<if test="exameTotal != null">exame_total=#{exameTotal},</if>
+<if test="exameZy != null">exame_zy=#{exameZy},</if>
+<if test="valid != null">valid=#{valid},</if>
+<if test="state != null">state=#{state},</if>
+            <if test="fileId != null">file_id=#{fileId},</if>
+            <if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findFsBExame" resultType="cc.mrbird.febs.fs.entity.FsBExame" parameterType="cc.mrbird.febs.fs.entity.FsBExame">
+        select
+        fs_b_exame.id,
+        fs_b_exame.user_no,
+        fs_b_exame.`name`,
+        fs_b_user.user_account_name,
+        fs_b_user.user_account,
+        fs_b_user.grjlbh number,
+        fs_b_exame.exame_type,
+        fs_b_exame.exame_date,
+        fs_b_exame.exame_num,
+        fs_b_exame.exame_score,
+        fs_b_exame.exame_total,
+        fs_b_exame.exame_zy,
+        fs_b_exame.valid,
+        fs_b_exame.state,
+        fs_b_exame.IS_DELETEMARK,
+        fs_b_exame.CREATE_TIME,
+        fs_b_exame.display_index,
+        fs_b_exame.MODIFY_TIME,
+        fs_b_exame.CREATE_USER_ID,
+        fs_b_exame.MODIFY_USER_ID,
+        fs_b_exame.file_id,
+        fs_b_exame.file_url
+          from fs_b_exame
+        inner join fs_b_user  on fs_b_user.user_account=fs_b_exame.user_account
+        where  1=1 and fs_b_exame.user_account!=''
+        <if test="fsBExame.yuanqu != null">and fs_b_user.yuanqu =#{fsBExame.yuanqu}</if>
+            <if test="fsBExame.id != null and fsBExame.id != ''"> and  fs_b_exame.id =#{ fsBExame.id} </if>
+            <if test="fsBExame.userNo != null and fsBExame.userNo != ''"> and  fs_b_exame.user_no like concat('%', #{ fsBExame.userNo} ,'%')</if>
+            <if test="fsBExame.name != null and fsBExame.name != ''"> and  fs_b_exame.name like concat('%', #{ fsBExame.name} ,'%')</if>
+            <if test="fsBExame.userAccountName != null and fsBExame.userAccountName != ''"> and  fs_b_exame.user_account_name like concat('%', #{ fsBExame.userAccountName} ,'%')</if>
+            <if test="fsBExame.userAccount != null and fsBExame.userAccount != ''"> and  (fs_b_user.user_account=#{ fsBExame.userAccount} or fs_b_user.user_account_name like concat('%', #{ fsBExame.userAccount} ,'%')) </if>
+            <if test="fsBExame.number != null and fsBExame.number != ''"> and  fs_b_exame.number like concat('%', #{ fsBExame.number} ,'%')</if>
+            <if test="fsBExame.exameType != null and fsBExame.exameType != ''"> and  fs_b_exame.exame_type like concat('%', #{ fsBExame.exameType} ,'%')</if>
+        <if test="fsBExame.exameDateFrom!= null">
+            AND fs_b_exame.exame_date <![CDATA[ >= ]]>  #{fsBExame.exameDateFrom}
+        </if>
+        <if test="fsBExame.exameDateTo!= null">
+            AND  fs_b_exame.exame_date <![CDATA[ <= ]]>  #{fsBExame.exameDateTo}
+        </if>
+            <if test="fsBExame.exameNum != null and fsBExame.exameNum != ''"> and  fs_b_exame.exame_num like concat('%', #{ fsBExame.exameNum} ,'%')</if>
+            <if test="fsBExame.exameScore != null and fsBExame.exameScore != ''"> and  fs_b_exame.exame_score like concat('%', #{ fsBExame.exameScore} ,'%')</if>
+            <if test="fsBExame.exameTotal != null and fsBExame.exameTotal != ''"> and  fs_b_exame.exame_total like concat('%', #{ fsBExame.exameTotal} ,'%')</if>
+            <if test="fsBExame.exameZy != null and fsBExame.exameZy != ''"> and  fs_b_exame.exame_zy like concat('%', #{ fsBExame.exameZy} ,'%')</if>
+            <if test="fsBExame.valid != null and fsBExame.valid != ''"> and  fs_b_exame.valid like concat('%', #{ fsBExame.valid} ,'%')</if>
+        <if test="fsBExame.state != null"> and  fs_b_exame.state =#{ fsBExame.state} </if>
+        <if test="fsBExame.isDeletemark != null"> and  fs_b_exame.IS_DELETEMARK =#{ fsBExame.isDeletemark} </if>
+        <if test="fsBExame.createTimeFrom!= null">
+            AND fs_b_exame.CREATE_TIME <![CDATA[ >= ]]>  #{fsBExame.createTimeFrom}
+        </if>
+        <if test="fsBExame.createTimeTo!= null">
+            AND  fs_b_exame.CREATE_TIME <![CDATA[ <= ]]>  #{fsBExame.createTimeTo}
+        </if>
+        <if test="fsBExame.deptId != null"> and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{fsBExame.deptId} or parent_id =#{fsBExame.deptId}) </if>
+        <if test="fsBExame.displayIndex != null"> and  fs_b_exame.display_index =#{ fsBExame.displayIndex} </if>
+        <if test="fsBExame.modifyTimeFrom!= null">
+            AND fs_b_exame.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBExame.modifyTimeFrom}
+        </if>
+        <if test="fsBExame.modifyTimeTo!= null">
+            AND  fs_b_exame.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBExame.modifyTimeTo}
+        </if>
+  union
+        select
+        fs_b_exame.id,
+        fs_b_exame.user_no,
+        fs_b_exame.`name`,
+        fs_b_user.user_account_name,
+        fs_b_user.user_account,
+        fs_b_user.grjlbh number,
+        fs_b_exame.exame_type,
+        fs_b_exame.exame_date,
+        fs_b_exame.exame_num,
+        fs_b_exame.exame_score,
+        fs_b_exame.exame_total,
+        fs_b_exame.exame_zy,
+        fs_b_exame.valid,
+        fs_b_exame.state,
+        fs_b_exame.IS_DELETEMARK,
+        fs_b_exame.CREATE_TIME,
+        fs_b_exame.display_index,
+        fs_b_exame.MODIFY_TIME,
+        fs_b_exame.CREATE_USER_ID,
+        fs_b_exame.MODIFY_USER_ID,
+        fs_b_exame.file_id,
+        fs_b_exame.file_url
+        from fs_b_exame
+        inner join fs_b_user  on  fs_b_user.grjlbh=fs_b_exame.number
+        where  1=1 and (fs_b_exame.user_account='' or fs_b_exame.user_account is null) and  fs_b_exame.number!=''
+        <if test="fsBExame.yuanqu != null">and fs_b_user.yuanqu =#{fsBExame.yuanqu}</if>
+        <if test="fsBExame.id != null and fsBExame.id != ''"> and  fs_b_exame.id =#{ fsBExame.id} </if>
+        <if test="fsBExame.userNo != null and fsBExame.userNo != ''"> and  fs_b_exame.user_no like concat('%', #{ fsBExame.userNo} ,'%')</if>
+        <if test="fsBExame.name != null and fsBExame.name != ''"> and  fs_b_exame.name like concat('%', #{ fsBExame.name} ,'%')</if>
+        <if test="fsBExame.userAccountName != null and fsBExame.userAccountName != ''"> and  fs_b_exame.user_account_name like concat('%', #{ fsBExame.userAccountName} ,'%')</if>
+        <if test="fsBExame.userAccount != null and fsBExame.userAccount != ''"> and  (fs_b_user.user_account=#{ fsBExame.userAccount} or fs_b_user.user_account_name like concat('%', #{ fsBExame.userAccount} ,'%')) </if>
+        <if test="fsBExame.number != null and fsBExame.number != ''"> and  fs_b_exame.number like concat('%', #{ fsBExame.number} ,'%')</if>
+        <if test="fsBExame.exameType != null and fsBExame.exameType != ''"> and  fs_b_exame.exame_type like concat('%', #{ fsBExame.exameType} ,'%')</if>
+        <if test="fsBExame.exameDateFrom!= null">
+            AND fs_b_exame.exame_date <![CDATA[ >= ]]>  #{fsBExame.exameDateFrom}
+        </if>
+        <if test="fsBExame.exameDateTo!= null">
+            AND  fs_b_exame.exame_date <![CDATA[ <= ]]>  #{fsBExame.exameDateTo}
+        </if>
+        <if test="fsBExame.exameNum != null and fsBExame.exameNum != ''"> and  fs_b_exame.exame_num like concat('%', #{ fsBExame.exameNum} ,'%')</if>
+        <if test="fsBExame.exameScore != null and fsBExame.exameScore != ''"> and  fs_b_exame.exame_score like concat('%', #{ fsBExame.exameScore} ,'%')</if>
+        <if test="fsBExame.exameTotal != null and fsBExame.exameTotal != ''"> and  fs_b_exame.exame_total like concat('%', #{ fsBExame.exameTotal} ,'%')</if>
+        <if test="fsBExame.exameZy != null and fsBExame.exameZy != ''"> and  fs_b_exame.exame_zy like concat('%', #{ fsBExame.exameZy} ,'%')</if>
+        <if test="fsBExame.valid != null and fsBExame.valid != ''"> and  fs_b_exame.valid like concat('%', #{ fsBExame.valid} ,'%')</if>
+        <if test="fsBExame.state != null"> and  fs_b_exame.state =#{ fsBExame.state} </if>
+        <if test="fsBExame.isDeletemark != null"> and  fs_b_exame.IS_DELETEMARK =#{ fsBExame.isDeletemark} </if>
+        <if test="fsBExame.createTimeFrom!= null">
+            AND fs_b_exame.CREATE_TIME <![CDATA[ >= ]]>  #{fsBExame.createTimeFrom}
+        </if>
+        <if test="fsBExame.createTimeTo!= null">
+            AND  fs_b_exame.CREATE_TIME <![CDATA[ <= ]]>  #{fsBExame.createTimeTo}
+        </if>
+        <if test="fsBExame.deptId != null"> and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{fsBExame.deptId} or parent_id =#{fsBExame.deptId}) </if>
+        <if test="fsBExame.displayIndex != null"> and  fs_b_exame.display_index =#{ fsBExame.displayIndex} </if>
+        <if test="fsBExame.modifyTimeFrom!= null">
+            AND fs_b_exame.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBExame.modifyTimeFrom}
+        </if>
+        <if test="fsBExame.modifyTimeTo!= null">
+            AND  fs_b_exame.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBExame.modifyTimeTo}
+        </if>
+</select>
+    <select id="findExameAccounts" resultType="cc.mrbird.febs.fs.entity.FsBExame" >
+        select fs_b_user.user_account,fs_b_exame.exame_type,fs_b_user.grjlbh number,fs_b_exame.exame_num ,fs_b_exame.file_id  from fs_b_exame
+        inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+         where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 2 year) and fs_b_exame.exame_type='卫生考试')
+        or  (fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试'))
+        and fs_b_user.user_account in
+        <foreach item="item" index="index" collection="accountList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order  by exame_date desc
+    </select>
+    <select id="findExameAccountsAll" resultType="cc.mrbird.febs.fs.entity.FsBExame" >
+        select fs_b_user.user_account,fs_b_exame.exame_type,fs_b_user.grjlbh number,fs_b_exame.exame_num ,fs_b_exame.file_id from fs_b_exame
+        inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh and fs_b_user.user_account is null) or fs_b_exame.user_account=fs_b_user.user_account
+        where  fs_b_user.user_account in
+        <foreach item="item" index="index" collection="accountList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order  by exame_date desc
+    </select>
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBTousuMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBTousu">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="tousu_date" property="tousuDate"/>
+                    <result column="content" property="content"/>
+                    <result column="operation_name" property="operationName"/>
+                    <result column="unit" property="unit"/>
+                    <result column="receive_date" property="receiveDate"/>
+                    <result column="is_valid" property="isValid"/>
+                    <result column="redult" property="redult"/>
+                    <result column="suggestion" property="suggestion"/>
+                    <result column="audit_man" property="auditMan"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new, file_id, file_url, tousu_date, content, operation_name, unit, receive_date, is_valid, redult, suggestion, audit_man, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBTousu" parameterType="cc.mrbird.febs.xf.entity.XfBTousu">
+        update xf_b_tousu
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="tousuDate != null">tousu_date=#{tousuDate},</if>
+<if test="content != null">content=#{content},</if>
+<if test="operationName != null">operation_name=#{operationName},</if>
+<if test="unit != null">unit=#{unit},</if>
+<if test="receiveDate != null">receive_date=#{receiveDate},</if>
+<if test="isValid != null">is_valid=#{isValid},</if>
+<if test="redult != null">redult=#{redult},</if>
+<if test="suggestion != null">suggestion=#{suggestion},</if>
+<if test="auditMan != null">audit_man=#{auditMan},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBTousu" resultType="cc.mrbird.febs.xf.entity.XfBTousu" parameterType="cc.mrbird.febs.xf.entity.XfBTousu">
+        select  *  from xf_b_tousu
+        where  1=1
+            <if test="xfBTousu.userAccountName != null and xfBTousu.userAccountName != ''"> and  xf_b_tousu.user_account_name like concat('%', #{ xfBTousu.userAccountName} ,'%')</if>
+            <if test="xfBTousu.userAccount != null and xfBTousu.userAccount != ''"> and  xf_b_tousu.user_account like concat('%', #{ xfBTousu.userAccount} ,'%')</if>
+            <if test="xfBTousu.deptNew != null and xfBTousu.deptNew != ''"> and  xf_b_tousu.dept_new like concat('%', #{ xfBTousu.deptNew} ,'%')</if>
+            <if test="xfBTousu.fileId != null and xfBTousu.fileId != ''"> and  xf_b_tousu.file_id like concat('%', #{ xfBTousu.fileId} ,'%')</if>
+            <if test="xfBTousu.fileUrl != null and xfBTousu.fileUrl != ''"> and  xf_b_tousu.file_url like concat('%', #{ xfBTousu.fileUrl} ,'%')</if>
+        <if test="xfBTousu.tousuDateFrom!= null">
+            AND xf_b_tousu.tousu_date <![CDATA[ >= ]]>  #{xfBTousu.tousuDateFrom}
+        </if>
+        <if test="xfBTousu.tousuDateTo!= null">
+            AND  xf_b_tousu.tousu_date <![CDATA[ <= ]]>  #{xfBTousu.tousuDateTo}
+        </if>
+            <if test="xfBTousu.content != null and xfBTousu.content != ''"> and  xf_b_tousu.content like concat('%', #{ xfBTousu.content} ,'%')</if>
+            <if test="xfBTousu.operationName != null and xfBTousu.operationName != ''"> and  xf_b_tousu.operation_name like concat('%', #{ xfBTousu.operationName} ,'%')</if>
+            <if test="xfBTousu.unit != null and xfBTousu.unit != ''"> and  xf_b_tousu.unit like concat('%', #{ xfBTousu.unit} ,'%')</if>
+        <if test="xfBTousu.receiveDateFrom!= null">
+            AND xf_b_tousu.receive_date <![CDATA[ >= ]]>  #{xfBTousu.receiveDateFrom}
+        </if>
+        <if test="xfBTousu.receiveDateTo!= null">
+            AND  xf_b_tousu.receive_date <![CDATA[ <= ]]>  #{xfBTousu.receiveDateTo}
+        </if>
+            <if test="xfBTousu.isValid != null and xfBTousu.isValid != ''"> and  xf_b_tousu.is_valid like concat('%', #{ xfBTousu.isValid} ,'%')</if>
+            <if test="xfBTousu.redult != null and xfBTousu.redult != ''"> and  xf_b_tousu.redult like concat('%', #{ xfBTousu.redult} ,'%')</if>
+            <if test="xfBTousu.suggestion != null and xfBTousu.suggestion != ''"> and  xf_b_tousu.suggestion like concat('%', #{ xfBTousu.suggestion} ,'%')</if>
+            <if test="xfBTousu.auditMan != null and xfBTousu.auditMan != ''"> and  xf_b_tousu.audit_man like concat('%', #{ xfBTousu.auditMan} ,'%')</if>
+            <if test="xfBTousu.remark != null and xfBTousu.remark != ''"> and  xf_b_tousu.remark like concat('%', #{ xfBTousu.remark} ,'%')</if>
+        <if test="xfBTousu.state != null"> and  xf_b_tousu.state =#{ xfBTousu.state} </if>
+        <if test="xfBTousu.isDeletemark != null"> and  xf_b_tousu.IS_DELETEMARK =#{ xfBTousu.isDeletemark} </if>
+        <if test="xfBTousu.createTimeFrom!= null">
+            AND xf_b_tousu.CREATE_TIME <![CDATA[ >= ]]>  #{xfBTousu.createTimeFrom}
+        </if>
+        <if test="xfBTousu.createTimeTo!= null">
+            AND  xf_b_tousu.CREATE_TIME <![CDATA[ <= ]]>  #{xfBTousu.createTimeTo}
+        </if>
+        <if test="xfBTousu.modifyTimeFrom!= null">
+            AND xf_b_tousu.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBTousu.modifyTimeFrom}
+        </if>
+        <if test="xfBTousu.modifyTimeTo!= null">
+            AND  xf_b_tousu.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBTousu.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

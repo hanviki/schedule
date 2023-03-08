@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.asset.dao.AssetBPeibeiMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.asset.entity.AssetBPeibei">
+                    <id column="id" property="id"/>
+                    <result column="dept_name" property="deptName"/>
+                    <result column="dept_id" property="deptId"/>
+                    <result column="asset_name" property="assetName"/>
+                    <result column="changjia" property="changjia"/>
+                    <result column="xinghao" property="xinghao"/>
+                    <result column="bianhao" property="bianhao"/>
+            <result column="type" property="type"/>
+                    <result column="start_date" property="startDate"/>
+                    <result column="end_date" property="endDate"/>
+                    <result column="state" property="state"/>
+                    <result column="note" property="note"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dept_name, dept_id, asset_name, changjia, xinghao, bianhao,type, start_date, end_date, state, note, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateAssetBPeibei" parameterType="cc.mrbird.febs.asset.entity.AssetBPeibei">
+        update asset_b_peibei
+        <trim prefix="set" suffixOverrides=",">
+<if test="deptName != null">dept_name=#{deptName},</if>
+<if test="deptId != null">dept_id=#{deptId},</if>
+<if test="assetName != null">asset_name=#{assetName},</if>
+<if test="changjia != null">changjia=#{changjia},</if>
+            <if test="type != null">type=#{type},</if>
+<if test="xinghao != null">xinghao=#{xinghao},</if>
+<if test="bianhao != null">bianhao=#{bianhao},</if>
+<if test="startDate != null">start_date=#{startDate},</if>
+<if test="endDate != null">end_date=#{endDate},</if>
+<if test="state != null">state=#{state},</if>
+<if test="note != null">note=#{note},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findAssetBPeibei" resultType="cc.mrbird.febs.asset.entity.AssetBPeibei" parameterType="cc.mrbird.febs.asset.entity.AssetBPeibei">
+        select  type,dept_id,dept_name,count(*) state  from asset_b_peibei
+        where  1=1
+            <if test="assetBPeibei.id != null and assetBPeibei.id != ''"> and  asset_b_peibei.id =#{ assetBPeibei.id} </if>
+            <if test="assetBPeibei.deptName != null and assetBPeibei.deptName != ''"> and  asset_b_peibei.dept_name like concat('%', #{ assetBPeibei.deptName} ,'%')</if>
+            <if test="assetBPeibei.deptId != null and assetBPeibei.deptId != ''"> and  asset_b_peibei.dept_id like concat('%', #{ assetBPeibei.deptId} ,'%')</if>
+            <if test="assetBPeibei.assetName != null and assetBPeibei.assetName != ''"> and  asset_b_peibei.asset_name like concat('%', #{ assetBPeibei.assetName} ,'%')</if>
+            <if test="assetBPeibei.changjia != null and assetBPeibei.changjia != ''"> and  asset_b_peibei.changjia like concat('%', #{ assetBPeibei.changjia} ,'%')</if>
+            <if test="assetBPeibei.xinghao != null and assetBPeibei.xinghao != ''"> and  asset_b_peibei.xinghao like concat('%', #{ assetBPeibei.xinghao} ,'%')</if>
+            <if test="assetBPeibei.bianhao != null and assetBPeibei.bianhao != ''"> and  asset_b_peibei.bianhao like concat('%', #{ assetBPeibei.bianhao} ,'%')</if>
+        <if test="assetBPeibei.type != null and assetBPeibei.type != ''"> and  asset_b_peibei.type like concat('%', #{ assetBPeibei.type} ,'%')</if>
+        <if test="assetBPeibei.startDateFrom!= null">
+            AND asset_b_peibei.start_date <![CDATA[ >= ]]>  #{assetBPeibei.startDateFrom}
+        </if>
+        <if test="assetBPeibei.startDateTo!= null">
+            AND  asset_b_peibei.start_date <![CDATA[ <= ]]>  #{assetBPeibei.startDateTo}
+        </if>
+        <if test="assetBPeibei.endDateFrom!= null">
+            AND asset_b_peibei.end_date <![CDATA[ >= ]]>  #{assetBPeibei.endDateFrom}
+        </if>
+        <if test="assetBPeibei.endDateTo!= null">
+            AND  asset_b_peibei.end_date <![CDATA[ <= ]]>  #{assetBPeibei.endDateTo}
+        </if>
+        <if test="assetBPeibei.state != null"> and  asset_b_peibei.state =#{ assetBPeibei.state} </if>
+            <if test="assetBPeibei.note != null and assetBPeibei.note != ''"> and  asset_b_peibei.note like concat('%', #{ assetBPeibei.note} ,'%')</if>
+        <if test="assetBPeibei.isDeletemark != null"> and  asset_b_peibei.IS_DELETEMARK =#{ assetBPeibei.isDeletemark} </if>
+        <if test="assetBPeibei.createTimeFrom!= null">
+            AND asset_b_peibei.CREATE_TIME <![CDATA[ >= ]]>  #{assetBPeibei.createTimeFrom}
+        </if>
+        <if test="assetBPeibei.createTimeTo!= null">
+            AND  asset_b_peibei.CREATE_TIME <![CDATA[ <= ]]>  #{assetBPeibei.createTimeTo}
+        </if>
+        <if test="assetBPeibei.displayIndex != null"> and  asset_b_peibei.display_index =#{ assetBPeibei.displayIndex} </if>
+        <if test="assetBPeibei.modifyTimeFrom!= null">
+            AND asset_b_peibei.MODIFY_TIME <![CDATA[ >= ]]>  #{assetBPeibei.modifyTimeFrom}
+        </if>
+        <if test="assetBPeibei.modifyTimeTo!= null">
+            AND  asset_b_peibei.MODIFY_TIME <![CDATA[ <= ]]>  #{assetBPeibei.modifyTimeTo}
+        </if>
+        GROUP BY type,dept_id,dept_name
+</select>
+
+</mapper>

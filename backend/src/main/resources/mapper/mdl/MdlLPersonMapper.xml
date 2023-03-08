@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.mdl.dao.MdlLPersonMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.mdl.entity.MdlLPerson">
+                    <id column="id" property="id"/>
+                    <result column="base_id" property="baseId"/>
+                    <result column="lab_code" property="labCode"/>
+                    <result column="lab_name" property="labName"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="sex_name" property="sexName"/>
+                    <result column="telphone" property="telphone"/>
+                    <result column="xulie" property="xulie"/>
+                    <result column="zhicheng" property="zhicheng"/>
+                    <result column="profession" property="profession"/>
+                    <result column="zizhi" property="zizhi"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, base_id, lab_code, lab_name, user_account_name, user_account, sex_name, telphone, xulie, zhicheng, profession, zizhi, file_id, file_url, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateMdlLPerson" parameterType="cc.mrbird.febs.mdl.entity.MdlLPerson">
+        update mdl_l_person
+        <trim prefix="set" suffixOverrides=",">
+<if test="baseId != null">base_id=#{baseId},</if>
+<if test="labCode != null">lab_code=#{labCode},</if>
+<if test="labName != null">lab_name=#{labName},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="sexName != null">sex_name=#{sexName},</if>
+<if test="telphone != null">telphone=#{telphone},</if>
+<if test="xulie != null">xulie=#{xulie},</if>
+<if test="zhicheng != null">zhicheng=#{zhicheng},</if>
+<if test="profession != null">profession=#{profession},</if>
+<if test="zizhi != null">zizhi=#{zizhi},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findMdlLPerson" resultType="cc.mrbird.febs.mdl.entity.MdlLPerson" parameterType="cc.mrbird.febs.mdl.entity.MdlLPerson">
+        select  *  from mdl_l_person
+        where  1=1
+            <if test="mdlLPerson.id != null and mdlLPerson.id != ''"> and  mdl_l_person.id =#{ mdlLPerson.id} </if>
+            <if test="mdlLPerson.baseId != null and mdlLPerson.baseId != ''"> and  mdl_l_person.base_id like concat('%', #{ mdlLPerson.baseId} ,'%')</if>
+            <if test="mdlLPerson.labCode != null and mdlLPerson.labCode != ''"> and  mdl_l_person.lab_code like concat('%', #{ mdlLPerson.labCode} ,'%')</if>
+            <if test="mdlLPerson.labName != null and mdlLPerson.labName != ''"> and  mdl_l_person.lab_name like concat('%', #{ mdlLPerson.labName} ,'%')</if>
+            <if test="mdlLPerson.userAccountName != null and mdlLPerson.userAccountName != ''"> and  mdl_l_person.user_account_name like concat('%', #{ mdlLPerson.userAccountName} ,'%')</if>
+            <if test="mdlLPerson.userAccount != null and mdlLPerson.userAccount != ''"> and  mdl_l_person.user_account like concat('%', #{ mdlLPerson.userAccount} ,'%')</if>
+            <if test="mdlLPerson.sexName != null and mdlLPerson.sexName != ''"> and  mdl_l_person.sex_name like concat('%', #{ mdlLPerson.sexName} ,'%')</if>
+            <if test="mdlLPerson.telphone != null and mdlLPerson.telphone != ''"> and  mdl_l_person.telphone like concat('%', #{ mdlLPerson.telphone} ,'%')</if>
+            <if test="mdlLPerson.xulie != null and mdlLPerson.xulie != ''"> and  mdl_l_person.xulie like concat('%', #{ mdlLPerson.xulie} ,'%')</if>
+            <if test="mdlLPerson.zhicheng != null and mdlLPerson.zhicheng != ''"> and  mdl_l_person.zhicheng like concat('%', #{ mdlLPerson.zhicheng} ,'%')</if>
+            <if test="mdlLPerson.profession != null and mdlLPerson.profession != ''"> and  mdl_l_person.profession like concat('%', #{ mdlLPerson.profession} ,'%')</if>
+            <if test="mdlLPerson.zizhi != null and mdlLPerson.zizhi != ''"> and  mdl_l_person.zizhi like concat('%', #{ mdlLPerson.zizhi} ,'%')</if>
+            <if test="mdlLPerson.fileId != null and mdlLPerson.fileId != ''"> and  mdl_l_person.file_id like concat('%', #{ mdlLPerson.fileId} ,'%')</if>
+            <if test="mdlLPerson.fileUrl != null and mdlLPerson.fileUrl != ''"> and  mdl_l_person.file_url like concat('%', #{ mdlLPerson.fileUrl} ,'%')</if>
+        <if test="mdlLPerson.state != null"> and  mdl_l_person.state =#{ mdlLPerson.state} </if>
+        <if test="mdlLPerson.isDeletemark != null"> and  mdl_l_person.IS_DELETEMARK =#{ mdlLPerson.isDeletemark} </if>
+        <if test="mdlLPerson.createTimeFrom!= null">
+            AND mdl_l_person.CREATE_TIME <![CDATA[ >= ]]>  #{mdlLPerson.createTimeFrom}
+        </if>
+        <if test="mdlLPerson.createTimeTo!= null">
+            AND  mdl_l_person.CREATE_TIME <![CDATA[ <= ]]>  #{mdlLPerson.createTimeTo}
+        </if>
+        <if test="mdlLPerson.modifyTimeFrom!= null">
+            AND mdl_l_person.MODIFY_TIME <![CDATA[ >= ]]>  #{mdlLPerson.modifyTimeFrom}
+        </if>
+        <if test="mdlLPerson.modifyTimeTo!= null">
+            AND  mdl_l_person.MODIFY_TIME <![CDATA[ <= ]]>  #{mdlLPerson.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

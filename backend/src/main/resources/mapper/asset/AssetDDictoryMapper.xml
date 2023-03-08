@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.asset.dao.AssetDDictoryMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.asset.entity.AssetDDictory">
+                    <id column="id" property="id"/>
+                    <result column="PARENT_ID" property="parentId"/>
+                    <result column="NAME" property="name"/>
+                    <result column="type_index" property="typeIndex"/>
+                    <result column="ORDER_NUM" property="orderNum"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, PARENT_ID, NAME, type_index, ORDER_NUM, CREATE_TIME, MODIFY_TIME
+    </sql>
+    <update id="updateAssetDDictory" parameterType="cc.mrbird.febs.asset.entity.AssetDDictory">
+        update asset_d_dictory
+        <trim prefix="set" suffixOverrides=",">
+<if test="parentId != null">PARENT_ID=#{parentId},</if>
+<if test="name != null">NAME=#{name},</if>
+<if test="typeIndex != null">type_index=#{typeIndex},</if>
+<if test="orderNum != null">ORDER_NUM=#{orderNum},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findAssetDDictory" resultType="cc.mrbird.febs.asset.entity.AssetDDictory" parameterType="cc.mrbird.febs.asset.entity.AssetDDictory">
+        select  *  from asset_d_dictory
+        where  1=1
+            <if test="assetDDictory.id != null and assetDDictory.id != ''"> and  asset_d_dictory.id =#{ assetDDictory.id} </if>
+            <if test="assetDDictory.parentId != null and assetDDictory.parentId != ''"> and  asset_d_dictory.PARENT_ID like concat('%', #{ assetDDictory.parentId} ,'%')</if>
+            <if test="assetDDictory.name != null and assetDDictory.name != ''"> and  asset_d_dictory.NAME like concat('%', #{ assetDDictory.name} ,'%')</if>
+        <if test="assetDDictory.typeIndex != null"> and  asset_d_dictory.type_index =#{ assetDDictory.typeIndex} </if>
+        <if test="assetDDictory.createTimeFrom!= null">
+            AND asset_d_dictory.CREATE_TIME <![CDATA[ >= ]]>  #{assetDDictory.createTimeFrom}
+        </if>
+        <if test="assetDDictory.createTimeTo!= null">
+            AND  asset_d_dictory.CREATE_TIME <![CDATA[ <= ]]>  #{assetDDictory.createTimeTo}
+        </if>
+        <if test="assetDDictory.modifyTimeFrom!= null">
+            AND asset_d_dictory.MODIFY_TIME <![CDATA[ >= ]]>  #{assetDDictory.modifyTimeFrom}
+        </if>
+        <if test="assetDDictory.modifyTimeTo!= null">
+            AND  asset_d_dictory.MODIFY_TIME <![CDATA[ <= ]]>  #{assetDDictory.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

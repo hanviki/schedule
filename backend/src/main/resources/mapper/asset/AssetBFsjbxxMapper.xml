@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.asset.dao.AssetBFsjbxxMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.asset.entity.AssetBFsjbxx">
+                    <id column="id" property="id"/>
+                    <result column="base_id" property="baseId"/>
+                    <result column="create_date" property="createDate"/>
+                    <result column="lb" property="lb"/>
+                    <result column="hsmc" property="hsmc"/>
+                    <result column="meishu" property="meishu"/>
+                    <result column="zhd" property="zhd"/>
+                    <result column="state" property="state"/>
+                    <result column="note" property="note"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, base_id, create_date, lb, hsmc, meishu, zhd, state, note, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateAssetBFsjbxx" parameterType="cc.mrbird.febs.asset.entity.AssetBFsjbxx">
+        update asset_b_fsjbxx
+        <trim prefix="set" suffixOverrides=",">
+<if test="baseId != null">base_id=#{baseId},</if>
+<if test="createDate != null">create_date=#{createDate},</if>
+<if test="lb != null">lb=#{lb},</if>
+<if test="hsmc != null">hsmc=#{hsmc},</if>
+<if test="meishu != null">meishu=#{meishu},</if>
+<if test="zhd != null">zhd=#{zhd},</if>
+<if test="state != null">state=#{state},</if>
+<if test="note != null">note=#{note},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findAssetBFsjbxx" resultType="cc.mrbird.febs.asset.entity.AssetBFsjbxx" parameterType="cc.mrbird.febs.asset.entity.AssetBFsjbxx">
+        select  *  from asset_b_fsjbxx
+        where  1=1
+            <if test="assetBFsjbxx.id != null and assetBFsjbxx.id != ''"> and  asset_b_fsjbxx.id =#{ assetBFsjbxx.id} </if>
+        <if test="assetBFsjbxx.createDateFrom!= null">
+            AND asset_b_fsjbxx.create_date <![CDATA[ >= ]]>  #{assetBFsjbxx.createDateFrom}
+        </if>
+        <if test="assetBFsjbxx.createDateTo!= null">
+            AND  asset_b_fsjbxx.create_date <![CDATA[ <= ]]>  #{assetBFsjbxx.createDateTo}
+        </if>
+            <if test="assetBFsjbxx.lb != null and assetBFsjbxx.lb != ''"> and  asset_b_fsjbxx.lb like concat('%', #{ assetBFsjbxx.lb} ,'%')</if>
+            <if test="assetBFsjbxx.hsmc != null and assetBFsjbxx.hsmc != ''"> and  asset_b_fsjbxx.hsmc like concat('%', #{ assetBFsjbxx.hsmc} ,'%')</if>
+            <if test="assetBFsjbxx.meishu != null and assetBFsjbxx.meishu != ''"> and  asset_b_fsjbxx.meishu like concat('%', #{ assetBFsjbxx.meishu} ,'%')</if>
+            <if test="assetBFsjbxx.zhd != null and assetBFsjbxx.zhd != ''"> and  asset_b_fsjbxx.zhd like concat('%', #{ assetBFsjbxx.zhd} ,'%')</if>
+        <if test="assetBFsjbxx.state != null"> and  asset_b_fsjbxx.state =#{ assetBFsjbxx.state} </if>
+            <if test="assetBFsjbxx.note != null and assetBFsjbxx.note != ''"> and  asset_b_fsjbxx.note like concat('%', #{ assetBFsjbxx.note} ,'%')</if>
+        <if test="assetBFsjbxx.isDeletemark != null"> and  asset_b_fsjbxx.IS_DELETEMARK =#{ assetBFsjbxx.isDeletemark} </if>
+        <if test="assetBFsjbxx.createTimeFrom!= null">
+            AND asset_b_fsjbxx.CREATE_TIME <![CDATA[ >= ]]>  #{assetBFsjbxx.createTimeFrom}
+        </if>
+        <if test="assetBFsjbxx.createTimeTo!= null">
+            AND  asset_b_fsjbxx.CREATE_TIME <![CDATA[ <= ]]>  #{assetBFsjbxx.createTimeTo}
+        </if>
+        <if test="assetBFsjbxx.displayIndex != null"> and  asset_b_fsjbxx.display_index =#{ assetBFsjbxx.displayIndex} </if>
+        <if test="assetBFsjbxx.modifyTimeFrom!= null">
+            AND asset_b_fsjbxx.MODIFY_TIME <![CDATA[ >= ]]>  #{assetBFsjbxx.modifyTimeFrom}
+        </if>
+        <if test="assetBFsjbxx.modifyTimeTo!= null">
+            AND  asset_b_fsjbxx.MODIFY_TIME <![CDATA[ <= ]]>  #{assetBFsjbxx.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

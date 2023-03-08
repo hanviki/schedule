@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBSocialMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBSocial">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="lingyu" property="lingyu"/>
+                    <result column="work_unit" property="workUnit"/>
+                    <result column="zw" property="zw"/>
+            <result column="telphone" property="telphone"/>
+                    <result column="job" property="job"/>
+                    <result column="tjbm" property="tjbm"/>
+                    <result column="start_date" property="startDate"/>
+                    <result column="end_date" property="endDate"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new,telphone, file_id, file_url, lingyu, work_unit, zw, job, tjbm, start_date, end_date, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBSocial" parameterType="cc.mrbird.febs.xf.entity.XfBSocial">
+        update xf_b_social
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="lingyu != null">lingyu=#{lingyu},</if>
+<if test="workUnit != null">work_unit=#{workUnit},</if>
+<if test="zw != null">zw=#{zw},</if>
+            <if test="telphone != null">telphone=#{telphone},</if>
+<if test="job != null">job=#{job},</if>
+<if test="tjbm != null">tjbm=#{tjbm},</if>
+<if test="startDate != null">start_date=#{startDate},</if>
+<if test="endDate != null">end_date=#{endDate},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBSocial" resultType="cc.mrbird.febs.xf.entity.XfBSocial" parameterType="cc.mrbird.febs.xf.entity.XfBSocial">
+        select  *  from xf_b_social
+        where  1=1
+            <if test="xfBSocial.userAccountName != null and xfBSocial.userAccountName != ''"> and  xf_b_social.user_account_name like concat('%', #{ xfBSocial.userAccountName} ,'%')</if>
+            <if test="xfBSocial.userAccount != null and xfBSocial.userAccount != ''"> and  xf_b_social.user_account like concat('%', #{ xfBSocial.userAccount} ,'%')</if>
+            <if test="xfBSocial.deptNew != null and xfBSocial.deptNew != ''"> and  xf_b_social.dept_new like concat('%', #{ xfBSocial.deptNew} ,'%')</if>
+            <if test="xfBSocial.fileId != null and xfBSocial.fileId != ''"> and  xf_b_social.file_id like concat('%', #{ xfBSocial.fileId} ,'%')</if>
+            <if test="xfBSocial.fileUrl != null and xfBSocial.fileUrl != ''"> and  xf_b_social.file_url like concat('%', #{ xfBSocial.fileUrl} ,'%')</if>
+            <if test="xfBSocial.lingyu != null and xfBSocial.lingyu != ''"> and  xf_b_social.lingyu like concat('%', #{ xfBSocial.lingyu} ,'%')</if>
+            <if test="xfBSocial.workUnit != null and xfBSocial.workUnit != ''"> and  xf_b_social.work_unit like concat('%', #{ xfBSocial.workUnit} ,'%')</if>
+            <if test="xfBSocial.zw != null and xfBSocial.zw != ''"> and  xf_b_social.zw like concat('%', #{ xfBSocial.zw} ,'%')</if>
+            <if test="xfBSocial.job != null and xfBSocial.job != ''"> and  xf_b_social.job like concat('%', #{ xfBSocial.job} ,'%')</if>
+            <if test="xfBSocial.tjbm != null and xfBSocial.tjbm != ''"> and  xf_b_social.tjbm like concat('%', #{ xfBSocial.tjbm} ,'%')</if>
+        <if test="xfBSocial.startDateFrom!= null">
+            AND xf_b_social.start_date <![CDATA[ >= ]]>  #{xfBSocial.startDateFrom}
+        </if>
+        <if test="xfBSocial.startDateTo!= null">
+            AND  xf_b_social.start_date <![CDATA[ <= ]]>  #{xfBSocial.startDateTo}
+        </if>
+        <if test="xfBSocial.endDateFrom!= null">
+            AND xf_b_social.end_date <![CDATA[ >= ]]>  #{xfBSocial.endDateFrom}
+        </if>
+        <if test="xfBSocial.endDateTo!= null">
+            AND  xf_b_social.end_date <![CDATA[ <= ]]>  #{xfBSocial.endDateTo}
+        </if>
+            <if test="xfBSocial.remark != null and xfBSocial.remark != ''"> and  xf_b_social.remark like concat('%', #{ xfBSocial.remark} ,'%')</if>
+        <if test="xfBSocial.state != null"> and  xf_b_social.state =#{ xfBSocial.state} </if>
+        <if test="xfBSocial.isDeletemark != null"> and  xf_b_social.IS_DELETEMARK =#{ xfBSocial.isDeletemark} </if>
+        <if test="xfBSocial.createTimeFrom!= null">
+            AND xf_b_social.CREATE_TIME <![CDATA[ >= ]]>  #{xfBSocial.createTimeFrom}
+        </if>
+        <if test="xfBSocial.createTimeTo!= null">
+            AND  xf_b_social.CREATE_TIME <![CDATA[ <= ]]>  #{xfBSocial.createTimeTo}
+        </if>
+        <if test="xfBSocial.modifyTimeFrom!= null">
+            AND xf_b_social.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBSocial.modifyTimeFrom}
+        </if>
+        <if test="xfBSocial.modifyTimeTo!= null">
+            AND  xf_b_social.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBSocial.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

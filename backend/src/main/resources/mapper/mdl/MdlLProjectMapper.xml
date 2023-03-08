@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.mdl.dao.MdlLProjectMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.mdl.entity.MdlLProject">
+                    <id column="id" property="id"/>
+                    <result column="base_id" property="baseId"/>
+                    <result column="lab_code" property="labCode"/>
+                    <result column="lab_name" property="labName"/>
+                    <result column="code" property="code"/>
+                    <result column="name" property="name"/>
+                    <result column="detail_name" property="detailName"/>
+                    <result column="fanwei" property="fanwei"/>
+                    <result column="detail_code" property="detailCode"/>
+                    <result column="price_code" property="priceCode"/>
+                    <result column="amount" property="amount"/>
+                    <result column="is_lis" property="isLis"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, base_id, lab_code, lab_name, code, name, detail_name, fanwei, detail_code, price_code, amount, is_lis, file_id, file_url, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateMdlLProject" parameterType="cc.mrbird.febs.mdl.entity.MdlLProject">
+        update mdl_l_project
+        <trim prefix="set" suffixOverrides=",">
+<if test="baseId != null">base_id=#{baseId},</if>
+<if test="labCode != null">lab_code=#{labCode},</if>
+<if test="labName != null">lab_name=#{labName},</if>
+<if test="code != null">code=#{code},</if>
+<if test="name != null">name=#{name},</if>
+<if test="detailName != null">detail_name=#{detailName},</if>
+<if test="fanwei != null">fanwei=#{fanwei},</if>
+<if test="detailCode != null">detail_code=#{detailCode},</if>
+<if test="priceCode != null">price_code=#{priceCode},</if>
+<if test="amount != null">amount=#{amount},</if>
+<if test="isLis != null">is_lis=#{isLis},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findMdlLProject" resultType="cc.mrbird.febs.mdl.entity.MdlLProject" parameterType="cc.mrbird.febs.mdl.entity.MdlLProject">
+        select  *  from mdl_l_project
+        where  1=1
+            <if test="mdlLProject.id != null and mdlLProject.id != ''"> and  mdl_l_project.id =#{ mdlLProject.id} </if>
+            <if test="mdlLProject.baseId != null and mdlLProject.baseId != ''"> and  mdl_l_project.base_id like concat('%', #{ mdlLProject.baseId} ,'%')</if>
+            <if test="mdlLProject.labCode != null and mdlLProject.labCode != ''"> and  mdl_l_project.lab_code like concat('%', #{ mdlLProject.labCode} ,'%')</if>
+            <if test="mdlLProject.labName != null and mdlLProject.labName != ''"> and  mdl_l_project.lab_name like concat('%', #{ mdlLProject.labName} ,'%')</if>
+            <if test="mdlLProject.code != null and mdlLProject.code != ''"> and  mdl_l_project.code like concat('%', #{ mdlLProject.code} ,'%')</if>
+            <if test="mdlLProject.name != null and mdlLProject.name != ''"> and  mdl_l_project.name like concat('%', #{ mdlLProject.name} ,'%')</if>
+            <if test="mdlLProject.detailName != null and mdlLProject.detailName != ''"> and  mdl_l_project.detail_name like concat('%', #{ mdlLProject.detailName} ,'%')</if>
+            <if test="mdlLProject.fanwei != null and mdlLProject.fanwei != ''"> and  mdl_l_project.fanwei like concat('%', #{ mdlLProject.fanwei} ,'%')</if>
+            <if test="mdlLProject.detailCode != null and mdlLProject.detailCode != ''"> and  mdl_l_project.detail_code like concat('%', #{ mdlLProject.detailCode} ,'%')</if>
+            <if test="mdlLProject.priceCode != null and mdlLProject.priceCode != ''"> and  mdl_l_project.price_code like concat('%', #{ mdlLProject.priceCode} ,'%')</if>
+            <if test="mdlLProject.isLis != null and mdlLProject.isLis != ''"> and  mdl_l_project.is_lis like concat('%', #{ mdlLProject.isLis} ,'%')</if>
+            <if test="mdlLProject.fileId != null and mdlLProject.fileId != ''"> and  mdl_l_project.file_id like concat('%', #{ mdlLProject.fileId} ,'%')</if>
+            <if test="mdlLProject.fileUrl != null and mdlLProject.fileUrl != ''"> and  mdl_l_project.file_url like concat('%', #{ mdlLProject.fileUrl} ,'%')</if>
+        <if test="mdlLProject.state != null"> and  mdl_l_project.state =#{ mdlLProject.state} </if>
+        <if test="mdlLProject.isDeletemark != null"> and  mdl_l_project.IS_DELETEMARK =#{ mdlLProject.isDeletemark} </if>
+        <if test="mdlLProject.createTimeFrom!= null">
+            AND mdl_l_project.CREATE_TIME <![CDATA[ >= ]]>  #{mdlLProject.createTimeFrom}
+        </if>
+        <if test="mdlLProject.createTimeTo!= null">
+            AND  mdl_l_project.CREATE_TIME <![CDATA[ <= ]]>  #{mdlLProject.createTimeTo}
+        </if>
+        <if test="mdlLProject.modifyTimeFrom!= null">
+            AND mdl_l_project.MODIFY_TIME <![CDATA[ >= ]]>  #{mdlLProject.modifyTimeFrom}
+        </if>
+        <if test="mdlLProject.modifyTimeTo!= null">
+            AND  mdl_l_project.MODIFY_TIME <![CDATA[ <= ]]>  #{mdlLProject.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

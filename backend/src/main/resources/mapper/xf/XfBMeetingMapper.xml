@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBMeetingMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBMeeting">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="content" property="content"/>
+                    <result column="summary" property="summary"/>
+                    <result column="brife" property="brife"/>
+                    <result column="join_person" property="joinPerson"/>
+                    <result column="me_date" property="meDate"/>
+                    <result column="send_date" property="sendDate"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="file_id2" property="fileId2"/>
+                    <result column="file_url2" property="fileUrl2"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new, content, summary, brife, join_person, me_date, send_date, file_id, file_url, file_id2, file_url2, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBMeeting" parameterType="cc.mrbird.febs.xf.entity.XfBMeeting">
+        update xf_b_meeting
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="content != null">content=#{content},</if>
+<if test="summary != null">summary=#{summary},</if>
+<if test="brife != null">brife=#{brife},</if>
+<if test="joinPerson != null">join_person=#{joinPerson},</if>
+<if test="meDate != null">me_date=#{meDate},</if>
+<if test="sendDate != null">send_date=#{sendDate},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="fileId2 != null">file_id2=#{fileId2},</if>
+<if test="fileUrl2 != null">file_url2=#{fileUrl2},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBMeeting" resultType="cc.mrbird.febs.xf.entity.XfBMeeting" parameterType="cc.mrbird.febs.xf.entity.XfBMeeting">
+        select  *  from xf_b_meeting
+        where  1=1
+            <if test="xfBMeeting.userAccountName != null and xfBMeeting.userAccountName != ''"> and  xf_b_meeting.user_account_name like concat('%', #{ xfBMeeting.userAccountName} ,'%')</if>
+            <if test="xfBMeeting.userAccount != null and xfBMeeting.userAccount != ''"> and  xf_b_meeting.user_account like concat('%', #{ xfBMeeting.userAccount} ,'%')</if>
+            <if test="xfBMeeting.deptNew != null and xfBMeeting.deptNew != ''"> and  xf_b_meeting.dept_new like concat('%', #{ xfBMeeting.deptNew} ,'%')</if>
+            <if test="xfBMeeting.content != null and xfBMeeting.content != ''"> and  xf_b_meeting.content like concat('%', #{ xfBMeeting.content} ,'%')</if>
+            <if test="xfBMeeting.summary != null and xfBMeeting.summary != ''"> and  xf_b_meeting.summary like concat('%', #{ xfBMeeting.summary} ,'%')</if>
+            <if test="xfBMeeting.brife != null and xfBMeeting.brife != ''"> and  xf_b_meeting.brife like concat('%', #{ xfBMeeting.brife} ,'%')</if>
+            <if test="xfBMeeting.joinPerson != null and xfBMeeting.joinPerson != ''"> and  xf_b_meeting.join_person like concat('%', #{ xfBMeeting.joinPerson} ,'%')</if>
+        <if test="xfBMeeting.meDateFrom!= null">
+            AND xf_b_meeting.me_date <![CDATA[ >= ]]>  #{xfBMeeting.meDateFrom}
+        </if>
+        <if test="xfBMeeting.meDateTo!= null">
+            AND  xf_b_meeting.me_date <![CDATA[ <= ]]>  #{xfBMeeting.meDateTo}
+        </if>
+        <if test="xfBMeeting.sendDateFrom!= null">
+            AND xf_b_meeting.send_date <![CDATA[ >= ]]>  #{xfBMeeting.sendDateFrom}
+        </if>
+        <if test="xfBMeeting.sendDateTo!= null">
+            AND  xf_b_meeting.send_date <![CDATA[ <= ]]>  #{xfBMeeting.sendDateTo}
+        </if>
+            <if test="xfBMeeting.fileId != null and xfBMeeting.fileId != ''"> and  xf_b_meeting.file_id like concat('%', #{ xfBMeeting.fileId} ,'%')</if>
+            <if test="xfBMeeting.fileUrl != null and xfBMeeting.fileUrl != ''"> and  xf_b_meeting.file_url like concat('%', #{ xfBMeeting.fileUrl} ,'%')</if>
+            <if test="xfBMeeting.fileId2 != null and xfBMeeting.fileId2 != ''"> and  xf_b_meeting.file_id2 like concat('%', #{ xfBMeeting.fileId2} ,'%')</if>
+            <if test="xfBMeeting.fileUrl2 != null and xfBMeeting.fileUrl2 != ''"> and  xf_b_meeting.file_url2 like concat('%', #{ xfBMeeting.fileUrl2} ,'%')</if>
+            <if test="xfBMeeting.remark != null and xfBMeeting.remark != ''"> and  xf_b_meeting.remark like concat('%', #{ xfBMeeting.remark} ,'%')</if>
+        <if test="xfBMeeting.state != null"> and  xf_b_meeting.state =#{ xfBMeeting.state} </if>
+        <if test="xfBMeeting.isDeletemark != null"> and  xf_b_meeting.IS_DELETEMARK =#{ xfBMeeting.isDeletemark} </if>
+        <if test="xfBMeeting.createTimeFrom!= null">
+            AND xf_b_meeting.CREATE_TIME <![CDATA[ >= ]]>  #{xfBMeeting.createTimeFrom}
+        </if>
+        <if test="xfBMeeting.createTimeTo!= null">
+            AND  xf_b_meeting.CREATE_TIME <![CDATA[ <= ]]>  #{xfBMeeting.createTimeTo}
+        </if>
+        <if test="xfBMeeting.modifyTimeFrom!= null">
+            AND xf_b_meeting.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBMeeting.modifyTimeFrom}
+        </if>
+        <if test="xfBMeeting.modifyTimeTo!= null">
+            AND  xf_b_meeting.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBMeeting.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.fs.dao.FsBQyMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.fs.entity.FsBQy">
+                    <id column="id" property="id"/>
+            <result column="number" property="number"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="year" property="year"/>
+                    <result column="quarter" property="quarter"/>
+                    <result column="sex_name" property="sexName"/>
+                    <result column="job_type" property="jobType"/>
+                    <result column="start_date" property="startDate"/>
+                    <result column="days" property="days"/>
+                    <result column="qy_out" property="qyOut"/>
+                    <result column="qy_in" property="qyIn"/>
+                    <result column="qy_no" property="qyNo"/>
+                    <result column="is_big" property="isBig"/>
+                    <result column="is_pb" property="isPb"/>
+                    <result column="toal" property="toal"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account,number, year, quarter, sex_name, job_type, start_date, days, qy_out, qy_in, qy_no, is_big, is_pb, toal, file_id, file_url, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateFsBQy" parameterType="cc.mrbird.febs.fs.entity.FsBQy">
+        update fs_b_qy
+        <trim prefix="set" suffixOverrides=",">
+            <if test="number != null">number=#{number},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="year != null">year=#{year},</if>
+<if test="quarter != null">quarter=#{quarter},</if>
+<if test="sexName != null">sex_name=#{sexName},</if>
+<if test="jobType != null">job_type=#{jobType},</if>
+<if test="startDate != null">start_date=#{startDate},</if>
+<if test="days != null">days=#{days},</if>
+<if test="qyOut != null">qy_out=#{qyOut},</if>
+<if test="qyIn != null">qy_in=#{qyIn},</if>
+<if test="qyNo != null">qy_no=#{qyNo},</if>
+<if test="isBig != null">is_big=#{isBig},</if>
+<if test="isPb != null">is_pb=#{isPb},</if>
+<if test="toal != null">toal=#{toal},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findFsBQy" resultType="cc.mrbird.febs.fs.entity.FsBQy" parameterType="cc.mrbird.febs.fs.entity.FsBQy">
+        SELECT
+        fs_b_qy.id,
+        fs_b_qy.number,
+        fs_b_qy.`year`,
+        fs_b_qy.`quarter`,
+        fs_b_qy.sex_name,
+        fs_b_qy.job_type,
+        fs_b_qy.start_date,
+        fs_b_qy.days,
+        fs_b_qy.qy_out,
+        fs_b_qy.qy_in,
+        fs_b_qy.qy_no,
+        fs_b_qy.is_big,
+        fs_b_qy.is_pb,
+        fs_b_qy.toal,
+        fs_b_qy.file_id,
+        fs_b_qy.file_url,
+        fs_b_qy.state,
+        fs_b_qy.IS_DELETEMARK,
+        fs_b_qy.CREATE_TIME,
+        fs_b_qy.display_index,
+        fs_b_qy.MODIFY_TIME,
+        fs_b_qy.CREATE_USER_ID,
+        fs_b_qy.MODIFY_USER_ID,
+        fs_b_user.user_account_name,
+        fs_b_user.user_account
+        FROM
+        fs_b_user inner join
+        fs_b_qy on fs_b_qy.number= fs_b_user.grjlbh
+        where  1=1
+        <if test="fsBQy.yuanqu != null">and fs_b_user.yuanqu =#{fsBQy.yuanqu}</if>
+            <if test="fsBQy.id != null and fsBQy.id != ''"> and  fs_b_qy.id =#{ fsBQy.id} </if>
+            <if test="fsBQy.userAccountName != null and fsBQy.userAccountName != ''"> and  fs_b_qy.user_account_name like concat('%', #{ fsBQy.userAccountName} ,'%')</if>
+            <if test="fsBQy.userAccount != null and fsBQy.userAccount != ''"> and  (fs_b_user.user_account  =#{ fsBQy.userAccount} or fs_b_user.user_account_name like concat('%', #{ fsBQy.userAccount} ,'%')) </if>
+            <if test="fsBQy.year != null and fsBQy.year != ''"> and  fs_b_qy.year =#{ fsBQy.year} </if>
+        <if test="fsBQy.number != null and fsBQy.number != ''"> and  fs_b_qy.number =#{ fsBQy.number} </if>
+            <if test="fsBQy.quarter != null and fsBQy.quarter != ''"> and  fs_b_qy.quarter =#{ fsBQy.quarter} </if>
+            <if test="fsBQy.sexName != null and fsBQy.sexName != ''"> and  fs_b_qy.sex_name like concat('%', #{ fsBQy.sexName} ,'%')</if>
+            <if test="fsBQy.jobType != null and fsBQy.jobType != ''"> and  fs_b_qy.job_type like concat('%', #{ fsBQy.jobType} ,'%')</if>
+        <if test="fsBQy.startDateFrom!= null">
+            AND fs_b_qy.start_date <![CDATA[ >= ]]>  #{fsBQy.startDateFrom}
+        </if>
+        <if test="fsBQy.startDateTo!= null">
+            AND  fs_b_qy.start_date <![CDATA[ <= ]]>  #{fsBQy.startDateTo}
+        </if>
+        <if test="fsBQy.days != null"> and  fs_b_qy.days =#{ fsBQy.days} </if>
+            <if test="fsBQy.isBig != null and fsBQy.isBig != ''"> and  fs_b_qy.is_big like concat('%', #{ fsBQy.isBig} ,'%')</if>
+            <if test="fsBQy.isPb != null and fsBQy.isPb != ''"> and  fs_b_qy.is_pb like concat('%', #{ fsBQy.isPb} ,'%')</if>
+            <if test="fsBQy.fileId != null and fsBQy.fileId != ''"> and  fs_b_qy.file_id like concat('%', #{ fsBQy.fileId} ,'%')</if>
+            <if test="fsBQy.fileUrl != null and fsBQy.fileUrl != ''"> and  fs_b_qy.file_url like concat('%', #{ fsBQy.fileUrl} ,'%')</if>
+        <if test="fsBQy.state != null"> and  fs_b_qy.state =#{ fsBQy.state} </if>
+        <if test="fsBQy.isDeletemark != null"> and  fs_b_qy.IS_DELETEMARK =#{ fsBQy.isDeletemark} </if>
+        <if test="fsBQy.createTimeFrom!= null">
+            AND fs_b_qy.CREATE_TIME <![CDATA[ >= ]]>  #{fsBQy.createTimeFrom}
+        </if>
+        <if test="fsBQy.createTimeTo!= null">
+            AND  fs_b_qy.CREATE_TIME <![CDATA[ <= ]]>  #{fsBQy.createTimeTo}
+        </if>
+        <if test="fsBQy.displayIndex != null"> and  fs_b_qy.display_index =#{ fsBQy.displayIndex} </if>
+        <if test="fsBQy.modifyTimeFrom!= null">
+            AND fs_b_qy.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBQy.modifyTimeFrom}
+        </if>
+        <if test="fsBQy.modifyTimeTo!= null">
+            AND  fs_b_qy.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBQy.modifyTimeTo}
+        </if>
+        <if test="fsBQy.deptId != null"> and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{fsBQy.deptId} or parent_id =#{fsBQy.deptId}) </if>
+</select>
+<select id="report" resultType="cc.mrbird.febs.fs.entity.FsBQyReport" parameterType="cc.mrbird.febs.fs.entity.FsBQy">
+
+select *  from (
+    SELECT
+    fs_b_user.user_account,
+    fs_b_user.user_account_name,
+-- fs_b_qy.sex_name,
+fs_b_qy.number,
+sum(
+    CASE
+    WHEN  fs_b_qy.qy_no is NOT NULL THEN
+	fs_b_qy.qy_no ELSE
+CASE
+	fs_b_qy.is_pb
+	WHEN '是' THEN
+	(0.79 * fs_b_qy.qy_in) +( 0.051 * fs_b_qy.qy_out) WHEN '否' THEN (0.84 * fs_b_qy.qy_in) + (0.1 * fs_b_qy.qy_out) ELSE 0
+END
+END
+	) AS toal
+FROM
+	fs_b_qy
+	INNER JOIN fs_b_user ON fs_b_qy.number= fs_b_user.grjlbh
+	where 1=1
+    <if test="fsBQy.yuanqu != null">and fs_b_user.yuanqu =#{fsBQy.yuanqu}</if>
+    <if test="fsBQy.id != null and fsBQy.id != ''"> and  fs_b_qy.id =#{ fsBQy.id} </if>
+    <if test="fsBQy.userAccountName != null and fsBQy.userAccountName != ''"> and  fs_b_user.user_account_name like concat('%', #{ fsBQy.userAccountName} ,'%')</if>
+    <if test="fsBQy.userAccount != null and fsBQy.userAccount != ''"> and  (fs_b_user.user_account= #{ fsBQy.userAccount} or fs_b_user.user_account_name like concat('%', #{ fsBQy.userAccount} ,'%'))</if>
+    <if test="fsBQy.year != null and fsBQy.year != ''"> and  concat(fs_b_qy.year,'-',fs_b_qy.quarter) <![CDATA[ >= ]]>   #{ fsBQy.year} </if>
+    <if test="fsBQy.quarter != null and fsBQy.quarter != ''"> and  concat(fs_b_qy.year,'-',fs_b_qy.quarter) <![CDATA[ <= ]]>  #{ fsBQy.quarter}</if>
+    <if test="fsBQy.sexName != null and fsBQy.sexName != ''"> and  fs_b_qy.sex_name like concat('%', #{ fsBQy.sexName} ,'%')</if>
+    <if test="fsBQy.jobType != null and fsBQy.jobType != ''"> and  fs_b_qy.job_type like concat('%', #{ fsBQy.jobType} ,'%')</if>
+    <if test="fsBQy.number != null and fsBQy.number != ''"> and  fs_b_user.grjlbh =#{fsBQy.number}</if>
+    <if test="fsBQy.startDateFrom!= null">
+        AND fs_b_qy.start_date <![CDATA[ >= ]]>  #{fsBQy.startDateFrom}
+    </if>
+    <if test="fsBQy.startDateTo!= null">
+        AND  fs_b_qy.start_date <![CDATA[ <= ]]>  #{fsBQy.startDateTo}
+    </if>
+    <if test="fsBQy.days != null"> and  fs_b_qy.days =#{ fsBQy.days} </if>
+    <if test="fsBQy.isBig != null and fsBQy.isBig != ''"> and  fs_b_qy.is_big like concat('%', #{ fsBQy.isBig} ,'%')</if>
+    <if test="fsBQy.isPb != null and fsBQy.isPb != ''"> and  fs_b_qy.is_pb like concat('%', #{ fsBQy.isPb} ,'%')</if>
+    <if test="fsBQy.fileId != null and fsBQy.fileId != ''"> and  fs_b_qy.file_id like concat('%', #{ fsBQy.fileId} ,'%')</if>
+    <if test="fsBQy.fileUrl != null and fsBQy.fileUrl != ''"> and  fs_b_qy.file_url like concat('%', #{ fsBQy.fileUrl} ,'%')</if>
+
+    <if test="fsBQy.isDeletemark != null"> and  fs_b_qy.IS_DELETEMARK =#{ fsBQy.isDeletemark} </if>
+    <if test="fsBQy.createTimeFrom!= null">
+        AND fs_b_qy.CREATE_TIME <![CDATA[ >= ]]>  #{fsBQy.createTimeFrom}
+    </if>
+    <if test="fsBQy.createTimeTo!= null">
+        AND  fs_b_qy.CREATE_TIME <![CDATA[ <= ]]>  #{fsBQy.createTimeTo}
+    </if>
+    <if test="fsBQy.displayIndex != null"> and  fs_b_qy.display_index =#{ fsBQy.displayIndex} </if>
+    <if test="fsBQy.modifyTimeFrom!= null">
+        AND fs_b_qy.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBQy.modifyTimeFrom}
+    </if>
+    <if test="fsBQy.modifyTimeTo!= null">
+        AND  fs_b_qy.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBQy.modifyTimeTo}
+    </if>
+    <if test="fsBQy.deptId != null"> and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{fsBQy.deptId} or parent_id =#{fsBQy.deptId}) </if>
+GROUP BY
+	fs_b_qy.user_account,
+	fs_b_qy.user_account_name,
+	-- fs_b_qy.sex_name,
+	fs_b_qy.number )p  where 1=1
+    <if test="fsBQy.state != null and fsBQy.state>0"> and  p.toal>5 </if>
+</select>
+</mapper>

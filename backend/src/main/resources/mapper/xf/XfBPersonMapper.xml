@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBPersonMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBPerson">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="exiam_result" property="exiamResult"/>
+                    <result column="archive_id" property="archiveId"/>
+                    <result column="archive_name" property="archiveName"/>
+                    <result column="archive_code" property="archiveCode"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="power_date" property="powerDate"/>
+                    <result column="remark" property="remark"/>
+                    <result column="operation_name" property="operationName"/>
+                    <result column="audit_man" property="auditMan"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new, exiam_result, archive_id, archive_name, archive_code, file_id, file_url, power_date, remark, operation_name, audit_man, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBPerson" parameterType="cc.mrbird.febs.xf.entity.XfBPerson">
+        update xf_b_person
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="exiamResult != null">exiam_result=#{exiamResult},</if>
+<if test="archiveId != null">archive_id=#{archiveId},</if>
+<if test="archiveName != null">archive_name=#{archiveName},</if>
+<if test="archiveCode != null">archive_code=#{archiveCode},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="powerDate != null">power_date=#{powerDate},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="operationName != null">operation_name=#{operationName},</if>
+<if test="auditMan != null">audit_man=#{auditMan},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBPerson" resultType="cc.mrbird.febs.xf.entity.XfBPerson" parameterType="cc.mrbird.febs.xf.entity.XfBPerson">
+        select  *  from xf_b_person
+        where  1=1
+            <if test="xfBPerson.userAccountName != null and xfBPerson.userAccountName != ''"> and  xf_b_person.user_account_name like concat('%', #{ xfBPerson.userAccountName} ,'%')</if>
+            <if test="xfBPerson.userAccount != null and xfBPerson.userAccount != ''"> and  xf_b_person.user_account like concat('%', #{ xfBPerson.userAccount} ,'%')</if>
+            <if test="xfBPerson.deptNew != null and xfBPerson.deptNew != ''"> and  xf_b_person.dept_new like concat('%', #{ xfBPerson.deptNew} ,'%')</if>
+            <if test="xfBPerson.exiamResult != null and xfBPerson.exiamResult != ''"> and  xf_b_person.exiam_result like concat('%', #{ xfBPerson.exiamResult} ,'%')</if>
+            <if test="xfBPerson.archiveName != null and xfBPerson.archiveName != ''"> and  xf_b_person.archive_name like concat('%', #{ xfBPerson.archiveName} ,'%')</if>
+            <if test="xfBPerson.archiveCode != null and xfBPerson.archiveCode != ''"> and  xf_b_person.archive_code like concat('%', #{ xfBPerson.archiveCode} ,'%')</if>
+            <if test="xfBPerson.fileId != null and xfBPerson.fileId != ''"> and  xf_b_person.file_id like concat('%', #{ xfBPerson.fileId} ,'%')</if>
+            <if test="xfBPerson.fileUrl != null and xfBPerson.fileUrl != ''"> and  xf_b_person.file_url like concat('%', #{ xfBPerson.fileUrl} ,'%')</if>
+        <if test="xfBPerson.powerDateFrom!= null">
+            AND xf_b_person.power_date <![CDATA[ >= ]]>  #{xfBPerson.powerDateFrom}
+        </if>
+        <if test="xfBPerson.powerDateTo!= null">
+            AND  xf_b_person.power_date <![CDATA[ <= ]]>  #{xfBPerson.powerDateTo}
+        </if>
+            <if test="xfBPerson.remark != null and xfBPerson.remark != ''"> and  xf_b_person.remark like concat('%', #{ xfBPerson.remark} ,'%')</if>
+            <if test="xfBPerson.operationName != null and xfBPerson.operationName != ''"> and  xf_b_person.operation_name like concat('%', #{ xfBPerson.operationName} ,'%')</if>
+            <if test="xfBPerson.auditMan != null and xfBPerson.auditMan != ''"> and  xf_b_person.audit_man like concat('%', #{ xfBPerson.auditMan} ,'%')</if>
+        <if test="xfBPerson.state != null"> and  xf_b_person.state =#{ xfBPerson.state} </if>
+        <if test="xfBPerson.isDeletemark != null"> and  xf_b_person.IS_DELETEMARK =#{ xfBPerson.isDeletemark} </if>
+        <if test="xfBPerson.createTimeFrom!= null">
+            AND xf_b_person.CREATE_TIME <![CDATA[ >= ]]>  #{xfBPerson.createTimeFrom}
+        </if>
+        <if test="xfBPerson.createTimeTo!= null">
+            AND  xf_b_person.CREATE_TIME <![CDATA[ <= ]]>  #{xfBPerson.createTimeTo}
+        </if>
+        <if test="xfBPerson.modifyTimeFrom!= null">
+            AND xf_b_person.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBPerson.modifyTimeFrom}
+        </if>
+        <if test="xfBPerson.modifyTimeTo!= null">
+            AND  xf_b_person.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBPerson.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

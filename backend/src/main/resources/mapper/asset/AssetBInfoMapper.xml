@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.asset.dao.AssetBInfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.asset.entity.AssetBInfo">
+                    <id column="id" property="id"/>
+                    <result column="asset_name" property="assetName"/>
+                    <result column="asset_weis" property="assetWeis"/>
+                    <result column="asset_huanb" property="assetHuanb"/>
+                    <result column="product_name" property="productName"/>
+                    <result column="asset_xingh" property="assetXingh"/>
+                    <result column="asset_sn" property="assetSn"/>
+                    <result column="asset_ynbm" property="assetYnbm"/>
+                    <result column="asset_state" property="assetState"/>
+                    <result column="asset_date" property="assetDate"/>
+                    <result column="dept_name" property="deptName"/>
+                    <result column="dept_id" property="deptId"/>
+                    <result column="address" property="address"/>
+                    <result column="aq_bh" property="aqBh"/>
+                    <result column="aq_file_url" property="aqFileUrl"/>
+                    <result column="aq_file_id" property="aqFileId"/>
+                    <result column="fs_bh" property="fsBh"/>
+                    <result column="fs_file_url" property="fsFileUrl"/>
+                    <result column="fs_file_id" property="fsFileId"/>
+                    <result column="check_result" property="checkResult"/>
+                    <result column="perform_result" property="performResult"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, asset_name, asset_weis, asset_huanb, product_name, asset_xingh, asset_sn, asset_ynbm, asset_state, asset_date, dept_name, dept_id, address, aq_bh, aq_file_url, aq_file_id, fs_bh, fs_file_url, fs_file_id, check_result, perform_result, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateAssetBInfo" parameterType="cc.mrbird.febs.asset.entity.AssetBInfo">
+        update asset_b_info
+        <trim prefix="set" suffixOverrides=",">
+<if test="assetName != null">asset_name=#{assetName},</if>
+<if test="assetWeis != null">asset_weis=#{assetWeis},</if>
+<if test="assetHuanb != null">asset_huanb=#{assetHuanb},</if>
+<if test="productName != null">product_name=#{productName},</if>
+<if test="assetXingh != null">asset_xingh=#{assetXingh},</if>
+<if test="assetSn != null">asset_sn=#{assetSn},</if>
+<if test="assetYnbm != null">asset_ynbm=#{assetYnbm},</if>
+<if test="assetState != null">asset_state=#{assetState},</if>
+<if test="assetDate != null">asset_date=#{assetDate},</if>
+<if test="deptName != null">dept_name=#{deptName},</if>
+<if test="deptId != null">dept_id=#{deptId},</if>
+<if test="address != null">address=#{address},</if>
+<if test="aqBh != null">aq_bh=#{aqBh},</if>
+<if test="aqFileUrl != null">aq_file_url=#{aqFileUrl},</if>
+<if test="aqFileId != null">aq_file_id=#{aqFileId},</if>
+<if test="fsBh != null">fs_bh=#{fsBh},</if>
+<if test="fsFileUrl != null">fs_file_url=#{fsFileUrl},</if>
+<if test="fsFileId != null">fs_file_id=#{fsFileId},</if>
+<if test="checkResult != null">check_result=#{checkResult},</if>
+<if test="performResult != null">perform_result=#{performResult},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findAssetBInfo" resultType="cc.mrbird.febs.asset.entity.AssetBInfo" parameterType="cc.mrbird.febs.asset.entity.AssetBInfo">
+
+        select
+        asset_b_info.id,
+        asset_b_info.asset_name,
+        asset_b_info.asset_weis,
+        asset_b_info.asset_huanb,
+        asset_b_info.product_name,
+        asset_b_info.asset_xingh,
+        asset_b_info.asset_sn,
+        asset_b_info.asset_ynbm,
+
+        asset_b_info.asset_date,
+        asset_b_info.dept_name,
+        asset_b_info.dept_id,
+        asset_b_info.address,
+        asset_b_info.aq_bh,
+        asset_b_info.aq_file_url,
+        asset_b_info.aq_file_id,
+        asset_b_info.fs_bh,
+        asset_b_info.fs_file_url,
+        asset_b_info.fs_file_id,
+        asset_b_info.remark,
+        asset_b_info.state,
+        asset_b_info.IS_DELETEMARK,
+        asset_b_info.CREATE_TIME,
+        asset_b_info.MODIFY_TIME,
+        asset_b_info.CREATE_USER_ID,
+        asset_b_info.MODIFY_USER_ID,H.asset_state asset_state ,C.check_result check_result,D.check_result perform_result from asset_b_info  left join (
+
+        select b.asset_state,b.base_id  from asset_b_state b inner join (
+        select a.base_id, max(a.operation_date) operation_date  from asset_b_state a where  a.operation_date<![CDATA[ <= ]]>curdate() GROUP BY  a.base_id )p
+        on b.base_id=p.base_id and b.operation_date=p.operation_date   where  b.operation_date<![CDATA[ <= ]]>curdate()) H on asset_b_info.id=H.base_id
+        left join (
+        select b.check_result,b.base_id  from asset_b_check b inner join (
+        select a.base_id, max(a.check_date) check_date  from asset_b_check a where a.check_type='场所检测' and a.check_date<![CDATA[ <= ]]>curdate() GROUP BY  a.base_id )p
+        on b.base_id=p.base_id and b.check_date=p.check_date where b.check_type='场所检测' and b.check_date<![CDATA[ <= ]]>CURDATE()) C on asset_b_info.id=C.base_id
+        left join (
+        select b.check_result,b.base_id  from asset_b_check b inner join (
+        select a.base_id, max(a.check_date) check_date  from asset_b_check a where a.check_type='性能检测' and a.check_date<![CDATA[ <= ]]>CURDATE() GROUP BY  a.base_id )p
+        on b.base_id=p.base_id and b.check_date=p.check_date where b.check_type='性能检测' and b.check_date<![CDATA[ <= ]]>CURDATE() ) D on asset_b_info.id=D.base_id
+        where  1=1
+            <if test="assetBInfo.assetName != null and assetBInfo.assetName != ''"> and  asset_b_info.asset_name like concat('%', #{ assetBInfo.assetName} ,'%')</if>
+            <if test="assetBInfo.assetWeis != null and assetBInfo.assetWeis != ''"> and  asset_b_info.asset_weis like concat('%', #{ assetBInfo.assetWeis} ,'%')</if>
+            <if test="assetBInfo.assetHuanb != null and assetBInfo.assetHuanb != ''"> and  asset_b_info.asset_huanb like concat('%', #{ assetBInfo.assetHuanb} ,'%')</if>
+            <if test="assetBInfo.productName != null and assetBInfo.productName != ''"> and  asset_b_info.product_name like concat('%', #{ assetBInfo.productName} ,'%')</if>
+            <if test="assetBInfo.assetXingh != null and assetBInfo.assetXingh != ''"> and  asset_b_info.asset_xingh like concat('%', #{ assetBInfo.assetXingh} ,'%')</if>
+            <if test="assetBInfo.assetSn != null and assetBInfo.assetSn != ''"> and  asset_b_info.asset_sn like concat('%', #{ assetBInfo.assetSn} ,'%')</if>
+            <if test="assetBInfo.assetYnbm != null and assetBInfo.assetYnbm != ''"> and  asset_b_info.asset_ynbm like concat('%', #{ assetBInfo.assetYnbm} ,'%')</if>
+            <if test="assetBInfo.assetState != null and assetBInfo.assetState != ''">
+               and asset_b_info.id in (
+                select b.base_id  from asset_b_state b inner join (
+                select a.base_id, max(a.operation_date) operation_date  from asset_b_state a where a.asset_state=#{ assetBInfo.assetState} GROUP BY  a.base_id )p
+                on b.base_id=p.base_id and b.operation_date=p.operation_date where b.asset_state=#{ assetBInfo.assetState} and b.operation_date<![CDATA[ <= ]]>curdate()
+                )
+             </if>
+        <if test="assetBInfo.assetDateFrom!= null">
+            AND asset_b_info.asset_date <![CDATA[ >= ]]>  #{assetBInfo.assetDateFrom}
+        </if>
+        <if test="assetBInfo.assetDateTo!= null">
+            AND  asset_b_info.asset_date <![CDATA[ <= ]]>  #{assetBInfo.assetDateTo}
+        </if>
+            <if test="assetBInfo.deptName != null and assetBInfo.deptName != ''"> and  asset_b_info.dept_name like concat('%', #{ assetBInfo.deptName} ,'%')</if>
+            <if test="assetBInfo.deptId != null and assetBInfo.deptId != ''"> and  asset_b_info.dept_id like concat('%', #{ assetBInfo.deptId} ,'%')</if>
+            <if test="assetBInfo.address != null and assetBInfo.address != ''"> and  asset_b_info.address like concat('%', #{ assetBInfo.address} ,'%')</if>
+            <if test="assetBInfo.aqBh != null and assetBInfo.aqBh != ''"> and  asset_b_info.aq_bh like concat('%', #{ assetBInfo.aqBh} ,'%')</if>
+            <if test="assetBInfo.aqFileUrl != null and assetBInfo.aqFileUrl != ''"> and  asset_b_info.aq_file_url like concat('%', #{ assetBInfo.aqFileUrl} ,'%')</if>
+            <if test="assetBInfo.aqFileId != null and assetBInfo.aqFileId != ''"> and  asset_b_info.aq_file_id like concat('%', #{ assetBInfo.aqFileId} ,'%')</if>
+            <if test="assetBInfo.fsBh != null and assetBInfo.fsBh != ''"> and  asset_b_info.fs_bh like concat('%', #{ assetBInfo.fsBh} ,'%')</if>
+            <if test="assetBInfo.fsFileUrl != null and assetBInfo.fsFileUrl != ''"> and  asset_b_info.fs_file_url like concat('%', #{ assetBInfo.fsFileUrl} ,'%')</if>
+            <if test="assetBInfo.fsFileId != null and assetBInfo.fsFileId != ''"> and  asset_b_info.fs_file_id like concat('%', #{ assetBInfo.fsFileId} ,'%')</if>
+            <if test="assetBInfo.checkResult != null and assetBInfo.checkResult != ''"> and  asset_b_info.check_result like concat('%', #{ assetBInfo.checkResult} ,'%')</if>
+            <if test="assetBInfo.performResult != null and assetBInfo.performResult != ''"> and  asset_b_info.perform_result like concat('%', #{ assetBInfo.performResult} ,'%')</if>
+            <if test="assetBInfo.remark != null and assetBInfo.remark != ''"> and  asset_b_info.remark like concat('%', #{ assetBInfo.remark} ,'%')</if>
+        <if test="assetBInfo.state != null"> and  asset_b_info.state =#{ assetBInfo.state} </if>
+        <if test="assetBInfo.isDeletemark != null"> and  asset_b_info.IS_DELETEMARK =#{ assetBInfo.isDeletemark} </if>
+        <if test="assetBInfo.createTimeFrom!= null">
+            AND asset_b_info.CREATE_TIME <![CDATA[ >= ]]>  #{assetBInfo.createTimeFrom}
+        </if>
+        <if test="assetBInfo.createTimeTo!= null">
+            AND  asset_b_info.CREATE_TIME <![CDATA[ <= ]]>  #{assetBInfo.createTimeTo}
+        </if>
+        <if test="assetBInfo.modifyTimeFrom!= null">
+            AND asset_b_info.MODIFY_TIME <![CDATA[ >= ]]>  #{assetBInfo.modifyTimeFrom}
+        </if>
+        <if test="assetBInfo.modifyTimeTo!= null">
+            AND  asset_b_info.MODIFY_TIME <![CDATA[ <= ]]>  #{assetBInfo.modifyTimeTo}
+        </if>
+</select>
+
+    <select id="findAssetBInfoStatistic" resultType="cc.mrbird.febs.asset.entity.ViewAssetBInfo" parameterType="cc.mrbird.febs.asset.entity.ViewAssetBInfo">
+        SELECT
+	asset_b_info.dept_id,
+	asset_b_info.dept_name,
+	asset_b_info.asset_weis,
+	asset_b_info.asset_huanb,
+	asset_b_fanghu.lb,
+	asset_b_fanghu.ypfzfh,
+	sum( asset_b_fanghu.shuliang ) shuliang,
+	sum( asset_b_fanghu.qiandangliang ) qiandangliang
+FROM
+	asset_b_fanghu
+	INNER JOIN asset_b_info ON asset_b_fanghu.base_id = asset_b_info.id
+	where 1=1
+        <if test="assetBInfo.assetWeis != null and assetBInfo.assetWeis != ''"> and  asset_b_info.asset_weis like concat('%', #{ assetBInfo.assetWeis} ,'%')</if>
+        <if test="assetBInfo.assetHuanb != null and assetBInfo.assetHuanb != ''"> and  asset_b_info.asset_huanb like concat('%', #{ assetBInfo.assetHuanb} ,'%')</if>
+        <if test="assetBInfo.deptName != null and assetBInfo.deptName != ''"> and  asset_b_info.dept_name like concat('%', #{ assetBInfo.deptName} ,'%')</if>
+        <if test="assetBInfo.lb != null and assetBInfo.lb != ''"> and  asset_b_fanghu.lb like concat('%', #{ assetBInfo.lb} ,'%')</if>
+        <if test="assetBInfo.ypfzfh != null and assetBInfo.ypfzfh != ''"> and  asset_b_fanghu.ypfzfh like concat('%', #{ assetBInfo.ypfzfh} ,'%')</if>
+
+        GROUP BY
+	asset_b_info.dept_id,
+	asset_b_info.dept_name,
+	asset_b_info.asset_weis,
+	asset_b_info.asset_huanb,
+	asset_b_fanghu.lb,
+	asset_b_fanghu.ypfzfh
+    </select>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.dept.dao.DeptBBookMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.dept.entity.DeptBBook">
+                    <id column="id" property="id"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="book_type" property="bookType"/>
+                    <result column="book_name" property="bookName"/>
+                    <result column="book_no" property="bookNo"/>
+                    <result column="book_date" property="bookDate"/>
+                    <result column="state" property="state"/>
+                    <result column="note" property="note"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account, user_account_name, book_type, book_name, book_no, book_date, state, note, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, file_id, file_url
+    </sql>
+    <update id="updateDeptBBook" parameterType="cc.mrbird.febs.dept.entity.DeptBBook">
+        update dept_b_book
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="bookType != null">book_type=#{bookType},</if>
+<if test="bookName != null">book_name=#{bookName},</if>
+<if test="bookNo != null">book_no=#{bookNo},</if>
+<if test="bookDate != null">book_date=#{bookDate},</if>
+<if test="state != null">state=#{state},</if>
+<if test="note != null">note=#{note},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findDeptBBook" resultType="cc.mrbird.febs.dept.entity.DeptBBook" parameterType="cc.mrbird.febs.dept.entity.DeptBBook">
+        select  *  from dept_b_book
+        where  1=1
+            <if test="deptBBook.id != null and deptBBook.id != ''"> and  dept_b_book.id =#{ deptBBook.id} </if>
+            <if test="deptBBook.userAccount != null and deptBBook.userAccount != ''"> and  dept_b_book.user_account like concat('%', #{ deptBBook.userAccount} ,'%')</if>
+            <if test="deptBBook.userAccountName != null and deptBBook.userAccountName != ''"> and  dept_b_book.user_account_name like concat('%', #{ deptBBook.userAccountName} ,'%')</if>
+            <if test="deptBBook.bookType != null and deptBBook.bookType != ''"> and  dept_b_book.book_type like concat('%', #{ deptBBook.bookType} ,'%')</if>
+            <if test="deptBBook.bookName != null and deptBBook.bookName != ''"> and  dept_b_book.book_name like concat('%', #{ deptBBook.bookName} ,'%')</if>
+            <if test="deptBBook.bookNo != null and deptBBook.bookNo != ''"> and  dept_b_book.book_no like concat('%', #{ deptBBook.bookNo} ,'%')</if>
+        <if test="deptBBook.bookDateFrom!= null">
+            AND dept_b_book.book_date <![CDATA[ >= ]]>  #{deptBBook.bookDateFrom}
+        </if>
+        <if test="deptBBook.bookDateTo!= null">
+            AND  dept_b_book.book_date <![CDATA[ <= ]]>  #{deptBBook.bookDateTo}
+        </if>
+        <if test="deptBBook.state != null"> and  dept_b_book.state =#{ deptBBook.state} </if>
+            <if test="deptBBook.note != null and deptBBook.note != ''"> and  dept_b_book.note like concat('%', #{ deptBBook.note} ,'%')</if>
+        <if test="deptBBook.isDeletemark != null"> and  dept_b_book.IS_DELETEMARK =#{ deptBBook.isDeletemark} </if>
+        <if test="deptBBook.createTimeFrom!= null">
+            AND dept_b_book.CREATE_TIME <![CDATA[ >= ]]>  #{deptBBook.createTimeFrom}
+        </if>
+        <if test="deptBBook.createTimeTo!= null">
+            AND  dept_b_book.CREATE_TIME <![CDATA[ <= ]]>  #{deptBBook.createTimeTo}
+        </if>
+        <if test="deptBBook.displayIndex != null"> and  dept_b_book.display_index =#{ deptBBook.displayIndex} </if>
+        <if test="deptBBook.modifyTimeFrom!= null">
+            AND dept_b_book.MODIFY_TIME <![CDATA[ >= ]]>  #{deptBBook.modifyTimeFrom}
+        </if>
+        <if test="deptBBook.modifyTimeTo!= null">
+            AND  dept_b_book.MODIFY_TIME <![CDATA[ <= ]]>  #{deptBBook.modifyTimeTo}
+        </if>
+            <if test="deptBBook.fileId != null and deptBBook.fileId != ''"> and  dept_b_book.file_id like concat('%', #{ deptBBook.fileId} ,'%')</if>
+            <if test="deptBBook.fileUrl != null and deptBBook.fileUrl != ''"> and  dept_b_book.file_url like concat('%', #{ deptBBook.fileUrl} ,'%')</if>
+</select>
+
+    <select id="findBook" resultType="cc.mrbird.febs.dept.entity.ViewDicType">
+        select a.*,b.filed_name,c.check_date  from dept_b_book a inner join dept_d_dic b on a.book_type=b.book_type  and b.account_name =#{account}
+left join (select user_account,book_type, max(check_date) check_date from  dept_b_book_d GROUP BY user_account,book_type ) c
+on a.user_account=c.user_account and a.book_type= c.book_type
+where   a.user_account in
+        <foreach item="item" index="index" collection="accountList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

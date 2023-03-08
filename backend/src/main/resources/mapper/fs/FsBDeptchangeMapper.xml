@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.fs.dao.FsBDeptchangeMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.fs.entity.FsBDeptchange">
+                    <id column="id" property="id"/>
+                    <result column="user_no" property="userNo"/>
+                    <result column="name" property="name"/>
+                    <result column="user_dept" property="userDept"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="operation_name" property="operationName"/>
+                    <result column="dept_id" property="deptId"/>
+                    <result column="dept_new_id" property="deptNewId"/>
+                    <result column="dept_name" property="deptName"/>
+                    <result column="dept_new_name" property="deptNewName"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_no, name, user_dept, user_account_name, user_account, operation_name, dept_id, dept_new_id, dept_name, dept_new_name, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateFsBDeptchange" parameterType="cc.mrbird.febs.fs.entity.FsBDeptchange">
+        update fs_b_deptchange
+        <trim prefix="set" suffixOverrides=",">
+<if test="userNo != null">user_no=#{userNo},</if>
+<if test="name != null">name=#{name},</if>
+<if test="userDept != null">user_dept=#{userDept},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="operationName != null">operation_name=#{operationName},</if>
+<if test="deptId != null">dept_id=#{deptId},</if>
+<if test="deptNewId != null">dept_new_id=#{deptNewId},</if>
+<if test="deptName != null">dept_name=#{deptName},</if>
+<if test="deptNewName != null">dept_new_name=#{deptNewName},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findFsBDeptchange" resultType="cc.mrbird.febs.fs.entity.FsBDeptchange" parameterType="cc.mrbird.febs.fs.entity.FsBDeptchange">
+        select  *  from fs_b_deptchange
+        where  1=1
+            <if test="fsBDeptchange.id != null and fsBDeptchange.id != ''"> and  fs_b_deptchange.id =#{ fsBDeptchange.id} </if>
+            <if test="fsBDeptchange.userNo != null and fsBDeptchange.userNo != ''"> and  fs_b_deptchange.user_no like concat('%', #{ fsBDeptchange.userNo} ,'%')</if>
+            <if test="fsBDeptchange.name != null and fsBDeptchange.name != ''"> and  fs_b_deptchange.name like concat('%', #{ fsBDeptchange.name} ,'%')</if>
+            <if test="fsBDeptchange.userDept != null and fsBDeptchange.userDept != ''"> and  fs_b_deptchange.user_dept like concat('%', #{ fsBDeptchange.userDept} ,'%')</if>
+            <if test="fsBDeptchange.userAccountName != null and fsBDeptchange.userAccountName != ''"> and  fs_b_deptchange.user_account_name like concat('%', #{ fsBDeptchange.userAccountName} ,'%')</if>
+            <if test="fsBDeptchange.userAccount != null and fsBDeptchange.userAccount != ''"> and  fs_b_deptchange.user_account like concat('%', #{ fsBDeptchange.userAccount} ,'%')</if>
+            <if test="fsBDeptchange.operationName != null and fsBDeptchange.operationName != ''"> and  fs_b_deptchange.operation_name like concat('%', #{ fsBDeptchange.operationName} ,'%')</if>
+            <if test="fsBDeptchange.deptId != null and fsBDeptchange.deptId != ''"> and  fs_b_deptchange.dept_id like concat('%', #{ fsBDeptchange.deptId} ,'%')</if>
+            <if test="fsBDeptchange.deptNewId != null and fsBDeptchange.deptNewId != ''"> and  fs_b_deptchange.dept_new_id like concat('%', #{ fsBDeptchange.deptNewId} ,'%')</if>
+            <if test="fsBDeptchange.deptName != null and fsBDeptchange.deptName != ''"> and  fs_b_deptchange.dept_name like concat('%', #{ fsBDeptchange.deptName} ,'%')</if>
+            <if test="fsBDeptchange.deptNewName != null and fsBDeptchange.deptNewName != ''"> and  fs_b_deptchange.dept_new_name like concat('%', #{ fsBDeptchange.deptNewName} ,'%')</if>
+        <if test="fsBDeptchange.state != null"> and  fs_b_deptchange.state =#{ fsBDeptchange.state} </if>
+        <if test="fsBDeptchange.isDeletemark != null"> and  fs_b_deptchange.IS_DELETEMARK =#{ fsBDeptchange.isDeletemark} </if>
+        <if test="fsBDeptchange.createTimeFrom!= null">
+            AND fs_b_deptchange.CREATE_TIME <![CDATA[ >= ]]>  #{fsBDeptchange.createTimeFrom}
+        </if>
+        <if test="fsBDeptchange.createTimeTo!= null">
+            AND  fs_b_deptchange.CREATE_TIME <![CDATA[ <= ]]>  #{fsBDeptchange.createTimeTo}
+        </if>
+        <if test="fsBDeptchange.displayIndex != null"> and  fs_b_deptchange.display_index =#{ fsBDeptchange.displayIndex} </if>
+        <if test="fsBDeptchange.modifyTimeFrom!= null">
+            AND fs_b_deptchange.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBDeptchange.modifyTimeFrom}
+        </if>
+        <if test="fsBDeptchange.modifyTimeTo!= null">
+            AND  fs_b_deptchange.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBDeptchange.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

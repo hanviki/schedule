@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBProjectreportMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBProjectreport">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="content" property="content"/>
+                    <result column="person" property="person"/>
+                    <result column="poject_date" property="pojectDate"/>
+                    <result column="leader" property="leader"/>
+                    <result column="address" property="address"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, content, person, poject_date, leader, address, file_id, file_url, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBProjectreport" parameterType="cc.mrbird.febs.xf.entity.XfBProjectreport">
+        update xf_b_projectreport
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="content != null">content=#{content},</if>
+<if test="person != null">person=#{person},</if>
+<if test="pojectDate != null">poject_date=#{pojectDate},</if>
+<if test="leader != null">leader=#{leader},</if>
+<if test="address != null">address=#{address},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBProjectreport" resultType="cc.mrbird.febs.xf.entity.XfBProjectreport" parameterType="cc.mrbird.febs.xf.entity.XfBProjectreport">
+        select  *  from xf_b_projectreport
+        where  1=1
+            <if test="xfBProjectreport.userAccountName != null and xfBProjectreport.userAccountName != ''"> and  xf_b_projectreport.user_account_name like concat('%', #{ xfBProjectreport.userAccountName} ,'%')</if>
+            <if test="xfBProjectreport.userAccount != null and xfBProjectreport.userAccount != ''"> and  xf_b_projectreport.user_account like concat('%', #{ xfBProjectreport.userAccount} ,'%')</if>
+            <if test="xfBProjectreport.content != null and xfBProjectreport.content != ''"> and  xf_b_projectreport.content like concat('%', #{ xfBProjectreport.content} ,'%')</if>
+            <if test="xfBProjectreport.person != null and xfBProjectreport.person != ''"> and  xf_b_projectreport.person like concat('%', #{ xfBProjectreport.person} ,'%')</if>
+        <if test="xfBProjectreport.pojectDateFrom!= null">
+            AND xf_b_projectreport.poject_date <![CDATA[ >= ]]>  #{xfBProjectreport.pojectDateFrom}
+        </if>
+        <if test="xfBProjectreport.pojectDateTo!= null">
+            AND  xf_b_projectreport.poject_date <![CDATA[ <= ]]>  #{xfBProjectreport.pojectDateTo}
+        </if>
+            <if test="xfBProjectreport.leader != null and xfBProjectreport.leader != ''"> and  xf_b_projectreport.leader like concat('%', #{ xfBProjectreport.leader} ,'%')</if>
+            <if test="xfBProjectreport.address != null and xfBProjectreport.address != ''"> and  xf_b_projectreport.address like concat('%', #{ xfBProjectreport.address} ,'%')</if>
+            <if test="xfBProjectreport.fileId != null and xfBProjectreport.fileId != ''"> and  xf_b_projectreport.file_id like concat('%', #{ xfBProjectreport.fileId} ,'%')</if>
+            <if test="xfBProjectreport.fileUrl != null and xfBProjectreport.fileUrl != ''"> and  xf_b_projectreport.file_url like concat('%', #{ xfBProjectreport.fileUrl} ,'%')</if>
+            <if test="xfBProjectreport.remark != null and xfBProjectreport.remark != ''"> and  xf_b_projectreport.remark like concat('%', #{ xfBProjectreport.remark} ,'%')</if>
+        <if test="xfBProjectreport.state != null"> and  xf_b_projectreport.state =#{ xfBProjectreport.state} </if>
+        <if test="xfBProjectreport.isDeletemark != null"> and  xf_b_projectreport.IS_DELETEMARK =#{ xfBProjectreport.isDeletemark} </if>
+        <if test="xfBProjectreport.createTimeFrom!= null">
+            AND xf_b_projectreport.CREATE_TIME <![CDATA[ >= ]]>  #{xfBProjectreport.createTimeFrom}
+        </if>
+        <if test="xfBProjectreport.createTimeTo!= null">
+            AND  xf_b_projectreport.CREATE_TIME <![CDATA[ <= ]]>  #{xfBProjectreport.createTimeTo}
+        </if>
+        <if test="xfBProjectreport.modifyTimeFrom!= null">
+            AND xf_b_projectreport.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBProjectreport.modifyTimeFrom}
+        </if>
+        <if test="xfBProjectreport.modifyTimeTo!= null">
+            AND  xf_b_projectreport.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBProjectreport.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

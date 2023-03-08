@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.mdl.dao.MdlLBaseinfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.mdl.entity.MdlLBaseinfo">
+                    <id column="id" property="id"/>
+                    <result column="lab_code" property="labCode"/>
+                    <result column="lab_name" property="labName"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="leader" property="leader"/>
+                    <result column="telphone" property="telphone"/>
+                    <result column="linker" property="linker"/>
+                    <result column="link_tel" property="linkTel"/>
+                    <result column="address" property="address"/>
+                    <result column="lab_zz" property="labZz"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, lab_code, lab_name, dept_new, leader, telphone, linker, link_tel, address, lab_zz, file_id, file_url, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateMdlLBaseinfo" parameterType="cc.mrbird.febs.mdl.entity.MdlLBaseinfo">
+        update mdl_l_baseinfo
+        <trim prefix="set" suffixOverrides=",">
+<if test="labCode != null">lab_code=#{labCode},</if>
+<if test="labName != null">lab_name=#{labName},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="leader != null">leader=#{leader},</if>
+<if test="telphone != null">telphone=#{telphone},</if>
+<if test="linker != null">linker=#{linker},</if>
+<if test="linkTel != null">link_tel=#{linkTel},</if>
+<if test="address != null">address=#{address},</if>
+<if test="labZz != null">lab_zz=#{labZz},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findMdlLBaseinfo" resultType="cc.mrbird.febs.mdl.entity.MdlLBaseinfo" parameterType="cc.mrbird.febs.mdl.entity.MdlLBaseinfo">
+        select  *  from mdl_l_baseinfo
+        where  1=1
+            <if test="mdlLBaseinfo.id != null and mdlLBaseinfo.id != ''"> and  mdl_l_baseinfo.id =#{ mdlLBaseinfo.id} </if>
+            <if test="mdlLBaseinfo.labCode != null and mdlLBaseinfo.labCode != ''"> and  mdl_l_baseinfo.lab_code like concat('%', #{ mdlLBaseinfo.labCode} ,'%')</if>
+            <if test="mdlLBaseinfo.labName != null and mdlLBaseinfo.labName != ''"> and  mdl_l_baseinfo.lab_name like concat('%', #{ mdlLBaseinfo.labName} ,'%')</if>
+            <if test="mdlLBaseinfo.deptNew != null and mdlLBaseinfo.deptNew != ''"> and  mdl_l_baseinfo.dept_new like concat('%', #{ mdlLBaseinfo.deptNew} ,'%')</if>
+            <if test="mdlLBaseinfo.leader != null and mdlLBaseinfo.leader != ''"> and  mdl_l_baseinfo.leader like concat('%', #{ mdlLBaseinfo.leader} ,'%')</if>
+            <if test="mdlLBaseinfo.telphone != null and mdlLBaseinfo.telphone != ''"> and  mdl_l_baseinfo.telphone like concat('%', #{ mdlLBaseinfo.telphone} ,'%')</if>
+            <if test="mdlLBaseinfo.linker != null and mdlLBaseinfo.linker != ''"> and  mdl_l_baseinfo.linker like concat('%', #{ mdlLBaseinfo.linker} ,'%')</if>
+            <if test="mdlLBaseinfo.linkTel != null and mdlLBaseinfo.linkTel != ''"> and  mdl_l_baseinfo.link_tel like concat('%', #{ mdlLBaseinfo.linkTel} ,'%')</if>
+            <if test="mdlLBaseinfo.address != null and mdlLBaseinfo.address != ''"> and  mdl_l_baseinfo.address like concat('%', #{ mdlLBaseinfo.address} ,'%')</if>
+            <if test="mdlLBaseinfo.labZz != null and mdlLBaseinfo.labZz != ''"> and  mdl_l_baseinfo.lab_zz like concat('%', #{ mdlLBaseinfo.labZz} ,'%')</if>
+            <if test="mdlLBaseinfo.fileId != null and mdlLBaseinfo.fileId != ''"> and  mdl_l_baseinfo.file_id like concat('%', #{ mdlLBaseinfo.fileId} ,'%')</if>
+            <if test="mdlLBaseinfo.fileUrl != null and mdlLBaseinfo.fileUrl != ''"> and  mdl_l_baseinfo.file_url like concat('%', #{ mdlLBaseinfo.fileUrl} ,'%')</if>
+        <if test="mdlLBaseinfo.state != null"> and  mdl_l_baseinfo.state =#{ mdlLBaseinfo.state} </if>
+        <if test="mdlLBaseinfo.isDeletemark != null"> and  mdl_l_baseinfo.IS_DELETEMARK =#{ mdlLBaseinfo.isDeletemark} </if>
+        <if test="mdlLBaseinfo.createTimeFrom!= null">
+            AND mdl_l_baseinfo.CREATE_TIME <![CDATA[ >= ]]>  #{mdlLBaseinfo.createTimeFrom}
+        </if>
+        <if test="mdlLBaseinfo.createTimeTo!= null">
+            AND  mdl_l_baseinfo.CREATE_TIME <![CDATA[ <= ]]>  #{mdlLBaseinfo.createTimeTo}
+        </if>
+        <if test="mdlLBaseinfo.modifyTimeFrom!= null">
+            AND mdl_l_baseinfo.MODIFY_TIME <![CDATA[ >= ]]>  #{mdlLBaseinfo.modifyTimeFrom}
+        </if>
+        <if test="mdlLBaseinfo.modifyTimeTo!= null">
+            AND  mdl_l_baseinfo.MODIFY_TIME <![CDATA[ <= ]]>  #{mdlLBaseinfo.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.fs.dao.FsBQuarterDMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.fs.entity.FsBQuarterD">
+                    <id column="id" property="id"/>
+                    <result column="year" property="year"/>
+                    <result column="quarter" property="quarter"/>
+                    <result column="number" property="number"/>
+                    <result column="operation" property="operation"/>
+            <result column="user_no" property="userNo"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, year, quarter, number, operation, user_no,state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateFsBQuarterD" parameterType="cc.mrbird.febs.fs.entity.FsBQuarterD">
+        update fs_b_quarter_d
+        <trim prefix="set" suffixOverrides=",">
+<if test="year != null">year=#{year},</if>
+<if test="quarter != null">quarter=#{quarter},</if>
+<if test="number != null">number=#{number},</if>
+<if test="operation != null">operation=#{operation},</if>
+<if test="state != null">state=#{state},</if>
+            <if test="userNo != null">user_no=#{userNo},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findFsBQuarterD" resultType="cc.mrbird.febs.fs.entity.FsBQuarterD" parameterType="cc.mrbird.febs.fs.entity.FsBQuarterD">
+        select  fs_b_quarter_d.*, fs_b_user.user_account, fs_b_user.user_account_name from fs_b_quarter_d
+        left join fs_b_user on fs_b_quarter_d.number=fs_b_user.grjlbh
+        where  1=1
+            <if test="fsBQuarterD.id != null and fsBQuarterD.id != ''"> and  fs_b_quarter_d.id =#{ fsBQuarterD.id} </if>
+            <if test="fsBQuarterD.year != null and fsBQuarterD.year != ''"> and  fs_b_quarter_d.year like concat('%', #{ fsBQuarterD.year} ,'%')</if>
+        <if test="fsBQuarterD.quarter != null"> and  fs_b_quarter_d.quarter =#{ fsBQuarterD.quarter} </if>
+            <if test="fsBQuarterD.number != null and fsBQuarterD.number != ''"> and  fs_b_quarter_d.number like concat('%', #{ fsBQuarterD.number} ,'%')</if>
+            <if test="fsBQuarterD.operation != null and fsBQuarterD.operation != ''"> and  fs_b_quarter_d.operation like concat('%', #{ fsBQuarterD.operation} ,'%')</if>
+        <if test="fsBQuarterD.state != null"> and  fs_b_quarter_d.state =#{ fsBQuarterD.state} </if>
+        <if test="fsBQuarterD.isDeletemark != null"> and  fs_b_quarter_d.IS_DELETEMARK =#{ fsBQuarterD.isDeletemark} </if>
+        <if test="fsBQuarterD.createTimeFrom!= null">
+            AND fs_b_quarter_d.CREATE_TIME <![CDATA[ >= ]]>  #{fsBQuarterD.createTimeFrom}
+        </if>
+        <if test="fsBQuarterD.createTimeTo!= null">
+            AND  fs_b_quarter_d.CREATE_TIME <![CDATA[ <= ]]>  #{fsBQuarterD.createTimeTo}
+        </if>
+        <if test="fsBQuarterD.displayIndex != null"> and  fs_b_quarter_d.display_index =#{ fsBQuarterD.displayIndex} </if>
+        <if test="fsBQuarterD.modifyTimeFrom!= null">
+            AND fs_b_quarter_d.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBQuarterD.modifyTimeFrom}
+        </if>
+        <if test="fsBQuarterD.modifyTimeTo!= null">
+            AND  fs_b_quarter_d.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBQuarterD.modifyTimeTo}
+        </if>
+</select>
+
+    <select id="findReport" resultType="cc.mrbird.febs.fs.entity.FsBReport" parameterType="cc.mrbird.febs.fs.entity.FsBQuarterD">
+        select  fs_b_user.user_account,fs_b_user.user_account_name,fs_b_quarter.number,count,fs_b_quarter.year,fs_b_quarter.quarter,p.total,fs_b_user.hdjlpgs,fs_b_quarter.note,fs_b_quarter.id,p.ling,p.back  from
+        fs_b_user inner join fs_b_quarter
+        on fs_b_quarter.number= fs_b_user.grjlbh
+        left join
+        (
+        SELECT
+        sum( CASE WHEN operation = '领' THEN - 1 ELSE 1 END ) AS count,
+        sum( CASE WHEN operation = '领' THEN 1 ELSE 0 END ) AS total,
+        sum( CASE WHEN operation = '领' THEN  1 ELSE 0 END ) AS ling,
+        sum( CASE WHEN operation = '还' THEN  1 ELSE 0 END ) AS back,
+        number,
+        quarter,
+        year
+        FROM
+        fs_b_quarter_d
+        where  1=1
+        <if test="fsBQuarterD.id != null and fsBQuarterD.id != ''"> and  fs_b_quarter_d.id =#{ fsBQuarterD.id} </if>
+        <if test="fsBQuarterD.year != null and fsBQuarterD.year != ''"> and  fs_b_quarter_d.year like concat('%', #{ fsBQuarterD.year} ,'%')</if>
+        <if test="fsBQuarterD.quarter != null"> and  fs_b_quarter_d.quarter =#{ fsBQuarterD.quarter} </if>
+        <if test="fsBQuarterD.number != null and fsBQuarterD.number != ''"> and  fs_b_quarter_d.number like concat('%', #{ fsBQuarterD.number} ,'%')</if>
+        <if test="fsBQuarterD.operation != null and fsBQuarterD.operation != ''"> and  fs_b_quarter_d.operation like concat('%', #{ fsBQuarterD.operation} ,'%')</if>
+        <if test="fsBQuarterD.state != null"> and  fs_b_quarter_d.state =#{ fsBQuarterD.state} </if>
+        <if test="fsBQuarterD.isDeletemark != null"> and  fs_b_quarter_d.IS_DELETEMARK =#{ fsBQuarterD.isDeletemark} </if>
+        <if test="fsBQuarterD.createTimeFrom!= null">
+            AND fs_b_quarter_d.CREATE_TIME <![CDATA[ >= ]]>  #{fsBQuarterD.createTimeFrom}
+        </if>
+        <if test="fsBQuarterD.createTimeTo!= null">
+            AND  fs_b_quarter_d.CREATE_TIME <![CDATA[ <= ]]>  #{fsBQuarterD.createTimeTo}
+        </if>
+        <if test="fsBQuarterD.displayIndex != null"> and  fs_b_quarter_d.display_index =#{ fsBQuarterD.displayIndex} </if>
+        <if test="fsBQuarterD.modifyTimeFrom!= null">
+            AND fs_b_quarter_d.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBQuarterD.modifyTimeFrom}
+        </if>
+        <if test="fsBQuarterD.modifyTimeTo!= null">
+            AND  fs_b_quarter_d.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBQuarterD.modifyTimeTo}
+        </if>
+        GROUP BY
+        number,quarter,year
+
+        )p
+        on p.number=fs_b_quarter.number and p.year= fs_b_quarter.year and p.quarter= fs_b_quarter.`quarter`
+        where p.count!=0  or ( fs_b_user.hdjlpgs>1 and  p.total <![CDATA[ <]]> 2)  or  p.`year` is NULL
+        <if test="fsBQuarterD.year != null and fsBQuarterD.year != ''"> and  fs_b_quarter.year = #{ fsBQuarterD.year}</if>
+        <if test="fsBQuarterD.quarter != null"> and  fs_b_quarter.quarter =#{ fsBQuarterD.quarter} </if>
+        <if test="fsBQuarterD.number != null and fsBQuarterD.number != ''"> and  fs_b_quarter.number = #{ fsBQuarterD.number} </if>
+
+
+    </select>
+
+</mapper>

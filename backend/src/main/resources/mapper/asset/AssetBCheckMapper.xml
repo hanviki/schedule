@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.asset.dao.AssetBCheckMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.asset.entity.AssetBCheck">
+                    <id column="id" property="id"/>
+                    <result column="base_id" property="baseId"/>
+                    <result column="check_type" property="checkType"/>
+                    <result column="check_no" property="checkNo"/>
+                    <result column="check_date" property="checkDate"/>
+                    <result column="check_result" property="checkResult"/>
+                    <result column="state" property="state"/>
+                    <result column="note" property="note"/>
+            <result column="file_id" property="fileId"/>
+            <result column="file_url" property="fileUrl"/>
+                    <result column="check_cs" property="checkCs"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, base_id, check_type, check_no, check_date, file_id, file_url, check_result, state, note, check_cs, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateAssetBCheck" parameterType="cc.mrbird.febs.asset.entity.AssetBCheck">
+        update asset_b_check
+        <trim prefix="set" suffixOverrides=",">
+<if test="baseId != null">base_id=#{baseId},</if>
+<if test="checkType != null">check_type=#{checkType},</if>
+<if test="checkNo != null">check_no=#{checkNo},</if>
+<if test="checkDate != null">check_date=#{checkDate},</if>
+<if test="checkResult != null">check_result=#{checkResult},</if>
+<if test="state != null">state=#{state},</if>
+<if test="note != null">note=#{note},</if>
+            <if test="fileId != null">file_id=#{fileId},</if>
+            <if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="checkCs != null">check_cs=#{checkCs},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findAssetBCheck" resultType="cc.mrbird.febs.asset.entity.AssetBCheck" parameterType="cc.mrbird.febs.asset.entity.AssetBCheck">
+        select  *  from asset_b_check
+        where  1=1
+            <if test="assetBCheck.id != null and assetBCheck.id != ''"> and  asset_b_check.id =#{ assetBCheck.id} </if>
+            <if test="assetBCheck.checkType != null and assetBCheck.checkType != ''"> and  asset_b_check.check_type like concat('%', #{ assetBCheck.checkType} ,'%')</if>
+            <if test="assetBCheck.checkNo != null and assetBCheck.checkNo != ''"> and  asset_b_check.check_no like concat('%', #{ assetBCheck.checkNo} ,'%')</if>
+        <if test="assetBCheck.checkDateFrom!= null">
+            AND asset_b_check.check_date <![CDATA[ >= ]]>  #{assetBCheck.checkDateFrom}
+        </if>
+        <if test="assetBCheck.checkDateTo!= null">
+            AND  asset_b_check.check_date <![CDATA[ <= ]]>  #{assetBCheck.checkDateTo}
+        </if>
+            <if test="assetBCheck.checkResult != null and assetBCheck.checkResult != ''"> and  asset_b_check.check_result like concat('%', #{ assetBCheck.checkResult} ,'%')</if>
+        <if test="assetBCheck.state != null"> and  asset_b_check.state =#{ assetBCheck.state} </if>
+            <if test="assetBCheck.note != null and assetBCheck.note != ''"> and  asset_b_check.note like concat('%', #{ assetBCheck.note} ,'%')</if>
+            <if test="assetBCheck.checkCs != null and assetBCheck.checkCs != ''"> and  asset_b_check.check_cs like concat('%', #{ assetBCheck.checkCs} ,'%')</if>
+        <if test="assetBCheck.isDeletemark != null"> and  asset_b_check.IS_DELETEMARK =#{ assetBCheck.isDeletemark} </if>
+        <if test="assetBCheck.createTimeFrom!= null">
+            AND asset_b_check.CREATE_TIME <![CDATA[ >= ]]>  #{assetBCheck.createTimeFrom}
+        </if>
+        <if test="assetBCheck.createTimeTo!= null">
+            AND  asset_b_check.CREATE_TIME <![CDATA[ <= ]]>  #{assetBCheck.createTimeTo}
+        </if>
+        <if test="assetBCheck.displayIndex != null"> and  asset_b_check.display_index =#{ assetBCheck.displayIndex} </if>
+        <if test="assetBCheck.modifyTimeFrom!= null">
+            AND asset_b_check.MODIFY_TIME <![CDATA[ >= ]]>  #{assetBCheck.modifyTimeFrom}
+        </if>
+        <if test="assetBCheck.modifyTimeTo!= null">
+            AND  asset_b_check.MODIFY_TIME <![CDATA[ <= ]]>  #{assetBCheck.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

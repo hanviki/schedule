@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBRulesMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBRules">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="type" property="type"/>
+                    <result column="content" property="content"/>
+                    <result column="reord_date" property="reordDate"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new, type, content, reord_date, file_id, file_url, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBRules" parameterType="cc.mrbird.febs.xf.entity.XfBRules">
+        update xf_b_rules
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="type != null">type=#{type},</if>
+<if test="content != null">content=#{content},</if>
+<if test="reordDate != null">reord_date=#{reordDate},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBRules" resultType="cc.mrbird.febs.xf.entity.XfBRules" parameterType="cc.mrbird.febs.xf.entity.XfBRules">
+        select  *  from xf_b_rules
+        where  1=1
+            <if test="xfBRules.userAccountName != null and xfBRules.userAccountName != ''"> and  xf_b_rules.user_account_name like concat('%', #{ xfBRules.userAccountName} ,'%')</if>
+            <if test="xfBRules.userAccount != null and xfBRules.userAccount != ''"> and  xf_b_rules.user_account like concat('%', #{ xfBRules.userAccount} ,'%')</if>
+            <if test="xfBRules.deptNew != null and xfBRules.deptNew != ''"> and  xf_b_rules.dept_new like concat('%', #{ xfBRules.deptNew} ,'%')</if>
+            <if test="xfBRules.type != null and xfBRules.type != ''"> and  xf_b_rules.type like concat('%', #{ xfBRules.type} ,'%')</if>
+            <if test="xfBRules.content != null and xfBRules.content != ''"> and  xf_b_rules.content like concat('%', #{ xfBRules.content} ,'%')</if>
+        <if test="xfBRules.reordDateFrom!= null">
+            AND xf_b_rules.reord_date <![CDATA[ >= ]]>  #{xfBRules.reordDateFrom}
+        </if>
+        <if test="xfBRules.reordDateTo!= null">
+            AND  xf_b_rules.reord_date <![CDATA[ <= ]]>  #{xfBRules.reordDateTo}
+        </if>
+            <if test="xfBRules.fileId != null and xfBRules.fileId != ''"> and  xf_b_rules.file_id like concat('%', #{ xfBRules.fileId} ,'%')</if>
+            <if test="xfBRules.fileUrl != null and xfBRules.fileUrl != ''"> and  xf_b_rules.file_url like concat('%', #{ xfBRules.fileUrl} ,'%')</if>
+            <if test="xfBRules.remark != null and xfBRules.remark != ''"> and  xf_b_rules.remark like concat('%', #{ xfBRules.remark} ,'%')</if>
+        <if test="xfBRules.state != null"> and  xf_b_rules.state =#{ xfBRules.state} </if>
+        <if test="xfBRules.isDeletemark != null"> and  xf_b_rules.IS_DELETEMARK =#{ xfBRules.isDeletemark} </if>
+        <if test="xfBRules.createTimeFrom!= null">
+            AND xf_b_rules.CREATE_TIME <![CDATA[ >= ]]>  #{xfBRules.createTimeFrom}
+        </if>
+        <if test="xfBRules.createTimeTo!= null">
+            AND  xf_b_rules.CREATE_TIME <![CDATA[ <= ]]>  #{xfBRules.createTimeTo}
+        </if>
+        <if test="xfBRules.modifyTimeFrom!= null">
+            AND xf_b_rules.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBRules.modifyTimeFrom}
+        </if>
+        <if test="xfBRules.modifyTimeTo!= null">
+            AND  xf_b_rules.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBRules.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

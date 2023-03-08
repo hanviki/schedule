@@ -1,0 +1,428 @@
+<template>
+  <a-card :bordered="false" class="card-area">
+    <div :class="advanced ? 'search' : null">
+      <a-form layout="horizontal">
+        <a-row>
+          <div :class="advanced ? null : 'fold'">
+            <a-col :md="7" :sm="24">
+              <a-form-item label="发薪号/姓名" v-bind="formItemLayout">
+                <a-input v-model="queryParams.userAccount" />
+              </a-form-item>
+            </a-col>
+            <a-col :md="7" :sm="24">
+              <a-form-item v-bind="formItemLayout" label="科室">
+                <a-select
+                  v-model="queryParams.deptId"
+                  option-filter-prop="children"
+                  :filter-option="filterOption"
+                  show-search
+                >
+                  <a-select-option
+                    v-for="d in deptData"
+                    :key="d.deptId"
+                    :value="`${d.deptId}`"
+                  >
+                    {{ d.deptName }}
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+             <a-col :md="10" :sm="24">
+                <a-form-item label="入职日期" v-bind="formItemLayout">
+                  <a-date-picker @change="onfzDateFromChange" style="width:48%"/>-
+                  <a-date-picker @change="onfzDateToChange" style="width:48%"/>
+                </a-form-item>
+              </a-col>
+           
+            <template v-if="advanced">
+               <a-col :md="7" :sm="24">
+              <a-form-item label="人员状态" v-bind="formItemLayout">
+                <a-select
+                  style="width: 100%"
+                  mode="multiple"
+                  v-model="queryParams.auditMan"
+                >
+                  <a-select-option value="3"> 在职 </a-select-option>
+                  <a-select-option value="0"> 离职 </a-select-option>
+                  <a-select-option value="2"> 退休 </a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+            </template>
+          </div>
+          <span style="float: right; margin-top: 3px">
+            <a-button type="primary" @click="search">查询</a-button>
+            <a-button style="margin-left: 8px" @click="reset">重置</a-button>
+            <a @click="toggleAdvanced" style="margin-left: 8px">
+              {{ advanced ? "收起" : "展开" }}
+              <a-icon :type="advanced ? 'up' : 'down'" />
+            </a>
+          </span>
+        </a-row>
+      </a-form>
+    </div>
+    <div>
+      <div class="operator">
+        <!-- <a-button 
+        style="color: #fff;background-color: #faad14;border-color: #faad14;box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);"
+         icon="file-excel"  @click="exportExcel">导出</a-button> -->
+      </div>
+      <!-- 表格区域 -->
+      <a-table
+        ref="TableInfo"
+        :columns="columns"
+        :rowKey="(record) => record.id"
+        :dataSource="dataSource"
+        :pagination="pagination"
+        :loading="loading"
+        :rowSelection="{
+          selectedRowKeys: selectedRowKeys,
+          onChange: onSelectChange,
+        }"
+        @change="handleTableChange"
+        :bordered="bordered"
+        :scroll="{ x: 900 }"
+      >
+        <template
+          slot="action"
+          slot-scope="text, record"
+        >
+            <a-button
+              style="width:100%;padding-left:2px;padding-right:2px;"
+              type="dashed"
+              block
+              @click="ExportPersonReport(record)"
+            >
+              导出个人报告
+            </a-button>
+        </template>
+      </a-table>
+    </div>
+   
+    <user-info-view
+      ref="sdlBUserEdit"
+      @close="handleEditClose"
+      @success="handleEditSuccess"
+      :editVisiable="editVisiable"
+      :isPersonal="1"
+    >
+    </user-info-view>
+  </a-card>
+</template>
+
+<script>
+import moment from "moment";
+import UserInfoView from "./UserInfoView";
+
+const formItemLayout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+export default {
+  name: "SdlBUser",
+  components: { UserInfoView },
+  data() {
+    return {
+      advanced: false,
+      dataSource: [],
+      selectedRowKeys: [],
+      sortedInfo: null,
+      paginationInfo: null,
+      formItemLayout,
+      pagination: {
+        pageSizeOptions: ["10", "20", "30", "40", "100"],
+        defaultCurrent: 1,
+        defaultPageSize: 10,
+        showQuickJumper: true,
+        showSizeChanger: true,
+        showTotal: (total, range) =>
+          `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`,
+      },
+      queryParams: {
+        auditMan: ['3','2']
+      },
+      addVisiable: false,
+      editVisiable: false,
+      loading: false,
+      bordered: true,
+      deptData: [],
+    };
+  },
+  computed: {
+    columns() {
+      let { sortedInfo } = this;
+      sortedInfo = sortedInfo || {};
+      return [
+         {
+          title: "科室名称",
+          dataIndex: "deptNew",
+          width: 100,
+          fixed: "left",
+        },
+          {
+          title: "姓名",
+          dataIndex: "userAccountName",
+          width: 100,
+          fixed: "left",
+        },
+           {
+          title: "发薪号",
+          dataIndex: "userAccount",
+          width: 120,
+          fixed: "left",
+        },
+         {
+          title: "出生年月",
+          dataIndex: "birthday",
+          width: 100,
+        },
+         {
+          title: "人员类型",
+          dataIndex: "rylx",
+          width: 100,
+        },
+        
+        {
+          title: "员工工号",
+          dataIndex: "yggh",
+          width: 100,
+        },
+        {
+          title: "性别",
+          dataIndex: "sexName",
+          width: 100,
+        },
+      
+
+        {
+          title: "员工组",
+          dataIndex: "yuangongzu",
+          width: 100,
+        },
+        {
+          title: "员工子组",
+          dataIndex: "zizu",
+          width: 100,
+        },
+        {
+          title: "人事子范围",
+          dataIndex: "renshizifw",
+          width: 100,
+        }, {
+          title: '操作',
+          dataIndex: 'action',
+          scopedSlots: { customRender: 'action' },
+
+          width: 150
+        }
+      ];
+    },
+  },
+  mounted() {
+    this.fetchDept();
+    this.fetch({
+      auditMan: ['3','2']
+    });
+  },
+  methods: {
+    onSelectChange(selectedRowKeys) {
+      this.selectedRowKeys = selectedRowKeys;
+    },
+    onfzDateFromChange(date, dateString) {
+      this.queryParams.schoolDateFrom = dateString;
+    },
+    onfzDateToChange(date, dateString) {
+      this.queryParams.schoolDateTo = dateString;
+    },
+    onChang_zg(e) {
+      if (e.target.checked) {
+        this.queryParams.yishiZgzsbianhao = "1";
+      } else {
+        delete this.queryParams.yishiZgzsbianhao;
+      }
+    },
+    onChang_zy(e) {
+      if (e.target.checked) {
+        this.queryParams.yishiZiyebianhao = "1";
+      } else {
+        delete this.queryParams.yishiZiyebianhao;
+      }
+    },
+    fetchDept() {
+      this.$get("sdlBUser/deptNew", { }).then((res) => {
+        this.deptData = [];
+        this.deptData.push({
+          deptId: "-1",
+          deptName: "全部",
+        });
+        console.info(res)
+        if(res.data[0]!=null){
+         this.deptData.push(...res.data);
+        }
+      });
+    },
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      );
+    },
+    toggleAdvanced() {
+      this.advanced = !this.advanced;
+      if (!this.advanced) {
+        this.queryParams.comments = "";
+      }
+    },
+    handleAddSuccess() {
+      this.addVisiable = false;
+      this.$message.success("新增成功");
+      this.search();
+    },
+    handleAddClose() {
+      this.addVisiable = false;
+    },
+    add() {
+      this.addVisiable = true;
+    },
+    handleEditSuccess() {
+      this.editVisiable = false;
+      this.$message.success("修改成功");
+      this.search();
+    },
+    handleEditClose() {
+      this.editVisiable = false;
+    },
+    edit(record) {
+      this.$refs.sdlBUserEdit.setFormValues(record);
+      this.editVisiable = true;
+    },
+    batchDelete() {
+      if (!this.selectedRowKeys.length) {
+        this.$message.warning("请选择需要删除的记录");
+        return;
+      }
+      let that = this;
+      this.$confirm({
+        title: "确定删除所选中的记录?",
+        content: "当您点击确定按钮后，这些记录将会被彻底删除",
+        centered: true,
+        onOk() {
+          let sdlBUserIds = that.selectedRowKeys.join(",");
+          that.$delete("sdlBUser/" + sdlBUserIds).then(() => {
+            that.$message.success("删除成功");
+            that.selectedRowKeys = [];
+            that.search();
+          });
+        },
+        onCancel() {
+          that.selectedRowKeys = [];
+        },
+      });
+    },
+     ExportPersonReport (record) {
+      this.$download('xfBUser/personPdf', {
+        userAccount: record.userAccount
+      }, record.userAccount + ".pdf")
+    },
+    exportExcel() {
+      let { sortedInfo } = this;
+      let sortField, sortOrder;
+      // 获取当前列的排序和列的过滤规则
+      if (sortedInfo) {
+        sortField = sortedInfo.field;
+        sortOrder = sortedInfo.order;
+      }
+      let json = [...this.columns];
+      json.splice(this.columns.length - 1, 1); //移出第一个
+      console.info(json);
+      let dataJson = JSON.stringify(json);
+      let queryParams ={...this.queryParams};
+      if(queryParams.deptId=='-1'){
+        delete queryParams.deptId
+      }
+
+      this.$export("sdlBUser/excelYszy", {
+        sortField: sortField,
+        sortOrder: sortOrder,
+        dataJson,
+        ...queryParams,
+      });
+    },
+    search() {
+      let { sortedInfo } = this;
+      let sortField, sortOrder;
+      // 获取当前列的排序和列的过滤规则
+      if (sortedInfo) {
+        sortField = sortedInfo.field;
+        sortOrder = sortedInfo.order;
+      }
+      let queryParams ={...this.queryParams};
+      if(queryParams.deptId=='-1'){
+        delete queryParams.deptId
+      }
+      this.fetch({
+        sortField: sortField,
+        sortOrder: sortOrder,
+        ...queryParams,
+      });
+    },
+    reset() {
+      // 取消选中
+      this.selectedRowKeys = [];
+      // 重置分页
+      this.$refs.TableInfo.pagination.current = this.pagination.defaultCurrent;
+      if (this.paginationInfo) {
+        this.paginationInfo.current = this.pagination.defaultCurrent;
+        this.paginationInfo.pageSize = this.pagination.defaultPageSize;
+      }
+      // 重置列排序规则
+      this.sortedInfo = null;
+      this.paginationInfo = null;
+      // 重置查询参数
+      this.queryParams = {
+        auditMan: ['3','2']
+      };
+      this.fetch();
+    },
+    handleTableChange(pagination, filters, sorter) {
+      this.sortedInfo = sorter;
+      this.paginationInfo = pagination;
+      this.fetch({
+        sortField: sorter.field,
+        sortOrder: sorter.order,
+        ...this.queryParams,
+      });
+    },
+    fetch(params = {}) {
+      this.loading = true;
+      if (this.paginationInfo) {
+        // 如果分页信息不为空，则设置表格当前第几页，每页条数，并设置查询分页参数
+        this.$refs.TableInfo.pagination.current = this.paginationInfo.current;
+        this.$refs.TableInfo.pagination.pageSize = this.paginationInfo.pageSize;
+        params.pageSize = this.paginationInfo.pageSize;
+        params.pageNum = this.paginationInfo.current;
+      } else {
+        // 如果分页信息为空，则设置为默认值
+        params.pageSize = this.pagination.defaultPageSize;
+        params.pageNum = this.pagination.defaultCurrent;
+      }
+      params.rylx='职工';
+      this.$get("sdlBUserMg", {
+        ...params,
+      }).then((r) => {
+        let data = r.data;
+        const pagination = { ...this.pagination };
+        pagination.total = data.total;
+        this.loading = false;
+        this.dataSource = data.rows;
+        this.pagination = pagination;
+      });
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+@import "../../../static/less/Common";
+</style>

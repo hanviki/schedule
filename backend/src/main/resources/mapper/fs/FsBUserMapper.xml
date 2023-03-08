@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.fs.dao.FsBUserMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.fs.entity.FsBUser">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="grjlbh" property="grjlbh"/>
+                    <result column="zylb" property="zylb"/>
+                    <result column="gwlb" property="gwlb"/>
+                    <result column="hdjlpgs" property="hdjlpgs"/>
+                    <result column="fsgl" property="fsgl"/>
+                    <result column="fs_date" property="fsDate"/>
+                    <result column="jcks_date" property="jcksDate"/>
+                    <result column="fsgzzh" property="fsgzzh"/>
+                    <result column="bz_date" property="bzDate"/>
+                    <result column="dept_name" property="deptName"/>
+			 <result column="married" property="married"/>
+			<result column="yuanqu" property="yuanqu"/>
+			<result column="note" property="note"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account,married,yuanqu,note, grjlbh, zylb, gwlb, hdjlpgs, fsgl, fs_date, jcks_date, fsgzzh, bz_date, dept_name, file_id, file_url, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateFsBUser" parameterType="cc.mrbird.febs.fs.entity.FsBUser">
+        update fs_b_user
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="grjlbh != null">grjlbh=#{grjlbh},</if>
+<if test="zylb != null">zylb=#{zylb},</if>
+<if test="gwlb != null">gwlb=#{gwlb},</if>
+<if test="hdjlpgs != null">hdjlpgs=#{hdjlpgs},</if>
+<if test="fsgl != null">fsgl=#{fsgl},</if>
+<if test="fsDate != null">fs_date=#{fsDate},</if>
+<if test="jcksDate != null">jcks_date=#{jcksDate},</if>
+<if test="fsgzzh != null">fsgzzh=#{fsgzzh},</if>
+<if test="bzDate != null">bz_date=#{bzDate},</if>
+<if test="deptName != null">dept_name=#{deptName},</if>
+			<if test="married != null">married=#{married},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="state != null">state=#{state},</if>
+			<if test="yuanqu != null">yuanqu=#{yuanqu},</if>
+			<if test="note != null">note=#{note},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findFsBUser" resultType="cc.mrbird.febs.fs.entity.FsBUser" parameterType="cc.mrbird.febs.fs.entity.FsBUser">
+        select  *  from fs_b_user
+        where  1=1
+            <if test="fsBUser.id != null and fsBUser.id != ''"> and  fs_b_user.id =#{ fsBUser.id} </if>
+            <if test="fsBUser.userAccountName != null and fsBUser.userAccountName != ''"> and  fs_b_user.user_account_name like concat('%', #{ fsBUser.userAccountName} ,'%')</if>
+            <if test="fsBUser.userAccount != null and fsBUser.userAccount != ''"> and  fs_b_user.user_account like concat('%', #{ fsBUser.userAccount} ,'%')</if>
+            <if test="fsBUser.grjlbh != null and fsBUser.grjlbh != ''"> and  fs_b_user.grjlbh like concat('%', #{ fsBUser.grjlbh} ,'%')</if>
+            <if test="fsBUser.zylb != null and fsBUser.zylb != ''"> and  fs_b_user.zylb like concat('%', #{ fsBUser.zylb} ,'%')</if>
+            <if test="fsBUser.gwlb != null and fsBUser.gwlb != ''"> and  fs_b_user.gwlb like concat('%', #{ fsBUser.gwlb} ,'%')</if>
+        <if test="fsBUser.hdjlpgs != null"> and  fs_b_user.hdjlpgs =#{ fsBUser.hdjlpgs} </if>
+        <if test="fsBUser.fsDateFrom!= null">
+            AND fs_b_user.fs_date <![CDATA[ >= ]]>  #{fsBUser.fsDateFrom}
+        </if>
+        <if test="fsBUser.fsDateTo!= null">
+            AND  fs_b_user.fs_date <![CDATA[ <= ]]>  #{fsBUser.fsDateTo}
+        </if>
+        <if test="fsBUser.jcksDateFrom!= null">
+            AND fs_b_user.jcks_date <![CDATA[ >= ]]>  #{fsBUser.jcksDateFrom}
+        </if>
+        <if test="fsBUser.jcksDateTo!= null">
+            AND  fs_b_user.jcks_date <![CDATA[ <= ]]>  #{fsBUser.jcksDateTo}
+        </if>
+            <if test="fsBUser.fsgzzh != null and fsBUser.fsgzzh != ''"> and  fs_b_user.fsgzzh like concat('%', #{ fsBUser.fsgzzh} ,'%')</if>
+        <if test="fsBUser.bzDateFrom!= null">
+            AND fs_b_user.bz_date <![CDATA[ >= ]]>  #{fsBUser.bzDateFrom}
+        </if>
+        <if test="fsBUser.bzDateTo!= null">
+            AND  fs_b_user.bz_date <![CDATA[ <= ]]>  #{fsBUser.bzDateTo}
+        </if>
+            <if test="fsBUser.deptName != null and fsBUser.deptName != ''"> and  fs_b_user.dept_name like concat('%', #{ fsBUser.deptName} ,'%')</if>
+            <if test="fsBUser.fileId != null and fsBUser.fileId != ''"> and  fs_b_user.file_id like concat('%', #{ fsBUser.fileId} ,'%')</if>
+            <if test="fsBUser.fileUrl != null and fsBUser.fileUrl != ''"> and  fs_b_user.file_url like concat('%', #{ fsBUser.fileUrl} ,'%')</if>
+        <if test="fsBUser.state != null"> and  fs_b_user.state =#{ fsBUser.state} </if>
+        <if test="fsBUser.isDeletemark != null"> and  fs_b_user.IS_DELETEMARK =#{ fsBUser.isDeletemark} </if>
+        <if test="fsBUser.createTimeFrom!= null">
+            AND fs_b_user.CREATE_TIME <![CDATA[ >= ]]>  #{fsBUser.createTimeFrom}
+        </if>
+        <if test="fsBUser.createTimeTo!= null">
+            AND  fs_b_user.CREATE_TIME <![CDATA[ <= ]]>  #{fsBUser.createTimeTo}
+        </if>
+        <if test="fsBUser.displayIndex != null"> and  fs_b_user.display_index =#{ fsBUser.displayIndex} </if>
+        <if test="fsBUser.modifyTimeFrom!= null">
+            AND fs_b_user.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBUser.modifyTimeFrom}
+        </if>
+        <if test="fsBUser.modifyTimeTo!= null">
+            AND  fs_b_user.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBUser.modifyTimeTo}
+        </if>
+</select>
+<select id="getUser" resultType="cc.mrbird.febs.fs.entity.ViewFs">
+    SELECT
+	`sdl_b_user_mg`.`id` AS `id`,
+	`sdl_b_user_mg`.`user_account_name` AS `user_account_name`,
+	`sdl_b_user_mg`.`user_account` AS `user_account`,
+	`sdl_b_user_mg`.`bq_name` AS `bq_name`,
+	`sdl_b_user_mg`.`user_type` AS `user_type`,
+	`sdl_b_user_mg`.`user_type_name` AS `user_type_name`,
+	`sdl_b_user_mg`.`telephone` AS `telephone`,
+	`sdl_b_user_mg`.`position_name` AS `position_name`,
+	`sdl_b_user_mg`.`np_position_name` AS `np_position_name`,
+	`sdl_b_user_mg`.`rylx` AS `rylx`,
+	`sdl_b_user_mg`.`yggh` AS `yggh`,
+	`sdl_b_user_mg`.`gh_hk` AS `gh_hk`,
+	`sdl_b_user_mg`.`sex_name` AS `sex_name`,
+	`sdl_b_user_mg`.`qualify_no` AS `qualify_no`,
+	`sdl_b_user_mg`.`birthday` AS `birthday`,
+	`sdl_b_user_mg`.`school_date` AS `school_date`,
+	`sdl_b_user_mg`.`zyjsgw` AS `zyjsgw`,
+	`sdl_b_user_mg`.`bianhao_jx` AS `bianhao_jx`,
+	`sdl_b_user_mg`.`zyjsgw_lc` AS `zyjsgw_lc`,
+	`sdl_b_user_mg`.`xcszyjzc` AS `xcszyjzc`,
+	`sdl_b_user_mg`.`appointed_date` AS `appointed_date`,
+	`sdl_b_user_mg`.`appointed_date_lc` AS `appointed_date_lc`,
+	`sdl_b_user_mg`.`zizu` AS `zizu`,
+	`sdl_b_user_mg`.`yuangongzu` AS `yuangongzu`,
+	`sdl_b_user_mg`.`xrgwjb` AS `xrgwjb`,
+	`sdl_b_user_mg`.`xrgwjbprsj` AS `xrgwjbprsj`,
+	`sdl_b_user_mg`.`zhicheng` AS `zhicheng`,
+	`sdl_b_user_mg`.`zyjs_np` AS `zyjs_np`,
+	`sdl_b_user_mg`.`zyjs_date_np` AS `zyjs_date_np`,
+	`sdl_b_user_mg`.`zyjs_npjx` AS `zyjs_npjx`,
+	`sdl_b_user_mg`.`zyjs_date_npjx` AS `zyjs_date_npjx`,
+	`sdl_b_user_mg`.`edu` AS `edu`,
+	`sdl_b_user_mg`.`edu_school` AS `edu_school`,
+	`sdl_b_user_mg`.`guoji` AS `guoji`,
+	`sdl_b_user_mg`.`minzu` AS `minzu`,
+	`sdl_b_user_mg`.`jiguan` AS `jiguan`,
+	`sdl_b_user_mg`.`political_status` AS `political_status`,
+	`sdl_b_user_mg`.`bianhao_lc` AS `bianhao_lc`,
+	`sdl_b_user_mg`.`xingzhengjiebie` AS `xingzhengjiebie`,
+	`sdl_b_user_mg`.`id_card` AS `id_card`,
+	`sdl_b_user_mg`.`work_date` AS `work_date`,
+	`sdl_b_user_mg`.`yishi_lb` AS `yishi_lb`,
+	`sdl_b_user_mg`.`yishi_jb` AS `yishi_jb`,
+	`sdl_b_user_mg`.`yishi_zhiyefanwei` AS `yishi_zhiyefanwei`,
+	`sdl_b_user_mg`.`yishi_zgzsbianhao` AS `yishi_zgzsbianhao`,
+	`sdl_b_user_mg`.`yishi_ziyebianhao` AS `yishi_ziyebianhao`,
+	`sdl_b_user_mg`.`renshizifw` AS `renshizifw`,
+	`sdl_b_user_mg`.`renshizfenlei` AS `renshizfenlei`,
+	`sdl_b_user_mg`.`is_authority` AS `is_authority`,
+	`sdl_b_user_mg`.`IsUse` AS `IsUse`,
+	`sdl_b_user_mg`.`patent_good` AS `patent_good`,
+	`sdl_b_user_mg`.`patent_ranknum` AS `patent_ranknum`,
+	`sdl_b_user_mg`.`state` AS `state`,
+	`sdl_b_user_mg`.`IS_DELETEMARK` AS `IS_DELETEMARK`,
+	`sdl_b_user_mg`.`CREATE_TIME` AS `CREATE_TIME`,
+	`sdl_b_user_mg`.`display_index` AS `display_index`,
+	`sdl_b_user_mg`.`MODIFY_TIME` AS `MODIFY_TIME`,
+	`sdl_b_user_mg`.`CREATE_USER_ID` AS `CREATE_USER_ID`,
+	`sdl_b_user_mg`.`MODIFY_USER_ID` AS `MODIFY_USER_ID`,
+	`sdl_b_user_mg`.`auditMan` AS `auditMan`,
+	`sdl_b_user_mg`.`auditManName` AS `auditManName`,
+	`sdl_b_user_mg`.`auditDate` AS `auditDate`,
+	`sdl_b_user_mg`.`auditSuggestion` AS `auditSuggestion`,
+	`sdl_b_user_mg`.`file_id_lc` AS `file_id_lc`,
+	`sdl_b_user_mg`.`file_url_lc` AS `file_url_lc`,
+	`sdl_b_user_mg`.`dept_new` AS `dept_new`,
+	`sdl_b_user_mg`.`doc_type` AS `doc_type`,
+	`sdl_b_user_mg`.`chujikh_date` AS `chujikh_date`,
+	`sdl_b_user_mg`.`is_zhongjikh` AS `is_zhongjikh`,
+	`sdl_b_user_mg`.`zhongjikh_date` AS `zhongjikh_date`,
+	`sdl_b_user_mg`.`staff_date` AS `staff_date`,
+	`sdl_b_user_mg`.`picture_id` AS `picture_id`,
+	`sdl_b_user_mg`.`picture_url` AS `picture_url`,
+	`sdl_b_user_mg`.`gqpxqk` AS `gqpxqk`,
+	`sdl_b_user_mg`.`gfhyspxqk` AS `gfhyspxqk`,
+	`sdl_b_user_mg`.`zjspnlceqk` AS `zjspnlceqk`,
+	`sdl_b_user_mg`.`dca_year` AS `dca_year`,
+	`fs_b_user`.`grjlbh` AS `grjlbh`,
+	`fs_b_user`.`zylb` AS `zylb`,
+	`fs_b_user`.`gwlb` AS `gwlb`,
+	`fs_b_user`.`hdjlpgs` AS `hdjlpgs`,
+	`fs_b_user`.`fsgl` AS `fsgl`,
+	`fs_b_user`.`fs_date` AS `fs_date`,
+	`fs_b_user`.`jcks_date` AS `jcks_date`,
+	`fs_b_user`.`fsgzzh` AS `fsgzzh`,
+	`fs_b_user`.`bz_date` AS `bz_date`,
+	`fs_b_user`.`dept_id` AS `dept_id`,
+	`fs_b_user`.`dept_name` AS `dept_name`,
+	`fs_b_user`.`file_id` AS `file_id`,
+	`fs_b_user`.`file_url` AS `file_url`,
+	`fs_b_user`.`married` AS `married`,
+	`fs_b_user`.`yuanqu` AS `yuanqu`,
+	`fs_b_user`.`note` AS `note`
+FROM
+    `sdl_b_user_mg` inner  JOIN  `fs_b_user` ON  `fs_b_user`.`user_account` = `sdl_b_user_mg`.`user_account`
+    where 1=1
+	<if test="user.jcState != null and user.jcState > -1">
+      and exists (
+		select *  from fs_b_record where
+		 fs_b_user.user_account =fs_b_record.user_account and
+		operation_date in
+		(SELECT
+		MAX( operation_date ) operation_date
+		FROM
+		fs_b_record b
+		WHERE
+		b.operation_date <![CDATA[ <= ]]>  CURRENT_DATE ()  and fs_b_record.user_account=b.user_account
+		GROUP BY
+		user_account) and state= #{user.jcState}
+		)
+	</if>
+
+    <if test="user.userAccount != null">and (sdl_b_user_mg.user_account_name like concat('%', #{user.userAccount},'%') or sdl_b_user_mg.user_account=#{user.userAccount}) </if>
+    <if test="user.deptName != null">and fs_b_user.dept_name like concat('%',#{user.deptName},'%') </if>
+
+	<if test="user.yuanqu != null">and fs_b_user.yuanqu =#{user.yuanqu}</if>
+	<if test="user.displayIndex != null and user.displayIndex==0">and (length(fs_b_user.fsgzzh)=0 or fs_b_user.fsgzzh is NULL)</if>
+	<if test="user.displayIndex != null and user.displayIndex==1">and length(fs_b_user.fsgzzh)>0</if>
+    <if test="user.deptId != null and user.deptId!= '' "> and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{user.deptId} or parent_id =#{user.deptId}) </if>
+	<if test="user.hdjlpgs!= null and user.hdjlpgs==2">
+		and sdl_b_user_mg.user_account  in (
+		select fs_b_user.user_account from fs_b_exame
+		inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+		where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 2 year) and fs_b_exame.exame_type='卫生考试' and (fs_b_exame.exame_num like 'H________' or fs_b_exame.exame_num like '参加医院组织的使用%' ) and fs_b_exame.file_id is not null and fs_b_exame.file_id !='')
+		)
+		)
+	</if>
+	<if test="user.hdjlpgs!= null and user.hdjlpgs==1">
+		and  sdl_b_user_mg.user_account not in (
+		select fs_b_user.user_account from fs_b_exame
+		inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+		where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 2 year) and fs_b_exame.exame_type='卫生考试' and (fs_b_exame.exame_num like 'H________' or fs_b_exame.exame_num like '参加医院组织的使用%' ) and fs_b_exame.file_id is not null and fs_b_exame.file_id !='')
+		)
+		)
+	</if>
+	<if test="user.state!= null and user.state==5">
+		and  sdl_b_user_mg.user_account  in (
+		select fs_b_user.user_account from fs_b_exame
+		inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+		where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试' and (fs_b_exame.exame_num like 'FS__HB_______' or fs_b_exame.exame_num like '参加医院组织的使用%' )  and fs_b_exame.file_id is not null and fs_b_exame.file_id !='')
+		-- or  (fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试')
+		)
+		)
+
+	</if>
+	<if test="user.state!= null and user.state==4">
+		and  sdl_b_user_mg.user_account not in (
+		select fs_b_user.user_account from fs_b_exame
+		inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+		where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试' and (fs_b_exame.exame_num like 'FS__HB_______' or fs_b_exame.exame_num like '参加医院组织的使用%' )  and fs_b_exame.file_id is not null and fs_b_exame.file_id !='')
+		-- or  (fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试')
+		)
+		)
+	</if>
+	<if test="user.jiguan!= null and user.jiguan=='2'.toString()">
+		and sdl_b_user_mg.yggh in (	select a.pernr  from fs_b_health a
+		where a.rq  > DATE_SUB(CURDATE(), interval 2 year) and a.pernr is not null)
+	</if>
+	<if test="user.jiguan!= null and user.jiguan=='1'.toString()">
+		and sdl_b_user_mg.yggh not in (	select a.pernr  from fs_b_health a
+		where a.rq  > DATE_SUB(CURDATE(), interval 2 year) and a.pernr is not null )
+	</if>
+</select>
+	<select id="getUser2" resultType="cc.mrbird.febs.fs.entity.ViewFs">
+		SELECT
+		`sdl_b_user_mg`.`id` AS `id`,
+		`sdl_b_user_mg`.`user_account_name` AS `user_account_name`,
+		`sdl_b_user_mg`.`user_account` AS `user_account`,
+		`sdl_b_user_mg`.`bq_name` AS `bq_name`,
+		`sdl_b_user_mg`.`user_type` AS `user_type`,
+		`sdl_b_user_mg`.`user_type_name` AS `user_type_name`,
+		`sdl_b_user_mg`.`telephone` AS `telephone`,
+		`sdl_b_user_mg`.`position_name` AS `position_name`,
+		`sdl_b_user_mg`.`np_position_name` AS `np_position_name`,
+		`sdl_b_user_mg`.`rylx` AS `rylx`,
+		`sdl_b_user_mg`.`yggh` AS `yggh`,
+		`sdl_b_user_mg`.`gh_hk` AS `gh_hk`,
+		`sdl_b_user_mg`.`sex_name` AS `sex_name`,
+		`sdl_b_user_mg`.`qualify_no` AS `qualify_no`,
+		`sdl_b_user_mg`.`birthday` AS `birthday`,
+		`sdl_b_user_mg`.`school_date` AS `school_date`,
+		`sdl_b_user_mg`.`zyjsgw` AS `zyjsgw`,
+		`sdl_b_user_mg`.`bianhao_jx` AS `bianhao_jx`,
+		`sdl_b_user_mg`.`zyjsgw_lc` AS `zyjsgw_lc`,
+		`sdl_b_user_mg`.`xcszyjzc` AS `xcszyjzc`,
+		`sdl_b_user_mg`.`appointed_date` AS `appointed_date`,
+		`sdl_b_user_mg`.`appointed_date_lc` AS `appointed_date_lc`,
+		`sdl_b_user_mg`.`zizu` AS `zizu`,
+		`sdl_b_user_mg`.`yuangongzu` AS `yuangongzu`,
+		`sdl_b_user_mg`.`xrgwjb` AS `xrgwjb`,
+		`sdl_b_user_mg`.`xrgwjbprsj` AS `xrgwjbprsj`,
+		`sdl_b_user_mg`.`zhicheng` AS `zhicheng`,
+		`sdl_b_user_mg`.`zyjs_np` AS `zyjs_np`,
+		`sdl_b_user_mg`.`zyjs_date_np` AS `zyjs_date_np`,
+		`sdl_b_user_mg`.`zyjs_npjx` AS `zyjs_npjx`,
+		`sdl_b_user_mg`.`zyjs_date_npjx` AS `zyjs_date_npjx`,
+		`sdl_b_user_mg`.`edu` AS `edu`,
+		`sdl_b_user_mg`.`edu_school` AS `edu_school`,
+		`sdl_b_user_mg`.`guoji` AS `guoji`,
+		`sdl_b_user_mg`.`minzu` AS `minzu`,
+		`sdl_b_user_mg`.`jiguan` AS `jiguan`,
+		`sdl_b_user_mg`.`political_status` AS `political_status`,
+		`sdl_b_user_mg`.`bianhao_lc` AS `bianhao_lc`,
+		`sdl_b_user_mg`.`xingzhengjiebie` AS `xingzhengjiebie`,
+		`sdl_b_user_mg`.`id_card` AS `id_card`,
+		`sdl_b_user_mg`.`work_date` AS `work_date`,
+		`sdl_b_user_mg`.`yishi_lb` AS `yishi_lb`,
+		`sdl_b_user_mg`.`yishi_jb` AS `yishi_jb`,
+		`sdl_b_user_mg`.`yishi_zhiyefanwei` AS `yishi_zhiyefanwei`,
+		`sdl_b_user_mg`.`yishi_zgzsbianhao` AS `yishi_zgzsbianhao`,
+		`sdl_b_user_mg`.`yishi_ziyebianhao` AS `yishi_ziyebianhao`,
+		`sdl_b_user_mg`.`renshizifw` AS `renshizifw`,
+		`sdl_b_user_mg`.`renshizfenlei` AS `renshizfenlei`,
+		`sdl_b_user_mg`.`is_authority` AS `is_authority`,
+		`sdl_b_user_mg`.`IsUse` AS `IsUse`,
+		`sdl_b_user_mg`.`patent_good` AS `patent_good`,
+		`sdl_b_user_mg`.`patent_ranknum` AS `patent_ranknum`,
+		`sdl_b_user_mg`.`state` AS `state`,
+		`sdl_b_user_mg`.`IS_DELETEMARK` AS `IS_DELETEMARK`,
+		`sdl_b_user_mg`.`CREATE_TIME` AS `CREATE_TIME`,
+		`sdl_b_user_mg`.`display_index` AS `display_index`,
+		`sdl_b_user_mg`.`MODIFY_TIME` AS `MODIFY_TIME`,
+		`sdl_b_user_mg`.`CREATE_USER_ID` AS `CREATE_USER_ID`,
+		`sdl_b_user_mg`.`MODIFY_USER_ID` AS `MODIFY_USER_ID`,
+		`sdl_b_user_mg`.`auditMan` AS `auditMan`,
+		`sdl_b_user_mg`.`auditManName` AS `auditManName`,
+		`sdl_b_user_mg`.`auditDate` AS `auditDate`,
+		`sdl_b_user_mg`.`auditSuggestion` AS `auditSuggestion`,
+		`sdl_b_user_mg`.`file_id_lc` AS `file_id_lc`,
+		`sdl_b_user_mg`.`file_url_lc` AS `file_url_lc`,
+		`sdl_b_user_mg`.`dept_new` AS `dept_new`,
+		`sdl_b_user_mg`.`doc_type` AS `doc_type`,
+		`sdl_b_user_mg`.`chujikh_date` AS `chujikh_date`,
+		`sdl_b_user_mg`.`is_zhongjikh` AS `is_zhongjikh`,
+		`sdl_b_user_mg`.`zhongjikh_date` AS `zhongjikh_date`,
+		`sdl_b_user_mg`.`staff_date` AS `staff_date`,
+		`sdl_b_user_mg`.`picture_id` AS `picture_id`,
+		`sdl_b_user_mg`.`picture_url` AS `picture_url`,
+		`sdl_b_user_mg`.`gqpxqk` AS `gqpxqk`,
+		`sdl_b_user_mg`.`gfhyspxqk` AS `gfhyspxqk`,
+		`sdl_b_user_mg`.`zjspnlceqk` AS `zjspnlceqk`,
+		`sdl_b_user_mg`.`dca_year` AS `dca_year`,
+		`fs_b_user`.`grjlbh` AS `grjlbh`,
+		`fs_b_user`.`zylb` AS `zylb`,
+		`fs_b_user`.`gwlb` AS `gwlb`,
+		`fs_b_user`.`hdjlpgs` AS `hdjlpgs`,
+		`fs_b_user`.`fsgl` AS `fsgl`,
+		`fs_b_user`.`fs_date` AS `fs_date`,
+		`fs_b_user`.`jcks_date` AS `jcks_date`,
+		`fs_b_user`.`fsgzzh` AS `fsgzzh`,
+		`fs_b_user`.`bz_date` AS `bz_date`,
+		`fs_b_user`.`dept_id` AS `dept_id`,
+		`fs_b_user`.`dept_name` AS `dept_name`,
+		`fs_b_user`.`file_id` AS `file_id`,
+		`fs_b_user`.`file_url` AS `file_url`,
+		`fs_b_user`.`married` AS `married`,
+		`fs_b_user`.`yuanqu` AS `yuanqu`,
+		`fs_b_user`.`note` AS `note`
+		FROM
+		`sdl_b_user_mg` left  JOIN  `fs_b_user` ON  `fs_b_user`.`user_account` = `sdl_b_user_mg`.`user_account`
+		where 1=1
+		<if test="user.userAccount != null">and (sdl_b_user_mg.user_account_name like concat('%', #{user.userAccount},'%') or sdl_b_user_mg.user_account=#{user.userAccount}) </if>
+		<if test="user.deptName != null">and fs_b_user.dept_name =#{user.deptName}</if>
+		<if test="user.yuanqu != null">and fs_b_user.yuanqu =#{user.yuanqu}</if>
+		<if test="user.deptId != null and user.deptId!= ''"> and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{user.deptId} or parent_id =#{user.deptId}) </if>
+		<if test="user.hdjlpgs!= null and user.hdjlpgs==2">
+			and sdl_b_user_mg.user_account  in (
+			select fs_b_user.user_account from fs_b_exame
+			inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+			where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 2 year) and fs_b_exame.exame_type='卫生考试' and (fs_b_exame.exame_num like 'H________' or fs_b_exame.exame_num like '参加医院组织的使用%' ) and fs_b_exame.file_id is not null and fs_b_exame.file_id !='')
+			)
+			)
+		</if>
+		<if test="user.hdjlpgs!= null and user.hdjlpgs==1">
+			and  sdl_b_user_mg.user_account not in (
+			select fs_b_user.user_account from fs_b_exame
+			inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+			where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 2 year) and fs_b_exame.exame_type='卫生考试' and (fs_b_exame.exame_num like 'H________' or fs_b_exame.exame_num like '参加医院组织的使用%' ) and fs_b_exame.file_id is not null and fs_b_exame.file_id !='')
+			)
+			)
+		</if>
+		<if test="user.state!= null and user.state==5">
+			and  sdl_b_user_mg.user_account  in (
+			select fs_b_user.user_account from fs_b_exame
+			inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+			where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试' and (fs_b_exame.exame_num like 'FS__HB_______' or fs_b_exame.exame_num like '参加医院组织的使用%' )  and fs_b_exame.file_id is not null and fs_b_exame.file_id !='')
+			-- or  (fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试')
+			)
+			)
+
+		</if>
+		<if test="user.state!= null and user.state==4">
+			and  sdl_b_user_mg.user_account not in (
+			select fs_b_user.user_account from fs_b_exame
+			inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+			where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试' and (fs_b_exame.exame_num like 'FS__HB_______' or fs_b_exame.exame_num like '参加医院组织的使用%' )  and fs_b_exame.file_id is not null and fs_b_exame.file_id !='')
+			-- or  (fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试')
+			)
+			)
+		</if>
+	</select>
+
+	<select id="getUserExameTip" resultType="cc.mrbird.febs.fs.entity.ViewFs">
+		SELECT
+		`sdl_b_user_mg`.`id` AS `id`,
+		`sdl_b_user_mg`.`user_account_name` AS `user_account_name`,
+		`sdl_b_user_mg`.`user_account` AS `user_account`,
+		`sdl_b_user_mg`.`bq_name` AS `bq_name`,
+		`sdl_b_user_mg`.`user_type` AS `user_type`,
+		`sdl_b_user_mg`.`user_type_name` AS `user_type_name`,
+		`sdl_b_user_mg`.`telephone` AS `telephone`,
+		`sdl_b_user_mg`.`position_name` AS `position_name`,
+		`sdl_b_user_mg`.`np_position_name` AS `np_position_name`,
+		`sdl_b_user_mg`.`rylx` AS `rylx`,
+		`sdl_b_user_mg`.`yggh` AS `yggh`,
+		`sdl_b_user_mg`.`gh_hk` AS `gh_hk`,
+		`sdl_b_user_mg`.`sex_name` AS `sex_name`,
+		`sdl_b_user_mg`.`qualify_no` AS `qualify_no`,
+		`sdl_b_user_mg`.`birthday` AS `birthday`,
+		`sdl_b_user_mg`.`school_date` AS `school_date`,
+		`sdl_b_user_mg`.`zyjsgw` AS `zyjsgw`,
+		`sdl_b_user_mg`.`bianhao_jx` AS `bianhao_jx`,
+		`sdl_b_user_mg`.`zyjsgw_lc` AS `zyjsgw_lc`,
+		`sdl_b_user_mg`.`xcszyjzc` AS `xcszyjzc`,
+		`sdl_b_user_mg`.`appointed_date` AS `appointed_date`,
+		`sdl_b_user_mg`.`appointed_date_lc` AS `appointed_date_lc`,
+		`sdl_b_user_mg`.`zizu` AS `zizu`,
+		`sdl_b_user_mg`.`yuangongzu` AS `yuangongzu`,
+		`sdl_b_user_mg`.`xrgwjb` AS `xrgwjb`,
+		`sdl_b_user_mg`.`xrgwjbprsj` AS `xrgwjbprsj`,
+		`sdl_b_user_mg`.`zhicheng` AS `zhicheng`,
+		`sdl_b_user_mg`.`zyjs_np` AS `zyjs_np`,
+		`sdl_b_user_mg`.`zyjs_date_np` AS `zyjs_date_np`,
+		`sdl_b_user_mg`.`zyjs_npjx` AS `zyjs_npjx`,
+		`sdl_b_user_mg`.`zyjs_date_npjx` AS `zyjs_date_npjx`,
+		`sdl_b_user_mg`.`edu` AS `edu`,
+		`sdl_b_user_mg`.`edu_school` AS `edu_school`,
+		`sdl_b_user_mg`.`guoji` AS `guoji`,
+		`sdl_b_user_mg`.`minzu` AS `minzu`,
+		`sdl_b_user_mg`.`jiguan` AS `jiguan`,
+		`sdl_b_user_mg`.`political_status` AS `political_status`,
+		`sdl_b_user_mg`.`bianhao_lc` AS `bianhao_lc`,
+		`sdl_b_user_mg`.`xingzhengjiebie` AS `xingzhengjiebie`,
+		`sdl_b_user_mg`.`id_card` AS `id_card`,
+		`sdl_b_user_mg`.`work_date` AS `work_date`,
+		`sdl_b_user_mg`.`yishi_lb` AS `yishi_lb`,
+		`sdl_b_user_mg`.`yishi_jb` AS `yishi_jb`,
+		`sdl_b_user_mg`.`yishi_zhiyefanwei` AS `yishi_zhiyefanwei`,
+		`sdl_b_user_mg`.`yishi_zgzsbianhao` AS `yishi_zgzsbianhao`,
+		`sdl_b_user_mg`.`yishi_ziyebianhao` AS `yishi_ziyebianhao`,
+		`sdl_b_user_mg`.`renshizifw` AS `renshizifw`,
+		`sdl_b_user_mg`.`renshizfenlei` AS `renshizfenlei`,
+		`sdl_b_user_mg`.`is_authority` AS `is_authority`,
+		`sdl_b_user_mg`.`IsUse` AS `IsUse`,
+		`sdl_b_user_mg`.`patent_good` AS `patent_good`,
+		`sdl_b_user_mg`.`patent_ranknum` AS `patent_ranknum`,
+		`sdl_b_user_mg`.`state` AS `state`,
+		`sdl_b_user_mg`.`IS_DELETEMARK` AS `IS_DELETEMARK`,
+		`sdl_b_user_mg`.`CREATE_TIME` AS `CREATE_TIME`,
+		`sdl_b_user_mg`.`display_index` AS `display_index`,
+		`sdl_b_user_mg`.`MODIFY_TIME` AS `MODIFY_TIME`,
+		`sdl_b_user_mg`.`CREATE_USER_ID` AS `CREATE_USER_ID`,
+		`sdl_b_user_mg`.`MODIFY_USER_ID` AS `MODIFY_USER_ID`,
+		`sdl_b_user_mg`.`auditMan` AS `auditMan`,
+		`sdl_b_user_mg`.`auditManName` AS `auditManName`,
+		`sdl_b_user_mg`.`auditDate` AS `auditDate`,
+		`sdl_b_user_mg`.`auditSuggestion` AS `auditSuggestion`,
+		`sdl_b_user_mg`.`file_id_lc` AS `file_id_lc`,
+		`sdl_b_user_mg`.`file_url_lc` AS `file_url_lc`,
+		`sdl_b_user_mg`.`dept_new` AS `dept_new`,
+		`sdl_b_user_mg`.`doc_type` AS `doc_type`,
+		`sdl_b_user_mg`.`chujikh_date` AS `chujikh_date`,
+		`sdl_b_user_mg`.`is_zhongjikh` AS `is_zhongjikh`,
+		`sdl_b_user_mg`.`zhongjikh_date` AS `zhongjikh_date`,
+		`sdl_b_user_mg`.`staff_date` AS `staff_date`,
+		`sdl_b_user_mg`.`picture_id` AS `picture_id`,
+		`sdl_b_user_mg`.`picture_url` AS `picture_url`,
+		`sdl_b_user_mg`.`gqpxqk` AS `gqpxqk`,
+		`sdl_b_user_mg`.`gfhyspxqk` AS `gfhyspxqk`,
+		`sdl_b_user_mg`.`zjspnlceqk` AS `zjspnlceqk`,
+		`sdl_b_user_mg`.`dca_year` AS `dca_year`,
+		`fs_b_user`.`grjlbh` AS `grjlbh`,
+		`fs_b_user`.`zylb` AS `zylb`,
+		`fs_b_user`.`gwlb` AS `gwlb`,
+		`fs_b_user`.`hdjlpgs` AS `hdjlpgs`,
+		`fs_b_user`.`fsgl` AS `fsgl`,
+		`fs_b_user`.`fs_date` AS `fs_date`,
+		`fs_b_user`.`jcks_date` AS `jcks_date`,
+		`fs_b_user`.`fsgzzh` AS `fsgzzh`,
+		`fs_b_user`.`bz_date` AS `bz_date`,
+		`fs_b_user`.`dept_id` AS `dept_id`,
+		`fs_b_user`.`dept_name` AS `dept_name`,
+		`fs_b_user`.`file_id` AS `file_id`,
+		`fs_b_user`.`file_url` AS `file_url`,
+		`fs_b_user`.`married` AS `married`,
+		`fs_b_user`.`yuanqu` AS `yuanqu`,
+		`fs_b_user`.`note` AS `note`,
+		fs_b_exametype.name exame_type,
+		p.exame_date
+		FROM
+		`sdl_b_user_mg` INNER  JOIN  `fs_b_user` ON  `fs_b_user`.`user_account` = `sdl_b_user_mg`.`user_account`
+		JOIN fs_b_exametype
+		LEFT JOIN (
+		SELECT
+		a.exame_date,
+		a.user_account,
+		a.exame_type
+		FROM
+		fs_b_exame a
+		INNER JOIN (
+		SELECT
+		fs_b_exame.user_account,
+		fs_b_exame.exame_type,
+		max( fs_b_exame.exame_date ) exame_date
+		FROM
+		fs_b_exame
+		INNER JOIN fs_b_user ON fs_b_user.user_account = fs_b_exame.user_account
+		WHERE
+		fs_b_exame.user_account != ''
+		GROUP BY
+		fs_b_exame.user_account,
+		fs_b_exame.exame_type
+		) b ON a.user_account = b.user_account
+		AND a.exame_date = b.exame_date
+		AND a.exame_type = b.exame_type UNION
+		SELECT
+		a.exame_date,
+		b.user_account,
+		a.exame_type
+		FROM
+		fs_b_exame a
+		INNER JOIN (
+		SELECT
+		fs_b_user.user_account,
+		fs_b_exame.number,
+		fs_b_exame.exame_type,
+		max( fs_b_exame.exame_date ) exame_date
+		FROM
+		fs_b_exame
+		INNER JOIN fs_b_user ON fs_b_user.grjlbh = fs_b_exame.number
+		WHERE
+		fs_b_exame.user_account = ''
+		OR fs_b_exame.user_account IS NULL
+		GROUP BY
+		fs_b_user.user_account,
+		fs_b_exame.exame_type,
+		fs_b_exame.number
+		) b ON a.number = b.number
+		AND a.exame_date = b.exame_date
+		AND a.exame_type = b.exame_type
+		) p ON fs_b_user.user_account= p.user_account
+		AND fs_b_exametype.NAME = p.exame_type
+
+		where 1=1
+			and exists (
+			select *  from fs_b_record where
+		sdl_b_user_mg.user_account =fs_b_record.user_account and
+			operation_date in
+			(SELECT
+			MAX( operation_date ) operation_date
+			FROM
+			fs_b_record b
+			WHERE
+			b.operation_date <![CDATA[ <= ]]>  CURRENT_DATE ()  and fs_b_record.user_account=b.user_account
+			GROUP BY
+			user_account) and state= 0
+			)
+		and
+		(( p.exame_date <![CDATA[ <= ]]>  DATE_SUB( CURDATE( ), INTERVAL 21 MONTH ) AND p.exame_type = '卫生考试' )
+		OR ( p.exame_date <![CDATA[ <= ]]>  DATE_SUB( CURDATE( ), INTERVAL 4 YEAR ) AND p.exame_type = '环保考试' )
+		OR p.exame_type is NULL)
+		<if test="user.yuanqu != null">and fs_b_user.yuanqu =#{user.yuanqu}</if>
+		<if test="user.userAccount != null">and (sdl_b_user_mg.user_account_name like concat('%', #{user.userAccount},'%') or sdl_b_user_mg.user_account=#{user.userAccount}) </if>
+		<if test="user.deptName != null">and fs_b_user.dept_name like concat('%',#{user.deptName},'%') </if>
+		<if test="user.exameType != null">and fs_b_exametype.name =#{user.exameType}</if>
+		<if test="user.deptId != null and user.deptId!= ''"> and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{user.deptId} or parent_id =#{user.deptId}) </if>
+	</select>
+
+	<select id="getUserHealthTip" resultType="cc.mrbird.febs.fs.entity.ViewFs">
+		SELECT
+		`sdl_b_user_mg`.`id` AS `id`,
+		`sdl_b_user_mg`.`user_account_name` AS `user_account_name`,
+		`sdl_b_user_mg`.`user_account` AS `user_account`,
+		`sdl_b_user_mg`.`bq_name` AS `bq_name`,
+		`sdl_b_user_mg`.`user_type` AS `user_type`,
+		`sdl_b_user_mg`.`user_type_name` AS `user_type_name`,
+		`sdl_b_user_mg`.`telephone` AS `telephone`,
+		`sdl_b_user_mg`.`position_name` AS `position_name`,
+		`sdl_b_user_mg`.`np_position_name` AS `np_position_name`,
+		`sdl_b_user_mg`.`rylx` AS `rylx`,
+		`sdl_b_user_mg`.`yggh` AS `yggh`,
+		`sdl_b_user_mg`.`gh_hk` AS `gh_hk`,
+		`sdl_b_user_mg`.`sex_name` AS `sex_name`,
+		`sdl_b_user_mg`.`qualify_no` AS `qualify_no`,
+		`sdl_b_user_mg`.`birthday` AS `birthday`,
+		`sdl_b_user_mg`.`school_date` AS `school_date`,
+		`sdl_b_user_mg`.`zyjsgw` AS `zyjsgw`,
+		`sdl_b_user_mg`.`bianhao_jx` AS `bianhao_jx`,
+		`sdl_b_user_mg`.`zyjsgw_lc` AS `zyjsgw_lc`,
+		`sdl_b_user_mg`.`xcszyjzc` AS `xcszyjzc`,
+		`sdl_b_user_mg`.`appointed_date` AS `appointed_date`,
+		`sdl_b_user_mg`.`appointed_date_lc` AS `appointed_date_lc`,
+		`sdl_b_user_mg`.`zizu` AS `zizu`,
+		`sdl_b_user_mg`.`yuangongzu` AS `yuangongzu`,
+		`sdl_b_user_mg`.`xrgwjb` AS `xrgwjb`,
+		`sdl_b_user_mg`.`xrgwjbprsj` AS `xrgwjbprsj`,
+		`sdl_b_user_mg`.`zhicheng` AS `zhicheng`,
+		`sdl_b_user_mg`.`zyjs_np` AS `zyjs_np`,
+		`sdl_b_user_mg`.`zyjs_date_np` AS `zyjs_date_np`,
+		`sdl_b_user_mg`.`zyjs_npjx` AS `zyjs_npjx`,
+		`sdl_b_user_mg`.`zyjs_date_npjx` AS `zyjs_date_npjx`,
+		`sdl_b_user_mg`.`edu` AS `edu`,
+		`sdl_b_user_mg`.`edu_school` AS `edu_school`,
+		`sdl_b_user_mg`.`guoji` AS `guoji`,
+		`sdl_b_user_mg`.`minzu` AS `minzu`,
+		`sdl_b_user_mg`.`jiguan` AS `jiguan`,
+		`sdl_b_user_mg`.`political_status` AS `political_status`,
+		`sdl_b_user_mg`.`bianhao_lc` AS `bianhao_lc`,
+		`sdl_b_user_mg`.`xingzhengjiebie` AS `xingzhengjiebie`,
+		`sdl_b_user_mg`.`id_card` AS `id_card`,
+		`sdl_b_user_mg`.`work_date` AS `work_date`,
+		`sdl_b_user_mg`.`yishi_lb` AS `yishi_lb`,
+		`sdl_b_user_mg`.`yishi_jb` AS `yishi_jb`,
+		`sdl_b_user_mg`.`yishi_zhiyefanwei` AS `yishi_zhiyefanwei`,
+		`sdl_b_user_mg`.`yishi_zgzsbianhao` AS `yishi_zgzsbianhao`,
+		`sdl_b_user_mg`.`yishi_ziyebianhao` AS `yishi_ziyebianhao`,
+		`sdl_b_user_mg`.`renshizifw` AS `renshizifw`,
+		`sdl_b_user_mg`.`renshizfenlei` AS `renshizfenlei`,
+		`sdl_b_user_mg`.`is_authority` AS `is_authority`,
+		`sdl_b_user_mg`.`IsUse` AS `IsUse`,
+		`sdl_b_user_mg`.`patent_good` AS `patent_good`,
+		`sdl_b_user_mg`.`patent_ranknum` AS `patent_ranknum`,
+		`sdl_b_user_mg`.`state` AS `state`,
+		`sdl_b_user_mg`.`IS_DELETEMARK` AS `IS_DELETEMARK`,
+		`sdl_b_user_mg`.`CREATE_TIME` AS `CREATE_TIME`,
+		`sdl_b_user_mg`.`display_index` AS `display_index`,
+		`sdl_b_user_mg`.`MODIFY_TIME` AS `MODIFY_TIME`,
+		`sdl_b_user_mg`.`CREATE_USER_ID` AS `CREATE_USER_ID`,
+		`sdl_b_user_mg`.`MODIFY_USER_ID` AS `MODIFY_USER_ID`,
+		`sdl_b_user_mg`.`auditMan` AS `auditMan`,
+		`sdl_b_user_mg`.`auditManName` AS `auditManName`,
+		`sdl_b_user_mg`.`auditDate` AS `auditDate`,
+		`sdl_b_user_mg`.`auditSuggestion` AS `auditSuggestion`,
+		`sdl_b_user_mg`.`file_id_lc` AS `file_id_lc`,
+		`sdl_b_user_mg`.`file_url_lc` AS `file_url_lc`,
+		`sdl_b_user_mg`.`dept_new` AS `dept_new`,
+		`sdl_b_user_mg`.`doc_type` AS `doc_type`,
+		`sdl_b_user_mg`.`chujikh_date` AS `chujikh_date`,
+		`sdl_b_user_mg`.`is_zhongjikh` AS `is_zhongjikh`,
+		`sdl_b_user_mg`.`zhongjikh_date` AS `zhongjikh_date`,
+		`sdl_b_user_mg`.`staff_date` AS `staff_date`,
+		`sdl_b_user_mg`.`picture_id` AS `picture_id`,
+		`sdl_b_user_mg`.`picture_url` AS `picture_url`,
+		`sdl_b_user_mg`.`gqpxqk` AS `gqpxqk`,
+		`sdl_b_user_mg`.`gfhyspxqk` AS `gfhyspxqk`,
+		`sdl_b_user_mg`.`zjspnlceqk` AS `zjspnlceqk`,
+		`sdl_b_user_mg`.`dca_year` AS `dca_year`,
+		`fs_b_user`.`grjlbh` AS `grjlbh`,
+		`fs_b_user`.`zylb` AS `zylb`,
+		`fs_b_user`.`gwlb` AS `gwlb`,
+		`fs_b_user`.`hdjlpgs` AS `hdjlpgs`,
+		`fs_b_user`.`fsgl` AS `fsgl`,
+		`fs_b_user`.`fs_date` AS `fs_date`,
+		`fs_b_user`.`jcks_date` AS `jcks_date`,
+		`fs_b_user`.`fsgzzh` AS `fsgzzh`,
+		`fs_b_user`.`bz_date` AS `bz_date`,
+		`fs_b_user`.`dept_id` AS `dept_id`,
+		`fs_b_user`.`dept_name` AS `dept_name`,
+		`fs_b_user`.`file_id` AS `file_id`,
+		`fs_b_user`.`file_url` AS `file_url`,
+		`fs_b_user`.`married` AS `married`,
+		`fs_b_user`.`yuanqu` AS `yuanqu`,
+		`fs_b_user`.`note` AS `note`,
+        p2.is_big,
+		p.rq rq
+		FROM
+		`sdl_b_user_mg`
+		INNER JOIN `fs_b_user` ON `fs_b_user`.`user_account` = `sdl_b_user_mg`.`user_account`
+		LEFT JOIN (
+		SELECT
+		a.*
+		FROM
+		fs_b_health a
+		INNER JOIN ( SELECT pernr, max( rq ) rq FROM fs_b_health GROUP BY pernr, rq ) b ON a.pernr = b.pernr
+		AND a.rq = b.rq
+		) p ON sdl_b_user_mg.yggh = p.pernr
+		left join (
+		SELECT a.number number,a.is_big from fs_b_qy a inner join (
+		select max(start_date) start_date,number  from fs_b_qy GROUP BY number)p
+		on a.start_date=p.start_date and a.number=p.number
+		-- where a.is_big='是'
+		) p2 on fs_b_user.grjlbh= p2.number
+		WHERE
+		((
+		(
+		( p2.is_big='是' AND p.rq <![CDATA[ <= ]]> DATE_SUB( CURDATE( ), INTERVAL 9 MONTH ) )
+		OR ( (p2.is_big is NULL or p2.is_big='否') AND p.rq <![CDATA[ <= ]]> DATE_SUB( CURDATE( ), INTERVAL 21 MONTH ) )
+		OR p.rq IS NULL
+		)
+		AND EXISTS (
+		SELECT
+		*
+		FROM
+		fs_b_record
+		WHERE
+		sdl_b_user_mg.user_account = fs_b_record.user_account
+		AND operation_date IN (
+		SELECT
+		MAX( operation_date ) operation_date
+		FROM
+		fs_b_record b
+		WHERE
+		b.operation_date  <![CDATA[ <= ]]>  CURRENT_DATE ( )
+		AND fs_b_record.user_account = b.user_account
+		GROUP BY
+		user_account
+		)
+		AND state = 0
+		)
+		)
+		<if test="user.yuanqu != null">and fs_b_user.yuanqu =#{user.yuanqu}</if>
+		<if test="user.userAccount != null">and (sdl_b_user_mg.user_account_name like concat('%', #{user.userAccount},'%') or sdl_b_user_mg.user_account=#{user.userAccount}) </if>
+		<if test="user.deptName != null">and fs_b_user.dept_name like concat('%',#{user.deptName},'%') </if>
+		<if test="user.exameType != null">and fs_b_exametype.name =#{user.exameType}</if>
+		<if test="user.deptId != null and user.deptId!= ''"> and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{user.deptId} or parent_id =#{user.deptId}) </if>
+		)
+		union
+		SELECT
+		`sdl_b_user_mg`.`id` AS `id`,
+		`sdl_b_user_mg`.`user_account_name` AS `user_account_name`,
+		`sdl_b_user_mg`.`user_account` AS `user_account`,
+		`sdl_b_user_mg`.`bq_name` AS `bq_name`,
+		`sdl_b_user_mg`.`user_type` AS `user_type`,
+		`sdl_b_user_mg`.`user_type_name` AS `user_type_name`,
+		`sdl_b_user_mg`.`telephone` AS `telephone`,
+		`sdl_b_user_mg`.`position_name` AS `position_name`,
+		`sdl_b_user_mg`.`np_position_name` AS `np_position_name`,
+		`sdl_b_user_mg`.`rylx` AS `rylx`,
+		`sdl_b_user_mg`.`yggh` AS `yggh`,
+		`sdl_b_user_mg`.`gh_hk` AS `gh_hk`,
+		`sdl_b_user_mg`.`sex_name` AS `sex_name`,
+		`sdl_b_user_mg`.`qualify_no` AS `qualify_no`,
+		`sdl_b_user_mg`.`birthday` AS `birthday`,
+		`sdl_b_user_mg`.`school_date` AS `school_date`,
+		`sdl_b_user_mg`.`zyjsgw` AS `zyjsgw`,
+		`sdl_b_user_mg`.`bianhao_jx` AS `bianhao_jx`,
+		`sdl_b_user_mg`.`zyjsgw_lc` AS `zyjsgw_lc`,
+		`sdl_b_user_mg`.`xcszyjzc` AS `xcszyjzc`,
+		`sdl_b_user_mg`.`appointed_date` AS `appointed_date`,
+		`sdl_b_user_mg`.`appointed_date_lc` AS `appointed_date_lc`,
+		`sdl_b_user_mg`.`zizu` AS `zizu`,
+		`sdl_b_user_mg`.`yuangongzu` AS `yuangongzu`,
+		`sdl_b_user_mg`.`xrgwjb` AS `xrgwjb`,
+		`sdl_b_user_mg`.`xrgwjbprsj` AS `xrgwjbprsj`,
+		`sdl_b_user_mg`.`zhicheng` AS `zhicheng`,
+		`sdl_b_user_mg`.`zyjs_np` AS `zyjs_np`,
+		`sdl_b_user_mg`.`zyjs_date_np` AS `zyjs_date_np`,
+		`sdl_b_user_mg`.`zyjs_npjx` AS `zyjs_npjx`,
+		`sdl_b_user_mg`.`zyjs_date_npjx` AS `zyjs_date_npjx`,
+		`sdl_b_user_mg`.`edu` AS `edu`,
+		`sdl_b_user_mg`.`edu_school` AS `edu_school`,
+		`sdl_b_user_mg`.`guoji` AS `guoji`,
+		`sdl_b_user_mg`.`minzu` AS `minzu`,
+		`sdl_b_user_mg`.`jiguan` AS `jiguan`,
+		`sdl_b_user_mg`.`political_status` AS `political_status`,
+		`sdl_b_user_mg`.`bianhao_lc` AS `bianhao_lc`,
+		`sdl_b_user_mg`.`xingzhengjiebie` AS `xingzhengjiebie`,
+		`sdl_b_user_mg`.`id_card` AS `id_card`,
+		`sdl_b_user_mg`.`work_date` AS `work_date`,
+		`sdl_b_user_mg`.`yishi_lb` AS `yishi_lb`,
+		`sdl_b_user_mg`.`yishi_jb` AS `yishi_jb`,
+		`sdl_b_user_mg`.`yishi_zhiyefanwei` AS `yishi_zhiyefanwei`,
+		`sdl_b_user_mg`.`yishi_zgzsbianhao` AS `yishi_zgzsbianhao`,
+		`sdl_b_user_mg`.`yishi_ziyebianhao` AS `yishi_ziyebianhao`,
+		`sdl_b_user_mg`.`renshizifw` AS `renshizifw`,
+		`sdl_b_user_mg`.`renshizfenlei` AS `renshizfenlei`,
+		`sdl_b_user_mg`.`is_authority` AS `is_authority`,
+		`sdl_b_user_mg`.`IsUse` AS `IsUse`,
+		`sdl_b_user_mg`.`patent_good` AS `patent_good`,
+		`sdl_b_user_mg`.`patent_ranknum` AS `patent_ranknum`,
+		`sdl_b_user_mg`.`state` AS `state`,
+		`sdl_b_user_mg`.`IS_DELETEMARK` AS `IS_DELETEMARK`,
+		`sdl_b_user_mg`.`CREATE_TIME` AS `CREATE_TIME`,
+		`sdl_b_user_mg`.`display_index` AS `display_index`,
+		`sdl_b_user_mg`.`MODIFY_TIME` AS `MODIFY_TIME`,
+		`sdl_b_user_mg`.`CREATE_USER_ID` AS `CREATE_USER_ID`,
+		`sdl_b_user_mg`.`MODIFY_USER_ID` AS `MODIFY_USER_ID`,
+		`sdl_b_user_mg`.`auditMan` AS `auditMan`,
+		`sdl_b_user_mg`.`auditManName` AS `auditManName`,
+		`sdl_b_user_mg`.`auditDate` AS `auditDate`,
+		`sdl_b_user_mg`.`auditSuggestion` AS `auditSuggestion`,
+		`sdl_b_user_mg`.`file_id_lc` AS `file_id_lc`,
+		`sdl_b_user_mg`.`file_url_lc` AS `file_url_lc`,
+		`sdl_b_user_mg`.`dept_new` AS `dept_new`,
+		`sdl_b_user_mg`.`doc_type` AS `doc_type`,
+		`sdl_b_user_mg`.`chujikh_date` AS `chujikh_date`,
+		`sdl_b_user_mg`.`is_zhongjikh` AS `is_zhongjikh`,
+		`sdl_b_user_mg`.`zhongjikh_date` AS `zhongjikh_date`,
+		`sdl_b_user_mg`.`staff_date` AS `staff_date`,
+		`sdl_b_user_mg`.`picture_id` AS `picture_id`,
+		`sdl_b_user_mg`.`picture_url` AS `picture_url`,
+		`sdl_b_user_mg`.`gqpxqk` AS `gqpxqk`,
+		`sdl_b_user_mg`.`gfhyspxqk` AS `gfhyspxqk`,
+		`sdl_b_user_mg`.`zjspnlceqk` AS `zjspnlceqk`,
+		`sdl_b_user_mg`.`dca_year` AS `dca_year`,
+		`fs_b_user`.`grjlbh` AS `grjlbh`,
+		`fs_b_user`.`zylb` AS `zylb`,
+		`fs_b_user`.`gwlb` AS `gwlb`,
+		`fs_b_user`.`hdjlpgs` AS `hdjlpgs`,
+		`fs_b_user`.`fsgl` AS `fsgl`,
+		`fs_b_user`.`fs_date` AS `fs_date`,
+		`fs_b_user`.`jcks_date` AS `jcks_date`,
+		`fs_b_user`.`fsgzzh` AS `fsgzzh`,
+		`fs_b_user`.`bz_date` AS `bz_date`,
+		`fs_b_user`.`dept_id` AS `dept_id`,
+		`fs_b_user`.`dept_name` AS `dept_name`,
+		`fs_b_user`.`file_id` AS `file_id`,
+		`fs_b_user`.`file_url` AS `file_url`,
+		`fs_b_user`.`married` AS `married`,
+		`fs_b_user`.`yuanqu` AS `yuanqu`,
+		`fs_b_user`.`note` AS `note`,
+		p2.is_big,
+		p.rq rq
+		FROM
+		`sdl_b_user_mg`
+		INNER JOIN `fs_b_user` ON `fs_b_user`.`user_account` = `sdl_b_user_mg`.`user_account`
+		LEFT JOIN (
+		SELECT
+		a.*
+		FROM
+		fs_b_health a
+		INNER JOIN ( SELECT pernr, max( rq ) rq FROM fs_b_health GROUP BY pernr, rq ) b ON a.pernr = b.pernr
+		AND a.rq = b.rq
+		) p ON sdl_b_user_mg.yggh = p.pernr
+		left join (
+		SELECT a.number number,a.is_big from fs_b_qy a inner join (
+		select max(start_date) start_date,number  from fs_b_qy GROUP BY number)p
+		on a.start_date=p.start_date and a.number=p.number
+		-- where a.is_big='是'
+		) p2 on fs_b_user.grjlbh= p2.number
+		where  (
+		sdl_b_user_mg.state !=3 and sdl_b_user_mg.auditDate is not null and (p.rq is NULL or  p.rq <![CDATA[ < ]]>sdl_b_user_mg.auditDate)
+
+		<if test="user.yuanqu != null">and fs_b_user.yuanqu =#{user.yuanqu}</if>
+		<if test="user.userAccount != null">and (sdl_b_user_mg.user_account_name like concat('%', #{user.userAccount},'%') or sdl_b_user_mg.user_account=#{user.userAccount}) </if>
+		<if test="user.deptName != null">and fs_b_user.dept_name like concat('%',#{user.deptName},'%') </if>
+		<if test="user.exameType != null">and fs_b_exametype.name =#{user.exameType}</if>
+		<if test="user.deptId != null and user.deptId!= ''"> and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{user.deptId} or parent_id =#{user.deptId}) </if>
+		)
+
+
+	</select>
+
+</mapper>

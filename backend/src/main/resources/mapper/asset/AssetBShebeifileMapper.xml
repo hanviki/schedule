@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.asset.dao.AssetBShebeifileMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.asset.entity.AssetBShebeifile">
+                    <id column="id" property="id"/>
+                    <result column="base_id" property="baseId"/>
+                    <result column="sc_date" property="scDate"/>
+                    <result column="type" property="type"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="state" property="state"/>
+                    <result column="note" property="note"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, base_id, sc_date, type, file_id, file_url, state, note, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateAssetBShebeifile" parameterType="cc.mrbird.febs.asset.entity.AssetBShebeifile">
+        update asset_b_shebeifile
+        <trim prefix="set" suffixOverrides=",">
+<if test="baseId != null">base_id=#{baseId},</if>
+<if test="scDate != null">sc_date=#{scDate},</if>
+<if test="type != null">type=#{type},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="state != null">state=#{state},</if>
+<if test="note != null">note=#{note},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findAssetBShebeifile" resultType="cc.mrbird.febs.asset.entity.AssetBShebeifile" parameterType="cc.mrbird.febs.asset.entity.AssetBShebeifile">
+        select  *  from asset_b_shebeifile
+        where  1=1
+            <if test="assetBShebeifile.id != null and assetBShebeifile.id != ''"> and  asset_b_shebeifile.id =#{ assetBShebeifile.id} </if>
+        <if test="assetBShebeifile.scDateFrom!= null">
+            AND asset_b_shebeifile.sc_date <![CDATA[ >= ]]>  #{assetBShebeifile.scDateFrom}
+        </if>
+        <if test="assetBShebeifile.scDateTo!= null">
+            AND  asset_b_shebeifile.sc_date <![CDATA[ <= ]]>  #{assetBShebeifile.scDateTo}
+        </if>
+            <if test="assetBShebeifile.type != null and assetBShebeifile.type != ''"> and  asset_b_shebeifile.type like concat('%', #{ assetBShebeifile.type} ,'%')</if>
+            <if test="assetBShebeifile.fileId != null and assetBShebeifile.fileId != ''"> and  asset_b_shebeifile.file_id like concat('%', #{ assetBShebeifile.fileId} ,'%')</if>
+            <if test="assetBShebeifile.fileUrl != null and assetBShebeifile.fileUrl != ''"> and  asset_b_shebeifile.file_url like concat('%', #{ assetBShebeifile.fileUrl} ,'%')</if>
+        <if test="assetBShebeifile.state != null"> and  asset_b_shebeifile.state =#{ assetBShebeifile.state} </if>
+            <if test="assetBShebeifile.note != null and assetBShebeifile.note != ''"> and  asset_b_shebeifile.note like concat('%', #{ assetBShebeifile.note} ,'%')</if>
+        <if test="assetBShebeifile.isDeletemark != null"> and  asset_b_shebeifile.IS_DELETEMARK =#{ assetBShebeifile.isDeletemark} </if>
+        <if test="assetBShebeifile.createTimeFrom!= null">
+            AND asset_b_shebeifile.CREATE_TIME <![CDATA[ >= ]]>  #{assetBShebeifile.createTimeFrom}
+        </if>
+        <if test="assetBShebeifile.createTimeTo!= null">
+            AND  asset_b_shebeifile.CREATE_TIME <![CDATA[ <= ]]>  #{assetBShebeifile.createTimeTo}
+        </if>
+        <if test="assetBShebeifile.displayIndex != null"> and  asset_b_shebeifile.display_index =#{ assetBShebeifile.displayIndex} </if>
+        <if test="assetBShebeifile.modifyTimeFrom!= null">
+            AND asset_b_shebeifile.MODIFY_TIME <![CDATA[ >= ]]>  #{assetBShebeifile.modifyTimeFrom}
+        </if>
+        <if test="assetBShebeifile.modifyTimeTo!= null">
+            AND  asset_b_shebeifile.MODIFY_TIME <![CDATA[ <= ]]>  #{assetBShebeifile.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

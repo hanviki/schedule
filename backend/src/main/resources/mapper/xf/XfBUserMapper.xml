@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBUserMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBUser">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_name" property="deptName"/>
+                    <result column="start_date" property="startDate"/>
+                    <result column="end_date" property="endDate"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_name, start_date, end_date, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBUser" parameterType="cc.mrbird.febs.xf.entity.XfBUser">
+        update xf_b_user
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptName != null">dept_name=#{deptName},</if>
+<if test="startDate != null">start_date=#{startDate},</if>
+<if test="endDate != null">end_date=#{endDate},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBUser" resultType="cc.mrbird.febs.xf.entity.VXfuser" parameterType="cc.mrbird.febs.xf.entity.VXfuser">
+        SELECT
+        `xf_b_user`.`id` AS `id`,
+        `xf_b_user`.`start_date` AS `start_date`,
+        `xf_b_user`.`end_date` AS `end_date`,
+        `xf_b_user`.`CREATE_TIME` AS `CREATE_TIME`,
+        `xf_b_user`.`display_index` AS `display_index`,
+        `xf_b_user`.`MODIFY_TIME` AS `MODIFY_TIME`,
+        `xf_b_user`.`CREATE_USER_ID` AS `CREATE_USER_ID`,
+        `xf_b_user`.`MODIFY_USER_ID` AS `MODIFY_USER_ID`,
+        `xf_b_user`.`user_account` AS `user_account`,
+        `xf_b_user`.`state` AS `state`,
+        `xf_b_user`.`IS_DELETEMARK` AS `IS_DELETEMARK`,
+        `sdl_b_user_mg`.`user_account_name` AS `user_account_name`,
+        `sdl_b_user_mg`.`bq_name` AS `bq_name`,
+        `sdl_b_user_mg`.`user_type` AS `user_type`,
+        `sdl_b_user_mg`.`user_type_name` AS `user_type_name`,
+        `sdl_b_user_mg`.`dept_b_id` AS `dept_b_id`,
+        `sdl_b_user_mg`.`dept_id` AS `dept_id`,
+        `sdl_b_user_mg`.`telephone` AS `telephone`,
+        `sdl_b_user_mg`.`dept_name` AS `dept_name`,
+        `sdl_b_user_mg`.`position_name` AS `position_name`,
+        `sdl_b_user_mg`.`np_position_name` AS `np_position_name`,
+        `sdl_b_user_mg`.`rylx` AS `rylx`,
+        `sdl_b_user_mg`.`yggh` AS `yggh`,
+        `sdl_b_user_mg`.`gh_hk` AS `gh_hk`,
+        `sdl_b_user_mg`.`sex_name` AS `sex_name`,
+        `sdl_b_user_mg`.`qualify_no` AS `qualify_no`,
+        `sdl_b_user_mg`.`birthday` AS `birthday`,
+        `sdl_b_user_mg`.`school_date` AS `school_date`,
+        `sdl_b_user_mg`.`zyjsgw` AS `zyjsgw`,
+        `sdl_b_user_mg`.`bianhao_jx` AS `bianhao_jx`,
+        `sdl_b_user_mg`.`zyjsgw_lc` AS `zyjsgw_lc`,
+        `sdl_b_user_mg`.`xcszyjzc` AS `xcszyjzc`,
+        `sdl_b_user_mg`.`appointed_date` AS `appointed_date`,
+        `sdl_b_user_mg`.`appointed_date_lc` AS `appointed_date_lc`,
+        `sdl_b_user_mg`.`zizu` AS `zizu`,
+        `sdl_b_user_mg`.`yuangongzu` AS `yuangongzu`,
+        `sdl_b_user_mg`.`xrgwjb` AS `xrgwjb`,
+        `sdl_b_user_mg`.`xrgwjbprsj` AS `xrgwjbprsj`,
+        `sdl_b_user_mg`.`zhicheng` AS `zhicheng`,
+        `sdl_b_user_mg`.`zyjs_np` AS `zyjs_np`,
+        `sdl_b_user_mg`.`zyjs_date_np` AS `zyjs_date_np`,
+        `sdl_b_user_mg`.`zyjs_npjx` AS `zyjs_npjx`,
+        `sdl_b_user_mg`.`zyjs_date_npjx` AS `zyjs_date_npjx`,
+        `sdl_b_user_mg`.`edu` AS `edu`,
+        `sdl_b_user_mg`.`edu_school` AS `edu_school`,
+        `sdl_b_user_mg`.`guoji` AS `guoji`,
+        `sdl_b_user_mg`.`minzu` AS `minzu`,
+        `sdl_b_user_mg`.`jiguan` AS `jiguan`,
+        `sdl_b_user_mg`.`political_status` AS `political_status`,
+        `sdl_b_user_mg`.`bianhao_lc` AS `bianhao_lc`,
+        `sdl_b_user_mg`.`xingzhengjiebie` AS `xingzhengjiebie`,
+        `sdl_b_user_mg`.`id_card` AS `id_card`,
+        `sdl_b_user_mg`.`work_date` AS `work_date`,
+        `sdl_b_user_mg`.`yishi_lb` AS `yishi_lb`,
+        `sdl_b_user_mg`.`yishi_jb` AS `yishi_jb`,
+        `sdl_b_user_mg`.`yishi_zhiyefanwei` AS `yishi_zhiyefanwei`,
+        `sdl_b_user_mg`.`yishi_zgzsbianhao` AS `yishi_zgzsbianhao`,
+        `sdl_b_user_mg`.`yishi_ziyebianhao` AS `yishi_ziyebianhao`,
+        `sdl_b_user_mg`.`renshizifw` AS `renshizifw`,
+        `sdl_b_user_mg`.`renshizfenlei` AS `renshizfenlei`,
+        `sdl_b_user_mg`.`is_authority` AS `is_authority`,
+        `sdl_b_user_mg`.`file_id` AS `file_id`,
+        `sdl_b_user_mg`.`IsUse` AS `IsUse`,
+        `sdl_b_user_mg`.`file_url` AS `file_url`,
+        `sdl_b_user_mg`.`patent_good` AS `patent_good`,
+        `sdl_b_user_mg`.`patent_ranknum` AS `patent_ranknum`,
+        `sdl_b_user_mg`.`auditMan` AS `auditMan`,
+        `sdl_b_user_mg`.`auditManName` AS `auditManName`,
+        `sdl_b_user_mg`.`auditDate` AS `auditDate`,
+        `sdl_b_user_mg`.`auditSuggestion` AS `auditSuggestion`,
+        `sdl_b_user_mg`.`file_id_lc` AS `file_id_lc`,
+        `sdl_b_user_mg`.`file_url_lc` AS `file_url_lc`,
+        `sdl_b_user_mg`.`dept_new` AS `dept_new`,
+        `sdl_b_user_mg`.`doc_type` AS `doc_type`,
+        `sdl_b_user_mg`.`chujikh_date` AS `chujikh_date`,
+        `sdl_b_user_mg`.`is_zhongjikh` AS `is_zhongjikh`,
+        `sdl_b_user_mg`.`zhongjikh_date` AS `zhongjikh_date`,
+        `sdl_b_user_mg`.`staff_date` AS `staff_date`,
+        `sdl_b_user_mg`.`picture_id` AS `picture_id`,
+        `sdl_b_user_mg`.`picture_url` AS `picture_url`,
+        `sdl_b_user_mg`.`gqpxqk` AS `gqpxqk`,
+        `sdl_b_user_mg`.`gfhyspxqk` AS `gfhyspxqk`,
+        `sdl_b_user_mg`.`zjspnlceqk` AS `zjspnlceqk`,
+        `sdl_b_user_mg`.`dca_year` AS `dca_year`
+        FROM
+        ( `xf_b_user` JOIN `sdl_b_user_mg` ON ( ( `xf_b_user`.`user_account` = `sdl_b_user_mg`.`user_account` ) ) )
+       where  1=1
+            <if test="xfBUser.id != null and xfBUser.id != ''"> and  xf_b_user.id =#{ xfBUser.id} </if>
+            <if test="xfBUser.userAccountName != null and xfBUser.userAccountName != ''"> and  sdl_b_user_mg.user_account_name like concat('%', #{ xfBUser.userAccountName} ,'%')</if>
+            <if test="xfBUser.userAccount != null and xfBUser.userAccount != ''"> and  xf_b_user.user_account like concat('%', #{ xfBUser.userAccount} ,'%')</if>
+            <if test="xfBUser.deptName != null and xfBUser.deptName != ''"> and  sdl_b_user_mg.dept_new like concat('%', #{ xfBUser.deptName} ,'%')</if>
+        <if test="xfBUser.startDateFrom!= null">
+            AND xf_b_user.start_date <![CDATA[ >= ]]>  #{xfBUser.startDateFrom}
+        </if>
+        <if test="xfBUser.startDateTo!= null">
+            AND  xf_b_user.start_date <![CDATA[ <= ]]>  #{xfBUser.startDateTo}
+        </if>
+        <if test="xfBUser.endDateFrom!= null">
+            AND xf_b_user.end_date <![CDATA[ >= ]]>  #{xfBUser.endDateFrom}
+        </if>
+        <if test="xfBUser.endDateTo!= null">
+            AND  xf_b_user.end_date <![CDATA[ <= ]]>  #{xfBUser.endDateTo}
+        </if>
+        <if test="xfBUser.state != null"> and  xf_b_user.state =#{ xfBUser.state} </if>
+        <if test="xfBUser.isDeletemark != null"> and  xf_b_user.IS_DELETEMARK =#{ xfBUser.isDeletemark} </if>
+        <if test="xfBUser.createTimeFrom!= null">
+            AND xf_b_user.CREATE_TIME <![CDATA[ >= ]]>  #{xfBUser.createTimeFrom}
+        </if>
+        <if test="xfBUser.createTimeTo!= null">
+            AND  xf_b_user.CREATE_TIME <![CDATA[ <= ]]>  #{xfBUser.createTimeTo}
+        </if>
+        <if test="xfBUser.displayIndex != null"> and  xf_b_user.display_index =#{ xfBUser.displayIndex} </if>
+        <if test="xfBUser.modifyTimeFrom!= null">
+            AND xf_b_user.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBUser.modifyTimeFrom}
+        </if>
+        <if test="xfBUser.modifyTimeTo!= null">
+            AND  xf_b_user.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBUser.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

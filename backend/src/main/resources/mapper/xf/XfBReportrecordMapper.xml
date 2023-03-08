@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.xf.dao.XfBReportrecordMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.xf.entity.XfBReportrecord">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="type" property="type"/>
+                    <result column="result" property="result"/>
+                    <result column="report_date" property="reportDate"/>
+                    <result column="audit_man" property="auditMan"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="remark" property="remark"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, dept_new, type, result, report_date, audit_man, file_id, file_url, remark, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateXfBReportrecord" parameterType="cc.mrbird.febs.xf.entity.XfBReportrecord">
+        update xf_b_reportrecord
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="type != null">type=#{type},</if>
+<if test="result != null">result=#{result},</if>
+<if test="reportDate != null">report_date=#{reportDate},</if>
+<if test="auditMan != null">audit_man=#{auditMan},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="remark != null">remark=#{remark},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findXfBReportrecord" resultType="cc.mrbird.febs.xf.entity.XfBReportrecord" parameterType="cc.mrbird.febs.xf.entity.XfBReportrecord">
+        select  *  from xf_b_reportrecord
+        where  1=1
+            <if test="xfBReportrecord.userAccountName != null and xfBReportrecord.userAccountName != ''"> and  xf_b_reportrecord.user_account_name like concat('%', #{ xfBReportrecord.userAccountName} ,'%')</if>
+            <if test="xfBReportrecord.userAccount != null and xfBReportrecord.userAccount != ''"> and  xf_b_reportrecord.user_account like concat('%', #{ xfBReportrecord.userAccount} ,'%')</if>
+            <if test="xfBReportrecord.deptNew != null and xfBReportrecord.deptNew != ''"> and  xf_b_reportrecord.dept_new like concat('%', #{ xfBReportrecord.deptNew} ,'%')</if>
+            <if test="xfBReportrecord.type != null and xfBReportrecord.type != ''"> and  xf_b_reportrecord.type like concat('%', #{ xfBReportrecord.type} ,'%')</if>
+            <if test="xfBReportrecord.result != null and xfBReportrecord.result != ''"> and  xf_b_reportrecord.result like concat('%', #{ xfBReportrecord.result} ,'%')</if>
+        <if test="xfBReportrecord.reportDateFrom!= null">
+            AND xf_b_reportrecord.report_date <![CDATA[ >= ]]>  #{xfBReportrecord.reportDateFrom}
+        </if>
+        <if test="xfBReportrecord.reportDateTo!= null">
+            AND  xf_b_reportrecord.report_date <![CDATA[ <= ]]>  #{xfBReportrecord.reportDateTo}
+        </if>
+            <if test="xfBReportrecord.auditMan != null and xfBReportrecord.auditMan != ''"> and  xf_b_reportrecord.audit_man like concat('%', #{ xfBReportrecord.auditMan} ,'%')</if>
+            <if test="xfBReportrecord.fileId != null and xfBReportrecord.fileId != ''"> and  xf_b_reportrecord.file_id like concat('%', #{ xfBReportrecord.fileId} ,'%')</if>
+            <if test="xfBReportrecord.fileUrl != null and xfBReportrecord.fileUrl != ''"> and  xf_b_reportrecord.file_url like concat('%', #{ xfBReportrecord.fileUrl} ,'%')</if>
+            <if test="xfBReportrecord.remark != null and xfBReportrecord.remark != ''"> and  xf_b_reportrecord.remark like concat('%', #{ xfBReportrecord.remark} ,'%')</if>
+        <if test="xfBReportrecord.state != null"> and  xf_b_reportrecord.state =#{ xfBReportrecord.state} </if>
+        <if test="xfBReportrecord.isDeletemark != null"> and  xf_b_reportrecord.IS_DELETEMARK =#{ xfBReportrecord.isDeletemark} </if>
+        <if test="xfBReportrecord.createTimeFrom!= null">
+            AND xf_b_reportrecord.CREATE_TIME <![CDATA[ >= ]]>  #{xfBReportrecord.createTimeFrom}
+        </if>
+        <if test="xfBReportrecord.createTimeTo!= null">
+            AND  xf_b_reportrecord.CREATE_TIME <![CDATA[ <= ]]>  #{xfBReportrecord.createTimeTo}
+        </if>
+        <if test="xfBReportrecord.modifyTimeFrom!= null">
+            AND xf_b_reportrecord.MODIFY_TIME <![CDATA[ >= ]]>  #{xfBReportrecord.modifyTimeFrom}
+        </if>
+        <if test="xfBReportrecord.modifyTimeTo!= null">
+            AND  xf_b_reportrecord.MODIFY_TIME <![CDATA[ <= ]]>  #{xfBReportrecord.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

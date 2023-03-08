@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.fs.dao.FsBHealthMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.fs.entity.FsBHealth">
+                    <id column="id" property="id"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="is_fj" property="isFj"/>
+                    <result column="tj_code" property="tjCode"/>
+                    <result column="pernr" property="pernr"/>
+                    <result column="sexy" property="sexy"/>
+                    <result column="age" property="age"/>
+                    <result column="birthday" property="birthday"/>
+                    <result column="married" property="married"/>
+                    <result column="dept_unit" property="deptUnit"/>
+                    <result column="id_card" property="idCard"/>
+                    <result column="whys" property="whys"/>
+                    <result column="jhgl_year" property="jhglYear"/>
+                    <result column="jhgl_month" property="jhglMonth"/>
+                    <result column="gz" property="gz"/>
+                    <result column="deparment" property="deparment"/>
+                    <result column="tjtc" property="tjtc"/>
+                    <result column="rq" property="rq"/>
+                    <result column="tjlb" property="tjlb"/>
+                    <result column="result" property="result"/>
+                    <result column="jl" property="jl"/>
+            <result column="jc_unit" property="jcUnit"/>
+            <result column="jc_jzt" property="jcJzt"/>
+            <result column="jc_wbc" property="jcWbc"/>
+            <result column="jc_plt" property="jcPlt"/>
+            <result column="jc_dwl" property="jcDwl"/>
+            <result column="jc_xhywl" property="jcXhywl"/>
+            <result column="jc_szssrstl" property="jcSzssrstl"/>
+            <result column="jc_zssl" property="jcZssl"/>
+            <result column="jc_rstqbxbl" property="jcRstqbxbl"/>
+            <result column="jc_rstjbl" property="jcRstjbl"/>
+            <result column="jc_lbxbwhxpl" property="jcLbxbwhxpl"/>
+            <result column="jc_lbxbwhl" property="jcLbxbwhl"/>
+                    <result column="suggestion" property="suggestion"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account_name, user_account, is_fj, tj_code, pernr, sexy, age, birthday, married, dept_unit, id_card, whys, jhgl_year, jhgl_month, gz, deparment, tjtc, rq, tjlb, result, jl,jc_unit, jc_jzt, jc_wbc, jc_plt, jc_dwl, jc_xhywl, jc_szssrstl, jc_zssl, jc_rstqbxbl, jc_rstjbl, jc_lbxbwhxpl, jc_lbxbwhl, suggestion, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateFsBHealth" parameterType="cc.mrbird.febs.fs.entity.FsBHealth">
+        update fs_b_health
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="isFj != null">is_fj=#{isFj},</if>
+<if test="tjCode != null">tj_code=#{tjCode},</if>
+<if test="pernr != null">pernr=#{pernr},</if>
+<if test="sexy != null">sexy=#{sexy},</if>
+<if test="age != null">age=#{age},</if>
+<if test="birthday != null">birthday=#{birthday},</if>
+<if test="married != null">married=#{married},</if>
+<if test="deptUnit != null">dept_unit=#{deptUnit},</if>
+<if test="idCard != null">id_card=#{idCard},</if>
+<if test="whys != null">whys=#{whys},</if>
+<if test="jhglYear != null">jhgl_year=#{jhglYear},</if>
+<if test="jhglMonth != null">jhgl_month=#{jhglMonth},</if>
+<if test="gz != null">gz=#{gz},</if>
+<if test="deparment != null">deparment=#{deparment},</if>
+<if test="tjtc != null">tjtc=#{tjtc},</if>
+<if test="rq != null">rq=#{rq},</if>
+<if test="tjlb != null">tjlb=#{tjlb},</if>
+<if test="result != null">result=#{result},</if>
+<if test="jl != null">jl=#{jl},</if>
+            <if test="jcUnit != null">jc_unit=#{jcUnit},</if>
+            <if test="jcJzt != null">jc_jzt=#{jcJzt},</if>
+            <if test="jcWbc != null">jc_wbc=#{jcWbc},</if>
+            <if test="jcPlt != null">jc_plt=#{jcPlt},</if>
+            <if test="jcDwl != null">jc_dwl=#{jcDwl},</if>
+            <if test="jcXhywl != null">jc_xhywl=#{jcXhywl},</if>
+            <if test="jcSzssrstl != null">jc_szssrstl=#{jcSzssrstl},</if>
+            <if test="jcZssl != null">jc_zssl=#{jcZssl},</if>
+            <if test="jcRstqbxbl != null">jc_rstqbxbl=#{jcRstqbxbl},</if>
+            <if test="jcRstjbl != null">jc_rstjbl=#{jcRstjbl},</if>
+            <if test="jcLbxbwhxpl != null">jc_lbxbwhxpl=#{jcLbxbwhxpl},</if>
+            <if test="jcLbxbwhl != null">jc_lbxbwhl=#{jcLbxbwhl},</if>
+<if test="suggestion != null">suggestion=#{suggestion},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findFsBHealth" resultType="cc.mrbird.febs.fs.entity.FsBHealth" parameterType="cc.mrbird.febs.fs.entity.FsBHealth">
+        SELECT
+        fs_b_health.id,
+        fs_b_health.is_fj,
+        fs_b_health.fr_code,
+        fs_b_health.tj_code,
+        fs_b_health.pernr,
+        fs_b_health.sexy,
+        fs_b_health.age,
+        fs_b_health.birthday,
+        fs_b_health.married,
+        fs_b_health.dept_unit,
+        fs_b_health.id_card,
+        fs_b_health.whys,
+        fs_b_health.jhgl_year,
+        fs_b_health.jhgl_month,
+        fs_b_health.gz,
+        fs_b_health.deparment,
+        fs_b_health.tjtc,
+        fs_b_health.rq,
+        fs_b_health.tjlb,
+        fs_b_health.result,
+        fs_b_health.jl,
+        fs_b_health.jc_unit,
+        fs_b_health.jc_jzt,
+        fs_b_health.jc_wbc,
+        fs_b_health.jc_plt,
+        fs_b_health.jc_dwl,
+        fs_b_health.jc_xhywl,
+        fs_b_health.jc_szssrstl,
+        fs_b_health.jc_zssl,
+        fs_b_health.jc_rstqbxbl,
+        fs_b_health.jc_rstjbl,
+        fs_b_health.jc_lbxbwhxpl,
+        fs_b_health.jc_lbxbwhl,
+        fs_b_health.suggestion,
+        fs_b_health.state,
+        fs_b_health.IS_DELETEMARK,
+        fs_b_health.CREATE_TIME,
+        fs_b_health.display_index,
+        fs_b_health.MODIFY_TIME,
+        fs_b_health.CREATE_USER_ID,
+        fs_b_health.MODIFY_USER_ID,
+        sdl_b_user_mg.user_account_name,
+        sdl_b_user_mg.user_account
+        FROM
+        sdl_b_user_mg inner join
+        fs_b_health on sdl_b_user_mg.yggh= fs_b_health.pernr
+        inner join fs_b_user on sdl_b_user_mg.user_account=fs_b_user.user_account
+        where  1=1
+        <if test="fsBHealth.yuanqu != null">and fs_b_user.yuanqu =#{fsBHealth.yuanqu}</if>
+            <if test="fsBHealth.id != null and fsBHealth.id != ''"> and  fs_b_health.id =#{ fsBHealth.id} </if>
+            <if test="fsBHealth.userAccountName != null and fsBHealth.userAccountName != ''"> and  sdl_b_user_mg.user_account_name like concat('%', #{ fsBHealth.userAccountName} ,'%')</if>
+            <if test="fsBHealth.userAccount != null and fsBHealth.userAccount != ''"> and ( sdl_b_user_mg.user_account =#{ fsBHealth.userAccount} or sdl_b_user_mg.user_account_name like concat('%', #{ fsBHealth.userAccount} ,'%')) </if>
+            <if test="fsBHealth.isFj != null and fsBHealth.isFj != ''"> and  fs_b_health.is_fj like concat('%', #{ fsBHealth.isFj} ,'%')</if>
+            <if test="fsBHealth.tjCode != null and fsBHealth.tjCode != ''"> and  fs_b_health.tj_code like concat('%', #{ fsBHealth.tjCode} ,'%')</if>
+            <if test="fsBHealth.pernr != null and fsBHealth.pernr != ''"> and  fs_b_health.pernr like concat('%', #{ fsBHealth.pernr} ,'%')</if>
+            <if test="fsBHealth.sexy != null and fsBHealth.sexy != ''"> and  fs_b_health.sexy like concat('%', #{ fsBHealth.sexy} ,'%')</if>
+            <if test="fsBHealth.age != null and fsBHealth.age != ''"> and  fs_b_health.age like concat('%', #{ fsBHealth.age} ,'%')</if>
+            <if test="fsBHealth.birthday != null and fsBHealth.birthday != ''"> and  fs_b_health.birthday like concat('%', #{ fsBHealth.birthday} ,'%')</if>
+            <if test="fsBHealth.married != null and fsBHealth.married != ''"> and  fs_b_health.married like concat('%', #{ fsBHealth.married} ,'%')</if>
+            <if test="fsBHealth.deptUnit != null and fsBHealth.deptUnit != ''"> and  fs_b_health.dept_unit like concat('%', #{ fsBHealth.deptUnit} ,'%')</if>
+            <if test="fsBHealth.idCard != null and fsBHealth.idCard != ''"> and  fs_b_health.id_card like concat('%', #{ fsBHealth.idCard} ,'%')</if>
+            <if test="fsBHealth.whys != null and fsBHealth.whys != ''"> and  fs_b_health.whys like concat('%', #{ fsBHealth.whys} ,'%')</if>
+            <if test="fsBHealth.jhglYear != null and fsBHealth.jhglYear != ''"> and  fs_b_health.jhgl_year like concat('%', #{ fsBHealth.jhglYear} ,'%')</if>
+            <if test="fsBHealth.jhglMonth != null and fsBHealth.jhglMonth != ''"> and  fs_b_health.jhgl_month like concat('%', #{ fsBHealth.jhglMonth} ,'%')</if>
+            <if test="fsBHealth.gz != null and fsBHealth.gz != ''"> and  fs_b_health.gz like concat('%', #{ fsBHealth.gz} ,'%')</if>
+            <if test="fsBHealth.deparment != null and fsBHealth.deparment != ''"> and  fs_b_health.deparment like concat('%', #{ fsBHealth.deparment} ,'%')</if>
+            <if test="fsBHealth.tjtc != null and fsBHealth.tjtc != ''"> and  fs_b_health.tjtc like concat('%', #{ fsBHealth.tjtc} ,'%')</if>
+        <if test="fsBHealth.rqFrom!= null">
+            AND fs_b_health.rq <![CDATA[ >= ]]>  #{fsBHealth.rqFrom}
+        </if>
+        <if test="fsBHealth.rqTo!= null">
+            AND  fs_b_health.rq <![CDATA[ <= ]]>  #{fsBHealth.rqTo}
+        </if>
+            <if test="fsBHealth.tjlb != null and fsBHealth.tjlb != ''"> and  fs_b_health.tjlb like concat('%', #{ fsBHealth.tjlb} ,'%')</if>
+            <if test="fsBHealth.result != null and fsBHealth.result != ''"> and  fs_b_health.result like concat('%', #{ fsBHealth.result} ,'%')</if>
+            <if test="fsBHealth.jl != null and fsBHealth.jl != ''"> and  fs_b_health.jl like concat('%', #{ fsBHealth.jl} ,'%')</if>
+            <if test="fsBHealth.suggestion != null and fsBHealth.suggestion != ''"> and  fs_b_health.suggestion like concat('%', #{ fsBHealth.suggestion} ,'%')</if>
+        <if test="fsBHealth.state != null"> and  fs_b_health.state =#{ fsBHealth.state} </if>
+        <if test="fsBHealth.isDeletemark != null"> and  fs_b_health.IS_DELETEMARK =#{ fsBHealth.isDeletemark} </if>
+        <if test="fsBHealth.createTimeFrom!= null">
+            AND fs_b_health.CREATE_TIME <![CDATA[ >= ]]>  #{fsBHealth.createTimeFrom}
+        </if>
+        <if test="fsBHealth.createTimeTo!= null">
+            AND  fs_b_health.CREATE_TIME <![CDATA[ <= ]]>  #{fsBHealth.createTimeTo}
+        </if>
+        <if test="fsBHealth.displayIndex != null"> and  fs_b_health.display_index =#{ fsBHealth.displayIndex} </if>
+        <if test="fsBHealth.modifyTimeFrom!= null">
+            AND fs_b_health.MODIFY_TIME <![CDATA[ >= ]]>  #{fsBHealth.modifyTimeFrom}
+        </if>
+        <if test="fsBHealth.modifyTimeTo!= null">
+            AND  fs_b_health.MODIFY_TIME <![CDATA[ <= ]]>  #{fsBHealth.modifyTimeTo}
+        </if>
+        <if test="fsBHealth.deptId != null">
+            and fs_b_user.dept_id in (select dept_id from t_dept where dept_id=#{fsBHealth.deptId} or parent_id =#{fsBHealth.deptId})
+         </if>
+</select>
+
+    <select id="findHByAccounts" resultType="cc.mrbird.febs.fs.entity.FsBHealth" >
+        select fs_b_health.jl,sdl_b_user_mg.user_account,fs_b_health.pernr  as user_account from fs_b_health
+         inner join sdl_b_user_mg on fs_b_health.pernr=sdl_b_user_mg.yggh
+         where fs_b_health.rq between DATE_SUB(CURDATE(), interval 2 year) and CURDATE()
+        and sdl_b_user_mg.user_account in
+        <foreach item="item" index="index" collection="accountList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by rq desc
+    </select>
+
+</mapper>

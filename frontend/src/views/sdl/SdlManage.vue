@@ -40,8 +40,8 @@
         <div class="cuDiv" style="background-color: #00acec">
           <div class="bigDiv">
             <div class="titleDiv">报表查询</div>
-            <div class="subDiv" @click="openQulifaction(7, '排班打印')">
-              排班打印
+            <div class="subDiv" @click="openQulifaction(7, '排班数据查询与打印')">
+              排班数据查询与打印
             </div>
             <div class="subDiv" @click="openQulifaction(8, '夜班费')">
               夜班费

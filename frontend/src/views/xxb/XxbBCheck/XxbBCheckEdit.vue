@@ -486,7 +486,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入技术临床应用安全性分析"
                       v-decorator="[
                         'lincaqfx',
@@ -514,7 +514,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入技术临床应用有效性分析"
                       v-decorator="[
                         'lincyyfx',

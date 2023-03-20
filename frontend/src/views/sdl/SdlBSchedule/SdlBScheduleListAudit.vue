@@ -66,7 +66,7 @@
     </div>
     <!-- 表格区域 -->
     <div class="operator">
-      <a-button icon="check" 
+      <a-button icon="check"  v-hasNoPermission="['qc:no']"
       style="color: #fff;background-color: #faad14;border-color: #faad14;box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);"
        @click="audit">批量审核通过</a-button>
     </div>
@@ -98,7 +98,7 @@
             icon="search"
             @click="info(record)"
           >查看</a-button>
-        <a-button v-if="record.state == 1" icon="edit" @click="edit(record)"
+        <a-button v-hasNoPermission="['qc:no']" v-if="record.state == 1" icon="edit" @click="edit(record)"
           >审核</a-button>
       </template>
     </a-table>

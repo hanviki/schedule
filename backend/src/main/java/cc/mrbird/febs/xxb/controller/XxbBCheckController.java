@@ -624,6 +624,13 @@ public class XxbBCheckController extends BaseController {
                         mergeAddPdfList.add(filePath + fileQuery.get(0).getServerName());
                     }
 
+                    //xxbcheck_lcyyzqtys 新技术新业务临床应用
+                    fileQuery = fileList.stream().filter(s -> s.getRefTabTable() != null &&
+                            s.getRefTabTable().equals("xxbcheck_jyygk")).collect(Collectors.toList());
+                    if (fileQuery.size() > 0) {
+                        mergeAddPdfList.add(filePath + fileQuery.get(0).getServerName());
+                    }
+
                pdf.mergePdfFiles(mergeAddPdfList,fileName);
 
                 this.downFile(response, fileName, name, true);

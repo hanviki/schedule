@@ -306,6 +306,14 @@
               <td class="tdRight" style="width:20%;padding:20px 5px"><font class="fontColor">*</font>国内外研究与应用概况：</td>
               <td style="width:80%">
                 {{ xxbBCheck.gnwyjyygk }}
+                  <upload-file
+                  ref="jyygkFile"
+                  :baseId="xxbBCheck.id"
+                  btnTitle="上传相关佐证材料PDF"
+                  :isEdit="false"
+                  refTab="xxbcheck_jyygk"
+                >
+                </upload-file>
               </td>
             </tr>
             <tr>
@@ -560,6 +568,8 @@ export default {
       this.$refs.xxbBDeptFlow.reset()
       this.$refs.yxxfxFile.reset();
       this.$refs.aqxfxFile.reset();
+      this.$refs.jyygkFile.reset();
+      
     },
     onClose() {
       this.reset();

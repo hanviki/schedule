@@ -444,7 +444,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="500"
                       placeholder="请输入项目的主要内容"
                       v-decorator="[
                         'projectcontent',
@@ -467,7 +467,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="1500"
                       placeholder="请输入项目的目的、意义及创新之处"
                       v-decorator="[
                         'projectmdyycx',
@@ -490,7 +490,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入国内外研究与应用概况"
                       v-decorator="[
                         'gnwyjyygk',
@@ -505,6 +505,14 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                  ref="jyygkFile"
+                  :baseId="xxbBCheck.id"
+                  btnTitle="上传相关佐证材料PDF"
+                  :isEdit="isEdit"
+                  refTab="xxbcheck_jyygk"
+                >
+                </upload-file>
                 </td>
               </tr>
               <tr>
@@ -513,7 +521,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入技术临床应用安全性分析"
                       v-decorator="[
                         'lincaqfx',
@@ -541,7 +549,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入技术临床应用有效性分析"
                       v-decorator="[
                         'lincyyfx',
@@ -572,7 +580,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入可行性分析及实施计划"
                       v-decorator="[
                         'kxxfxssjh',
@@ -589,7 +597,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入项目可解决的临床问题及效益分析"
                       v-decorator="[
                         'projectlcwtxyfx',
@@ -607,7 +615,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                    :maxLength="txtLength500"
                       placeholder="请输入科室已具备的技术和设备条件"
                       v-decorator="[
                         'lincjssb',
@@ -630,7 +638,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入操作人员技术培训及岗位职责情况"
                       v-decorator="[
                         'ryjjpxgwzzqk',
@@ -678,7 +686,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入可能造成的不良后果、并发症及相应的防范措施"
                       v-decorator="[
                         'blhgbfzffcs',
@@ -718,7 +726,7 @@
                   <a-form-item>
                     <a-textarea
                       :rows="8"
-                      :maxLength="txtLength500"
+                      :maxLength="2000"
                       placeholder="请输入质控措施"
                       v-decorator="[
                         'zkcs',
@@ -952,6 +960,7 @@ export default {
       this.$refs.xxbBLcmanyDList.reset();
       this.$refs.yxxfxFile.reset();
       this.$refs.aqxfxFile.reset();
+      this.$refs.jyygkFile.reset();
       this.$refs.user1.reset();
       this.form.resetFields();
     },

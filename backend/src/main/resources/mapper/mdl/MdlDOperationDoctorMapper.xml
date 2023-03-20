@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.mdl.dao.MdlDOperationDoctorMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.mdl.entity.MdlDOperationDoctor">
+                    <id column="id" property="id"/>
+                    <result column="dept_new" property="deptNew"/>
+                    <result column="code" property="code"/>
+                    <result column="name" property="name"/>
+                    <result column="level" property="level"/>
+                    <result column="docto" property="docto"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dept_new, code, name, level, docto, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateMdlDOperationDoctor" parameterType="cc.mrbird.febs.mdl.entity.MdlDOperationDoctor">
+        update mdl_d_operation_doctor
+        <trim prefix="set" suffixOverrides=",">
+<if test="deptNew != null">dept_new=#{deptNew},</if>
+<if test="code != null">code=#{code},</if>
+<if test="name != null">name=#{name},</if>
+<if test="level != null">level=#{level},</if>
+<if test="docto != null">docto=#{docto},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findMdlDOperationDoctor" resultType="cc.mrbird.febs.mdl.entity.MdlDOperationDoctor" parameterType="cc.mrbird.febs.mdl.entity.MdlDOperationDoctor">
+        select  *  from mdl_d_operation_doctor
+        where  1=1
+            <if test="mdlDOperationDoctor.deptNew != null and mdlDOperationDoctor.deptNew != ''"> and  mdl_d_operation_doctor.dept_new like concat('%', #{ mdlDOperationDoctor.deptNew} ,'%')</if>
+            <if test="mdlDOperationDoctor.code != null and mdlDOperationDoctor.code != ''"> and  mdl_d_operation_doctor.code like concat('%', #{ mdlDOperationDoctor.code} ,'%')</if>
+            <if test="mdlDOperationDoctor.name != null and mdlDOperationDoctor.name != ''"> and  mdl_d_operation_doctor.name like concat('%', #{ mdlDOperationDoctor.name} ,'%')</if>
+            <if test="mdlDOperationDoctor.level != null and mdlDOperationDoctor.level != ''"> and  mdl_d_operation_doctor.level like concat('%', #{ mdlDOperationDoctor.level} ,'%')</if>
+            <if test="mdlDOperationDoctor.docto != null and mdlDOperationDoctor.docto != ''"> and  mdl_d_operation_doctor.docto like concat('%', #{ mdlDOperationDoctor.docto} ,'%')</if>
+        <if test="mdlDOperationDoctor.state != null"> and  mdl_d_operation_doctor.state =#{ mdlDOperationDoctor.state} </if>
+        <if test="mdlDOperationDoctor.isDeletemark != null"> and  mdl_d_operation_doctor.IS_DELETEMARK =#{ mdlDOperationDoctor.isDeletemark} </if>
+        <if test="mdlDOperationDoctor.createTimeFrom!= null">
+            AND mdl_d_operation_doctor.CREATE_TIME <![CDATA[ >= ]]>  #{mdlDOperationDoctor.createTimeFrom}
+        </if>
+        <if test="mdlDOperationDoctor.createTimeTo!= null">
+            AND  mdl_d_operation_doctor.CREATE_TIME <![CDATA[ <= ]]>  #{mdlDOperationDoctor.createTimeTo}
+        </if>
+        <if test="mdlDOperationDoctor.modifyTimeFrom!= null">
+            AND mdl_d_operation_doctor.MODIFY_TIME <![CDATA[ >= ]]>  #{mdlDOperationDoctor.modifyTimeFrom}
+        </if>
+        <if test="mdlDOperationDoctor.modifyTimeTo!= null">
+            AND  mdl_d_operation_doctor.MODIFY_TIME <![CDATA[ <= ]]>  #{mdlDOperationDoctor.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

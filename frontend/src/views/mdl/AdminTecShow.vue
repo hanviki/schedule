@@ -57,6 +57,9 @@
             <div class="subDiv" @click="openQulifaction(24, '操作分级管理目录')">
               操作分级管理目录
             </div>
+             <div class="subDiv" @click="openQulifaction(25, '操作分级目录及资质授权')">
+              操作分级目录及资质授权
+            </div>
           </div>
           <div class="imageDiv"><a-avatar :size="50" style=" backgroundColor:white;" ><a-icon type="user"  style="font-size: 30px;color:green" :bordered="false" /></a-avatar></div>
         </div>
@@ -96,6 +99,7 @@
      </xxb-b-result-report>
      <mdl-b-medicalchina v-if="subShow==23"></mdl-b-medicalchina>
      <mdl-d-operation v-if="subShow==24"></mdl-d-operation>
+     <mdl-d-operation-doctor v-if="subShow==25"></mdl-d-operation-doctor>
     </div>
   </div>
 </template>
@@ -115,6 +119,7 @@ import XxbBResultYwcFlow from '../xxb/XxbBResultFlow/XxbBResultYwcFlow.vue'
 import MdlBMedicalchina from '../mdl/MdlBMedicalchina/MdlBMedicalchina.vue'
 import MdlDOperation from './MdlDOperation/MdlDOperation.vue';
 import MdlYwc from './MdlYwc.vue';
+import MdlDOperationDoctor from './MdlDOperationDoctor/MdlDOperationDoctor.vue';
 
 export default {
   name: "AdminTecShow",
@@ -140,7 +145,8 @@ export default {
     XxbBResultReport,
     MdlBMedicalchina,
     MdlDOperation,
-    MdlYwc
+    MdlYwc,
+    MdlDOperationDoctor
   },
   watch: {
     '$route.query': {

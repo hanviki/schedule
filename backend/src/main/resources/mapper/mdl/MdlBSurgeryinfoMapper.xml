@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.mrbird.febs.mdl.dao.MdlBSurgeryinfoMapper">
 
+    <sql id="mdl_b_surgeryinfo">
+    select mdl_b_surgeryinfo.id,
+mdl_b_surgeryinfo.dept_name,
+mdl_b_surgeryinfo.user_account_name,
+mdl_b_surgeryinfo.user_account,
+sdl_b_user_mg.zhicheng,
+mdl_b_surgeryinfo.sex_name,
+mdl_b_surgeryinfo.birthday,
+mdl_b_surgeryinfo.jb,
+mdl_b_surgeryinfo.valid_date,
+mdl_b_surgeryinfo.note,
+mdl_b_surgeryinfo.state,
+mdl_b_surgeryinfo.IS_DELETEMARK,
+mdl_b_surgeryinfo.CREATE_TIME,
+mdl_b_surgeryinfo.MODIFY_TIME,
+mdl_b_surgeryinfo.CREATE_USER_ID,
+mdl_b_surgeryinfo.MODIFY_USER_ID from mdl_b_surgeryinfo
+inner join sdl_b_user_mg on mdl_b_surgeryinfo.user_account=sdl_b_user_mg.user_account
+</sql>
         <!-- 通用查询映射结果 -->
         <resultMap id="BaseResultMap" type="cc.mrbird.febs.mdl.entity.MdlBSurgeryinfo">
                     <id column="id" property="id"/>
@@ -58,7 +77,7 @@
         `mdl_b_surgeryinfo`.id  AS `id`,
         `mdl_b_surgeryinfo`.`user_account_name` AS `user_account_name`,
         `mdl_b_surgeryinfo`.`user_account` AS `user_account`,
-        `mdl_b_surgeryinfo`.`zhicheng` AS `zhicheng`,
+        `sdl_b_user_mg`.`zhicheng` AS `zhicheng`,
         `mdl_b_surgeryinfo`.`sex_name` AS `sex_name`,
         `mdl_b_surgeryinfo`.`birthday` AS `birthday`,
         `mdl_b_surgeryinfo`.`jb` AS `jb`,
@@ -67,6 +86,7 @@
         `mdl_b_surgeryinfo`.`note` AS `note`
         FROM
         `mdl_b_surgeryinfo`
+        inner join `sdl_b_user_mg` on `mdl_b_surgeryinfo`.`user_account` = `sdl_b_user_mg`.`user_account`
        --  JOIN `mdl_b_surgeryinfo_d` ON `mdl_b_surgeryinfo`.`id` = `mdl_b_surgeryinfo_d`.`base_id`
         where  1=1  and mdl_b_surgeryinfo.IS_DELETEMARK = 1
             <if test="mdlBSurgeryinfo.deptName != null and mdlBSurgeryinfo.deptName != ''"> and  mdl_b_surgeryinfo.dept_name like concat('%', #{ mdlBSurgeryinfo.deptName} ,'%')</if>

@@ -837,7 +837,7 @@ public class XxbBPdfInfo {
                 table.addCell(cell);
 
                 //职务职称
-                cell = new PdfPCell(new Phrase(item.getZhichenglc() + "-" + item.getZhiwu(), fontValue));
+                cell = new PdfPCell(new Phrase(item.getZhichenglc() + "-" + item.getZhiwu()==null?"无":item.getZhiwu(), fontValue));
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setFixedHeight(contentHeightStaff);
@@ -942,7 +942,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_5, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+           // this.setHeight(value3_5,cell);
             cell.setColspan(21);
             table.addCell(cell);
 
@@ -956,7 +956,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_6, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_6,cell);
+        //    this.setHeight(value3_6,cell);
             cell.setColspan(21);
             table.addCell(cell);
 
@@ -969,7 +969,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_7, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_7,cell);
+      //      this.setHeight(value3_7,cell);
             cell.setColspan(21);
             table.addCell(cell);
 
@@ -982,7 +982,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_8, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_8,cell);
+      //      this.setHeight(value3_8,cell);
             cell.setColspan(21);
             table.addCell(cell);
 
@@ -995,7 +995,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_9, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_9,cell);
+      //      this.setHeight(value3_9,cell);
             cell.setColspan(21);
             table.addCell(cell);
 
@@ -1008,7 +1008,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_10, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_10,cell);
+      //      this.setHeight(value3_10,cell);
             cell.setColspan(21);
             table.addCell(cell);
 
@@ -1021,7 +1021,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_11, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_11,cell);
+     //       this.setHeight(value3_11,cell);
             cell.setColspan(21);
             table.addCell(cell);
 
@@ -1975,7 +1975,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_5, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+          //  this.setHeight(value3_5,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -1988,7 +1988,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_12, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+          //  this.setHeight(value3_5,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2001,7 +2001,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_13, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+          //  this.setHeight(value3_5,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2014,7 +2014,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_6, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_6,cell);
+         //   this.setHeight(value3_6,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2027,7 +2027,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_7, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_7,cell);
+         //   this.setHeight(value3_7,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2040,7 +2040,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_14, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+        //    this.setHeight(value3_5,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2053,7 +2053,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_15, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+          //  this.setHeight(value3_5,cell);  //2023-03-27
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2066,7 +2066,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_8, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_8,cell);
+         //   this.setHeight(value3_8,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2079,7 +2079,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_16, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+         //   this.setHeight(value3_5,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2092,7 +2092,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_9, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_9,cell);
+        //    this.setHeight(value3_9,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2105,7 +2105,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_10, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_10,cell);
+      //      this.setHeight(value3_10,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2118,7 +2118,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_17, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+     //       this.setHeight(value3_5,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2131,7 +2131,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_11, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_11,cell);
+      //      this.setHeight(value3_11,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2144,7 +2144,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_18, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+       //     this.setHeight(value3_5,cell);
             cell.setColspan(12);
             table.addCell(cell);
 
@@ -2157,7 +2157,7 @@ public class XxbBPdfInfo {
 
             cell = new PdfPCell(new Phrase(value3_19, fontValue));
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            this.setHeight(value3_5,cell);
+       //     this.setHeight(value3_5,cell);
             cell.setColspan(12);
             table.addCell(cell);
 

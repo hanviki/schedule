@@ -90,7 +90,7 @@ private static final long serialVersionUID=1L;
      * 剂量计佩戴起始日期
      */
         
-        @ExcelField(value ="剂量计佩戴起始日期", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
+        @ExcelField(value ="剂量计佩戴起始日期", writeConverter = DateConverter.class,readConverter = DateReadConverter2.class)
     private Date startDate;
     private transient String startDateFrom;
     private transient String startDateTo;

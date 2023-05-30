@@ -121,6 +121,11 @@
               <a-date-picker @change="(a,b)=>onDateChange(a,b,'mqDateTo')" style="width:48%"/>
             </a-form-item>
           </a-col>
+           <a-col :md="6" :sm="24" 
+                ><a-form-item label="主任未审核" v-bind="formItemLayout"><a-checkbox  @change="isDfChange"
+                  ></a-checkbox
+                ></a-form-item>
+              </a-col>
            </template>
           <span style="float: right; margin-top: 3px">
             <a-button type="primary" @click="search">查询</a-button>
@@ -145,6 +150,11 @@
           url="xxbBCheck/import"
         >
         </import-excel> -->
+        <a-button
+                type="primary"
+                @click="showModal"
+                >提醒用户审核</a-button
+              >
       </div>
       <!-- 表格区域 -->
       <a-table
@@ -284,6 +294,17 @@
       >
       </xxbBDeptFlow-look>
     </a-modal>
+     <a-modal
+        v-model="modalVisible"
+        title="推送用户确认"
+        ok-text="确认"
+        cancel-text="取消"
+        @ok="mutiSend"
+      >
+        <span>请输入发送消息：</span>
+        <a-textarea @blur="(e) => userChange(e.target.value)" :value="sendInfo">
+        </a-textarea>
+      </a-modal>
   </a-card>
 </template>
 
@@ -328,7 +349,9 @@ export default {
           `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`,
       },
       projectType: "",
-      queryParams: {},
+      queryParams: {
+        edu: ''
+      },
       addVisiable: false,
       editVisiable: false,
       lookVisiable: false,
@@ -338,7 +361,8 @@ export default {
       editId: '',
       editMqVisiable: false,
       editZqVisiable: false,
-
+      sendInfo: '',
+      modalVisible: false
     };
   },
   computed: {
@@ -615,6 +639,38 @@ export default {
   },
   methods: {
     moment,
+    showModal() {
+      this.modalVisible = true;
+    },
+    userChange(value) {
+      this.sendInfo = value;
+    },
+    mutiSend() {
+      var that= this
+       that.$confirm({
+          title: "确定发送短信提醒吗?",
+          content: "当您点击确定按钮后，所有未审核用户将接受到提醒短信",
+          centered: true,
+          onOk() {
+            that.loading = true;
+            that
+              .$post("xxbBCheck/sendData", {
+                 sendInfo: that.sendInfo,
+                 ids: that.selectedRowKeys.join(",")
+              })
+              .then(() => {
+                that.$message.success("提交成功");
+                that.modalVisible = false;
+                that.sendInfo= '';
+                that.loading = false;
+              });
+          },
+          onCancel() {
+            that.modalVisible = false;
+          },
+        });
+      
+    },
     handleLookFlowOk () {
       this.lookFlowVisiable = false
     },
@@ -629,6 +685,16 @@ export default {
     },
     handleLookOk(){
       this.lookVisiable = false
+    },
+    isDfChange(e) {
+      console.info(e.target.checked)
+      if(e.target.checked==true){
+        this.queryParams.edu= "1"
+      }
+      else{
+        this.queryParams.edu= ""
+      }
+      
     },
     onSqStartChange (date, dateString) {
         if(date==null){
@@ -688,7 +754,7 @@ export default {
       this.$download('xxbBCheck/downloadFile2', {
         ...formData
       }, `${new Date().getTime()}_` + record.deptNew + '-' + 
-        record.projectName + '-' + record.userAccountName + '.pdf')
+        record.projectName + '-' + record.userAccountName + '.zip')
     },
      download_zq (record) {
       this.$download('xxbBZq/doc', {

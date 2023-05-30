@@ -8,13 +8,11 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
-import cc.mrbird.febs.mdl.entity.MdlBSurgeryinfoD;
-import cc.mrbird.febs.mdl.entity.MdlBSurgeryinfoImport;
-import cc.mrbird.febs.mdl.entity.ViewInfo;
+import cc.mrbird.febs.mdl.entity.*;
 import cc.mrbird.febs.mdl.service.IMdlBSurgeryinfoService;
-import cc.mrbird.febs.mdl.entity.MdlBSurgeryinfo;
 
 import cc.mrbird.febs.common.utils.FebsUtil;
+import cc.mrbird.febs.mdl.service.IViewSurgeryService;
 import cc.mrbird.febs.sdl.entity.SdlBUser;
 import cc.mrbird.febs.sdl.service.ISdlBUserService;
 import cc.mrbird.febs.system.domain.User;
@@ -67,6 +65,9 @@ public IMdlBSurgeryinfoService iMdlBSurgeryinfoService;
 @Autowired
 private ISdlBUserService iSdlBUserService;
 
+@Autowired
+private IViewSurgeryService iViewSurgeryService;
+
 /**
  INSERT into t_menu(parent_id,menu_name,path,component,perms,icon,type,order_num,CREATE_time)
  VALUES (0,'','/ass/MdlBSurgeryinfo/MdlBSurgeryinfo','ass/MdlBSurgeryinfo/MdlBSurgeryinfo','mdlBSurgeryinfo:view','fork',0,1,NOW());
@@ -87,8 +88,8 @@ private ISdlBUserService iSdlBUserService;
  * @return
  */
 @GetMapping
-public Map<String, Object> List(QueryRequest request, MdlBSurgeryinfo mdlBSurgeryinfo){
-        return getDataTable(this.iMdlBSurgeryinfoService.findMdlBSurgeryinfos(request, mdlBSurgeryinfo));
+public Map<String, Object> List(QueryRequest request, ViewSurgery mdlBSurgeryinfo){
+        return getDataTable(this.iViewSurgeryService.findViewSurgerys(request, mdlBSurgeryinfo));
         }
 
 /**

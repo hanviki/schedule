@@ -675,7 +675,7 @@ export default {
       this.$download('xxbBCheck/downloadFile2', {
         ...formData
       }, `${new Date().getTime()}_` + record.deptNew + '-' + 
-        record.projectName + '-' + record.userAccountName + '.pdf')
+        record.projectName + '-' + record.userAccountName + '.zip')
     },
     download (record) {
       let formData = {}

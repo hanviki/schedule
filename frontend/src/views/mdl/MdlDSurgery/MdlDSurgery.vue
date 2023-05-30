@@ -115,7 +115,11 @@
         <!-- <a-button @click="batchDelete"
           >删除</a-button
         > -->
-       
+       <a-button 
+        icon="file-excel"
+                style="color: #fff;background-color: #faad14;border-color: #faad14;box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);"
+        @click="exportExcel">导出Excel</a-button>
+
         <import-excel
           templateUrl="mdlDSurgery/downTemplate"
           @succ="handleRefesh"
@@ -249,9 +253,24 @@ export default {
           dataIndex: "name",
           width: 100,
         },
+         {
+          title: "ICD编码",
+          dataIndex: "icdCode",
+          width: 100,
+        },
+         {
+          title: "ICD手术操作名称",
+          dataIndex: "icdName",
+          width: 100,
+        },
         {
           title: "手术等级",
           dataIndex: "level",
+          width: 100,
+        },
+         {
+          title: "手术类别",
+          dataIndex: "shlb",
           width: 100,
         },
         {
@@ -418,10 +437,78 @@ export default {
         sortField = sortedInfo.field;
         sortOrder = sortedInfo.order;
       }
+      let json =   [
+        {
+          title: "科室",
+          dataIndex: "deptNew",
+          width: 100,
+        },
+        {
+          title: "编码",
+          dataIndex: "code",
+          width: 100,
+        },
+        {
+          title: "手术名称",
+          dataIndex: "name",
+          width: 100,
+        },
+         {
+          title: "ICD编码",
+          dataIndex: "icdCode",
+          width: 100,
+        },
+         {
+          title: "ICD手术操作名称",
+          dataIndex: "icdName",
+          width: 100,
+        },
+        {
+          title: "手术等级",
+          dataIndex: "level",
+          width: 100,
+        },
+         {
+          title: "手术类别",
+          dataIndex: "shlb",
+          width: 100,
+        },
+        {
+          title: "手术切口类别",
+          dataIndex: "lb",
+          width: 100,
+        },
+         {
+          title: "启用日期",
+          dataIndex: "startDate",
+        
+        },
+         {
+          title: "停用日期",
+          dataIndex: "endDate",
+         
+        },
+        
+        {
+          title: "备注",
+          dataIndex: "note",
+        
+        },
+      ];
+      //json.splice(json.length-1,1);
+     
+      let dataJson = JSON.stringify(json)
+      let params= this.queryParams
+       for (var items in params){
+          if(params[items]==-1){
+              delete params[items]
+          }
+      }
       this.$export("mdlDSurgery/excel", {
         sortField: sortField,
         sortOrder: sortOrder,
-        ...this.queryParams,
+         dataJson: dataJson,
+        ...params
       });
     },
     search() {

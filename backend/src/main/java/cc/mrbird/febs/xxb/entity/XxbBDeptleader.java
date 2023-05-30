@@ -55,6 +55,20 @@ private static final long serialVersionUID=1L;
         @ExcelField(value ="人事编号")
     private String userAccount;
 
+
+    /**
+     * 姓名
+     */
+
+    @ExcelField(value ="姓名")
+    private String userAccountNameZhibu;
+
+    /**
+     * 人事编号
+     */
+
+    @ExcelField(value ="人事编号")
+    private String userAccountZhibu;
     /**
      * 员工工号
      */

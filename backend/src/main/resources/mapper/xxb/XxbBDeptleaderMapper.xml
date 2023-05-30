@@ -8,6 +8,8 @@
         <result column="dept_name" property="deptName"/>
         <result column="user_account_name" property="userAccountName"/>
         <result column="user_account" property="userAccount"/>
+        <result column="user_account_name_zhibu" property="userAccountNameZhibu"/>
+        <result column="user_account_zhibu" property="userAccountZhibu"/>
         <result column="user_yggh" property="userYggh"/>
         <result column="state" property="state"/>
         <result column="IS_DELETEMARK" property="isDeletemark"/>
@@ -19,7 +21,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, dept_name, user_account_name, user_account, user_yggh, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+        id, dept_name, user_account_name, user_account,user_account_name_zhibu,user_account_zhibu user_yggh, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
     </sql>
     <update id="updateXxbBDeptleader" parameterType="cc.mrbird.febs.xxb.entity.XxbBDeptleader">
         update xxb_b_deptleader
@@ -27,6 +29,8 @@
             <if test="deptName != null">dept_name=#{deptName},</if>
             <if test="userAccountName != null">user_account_name=#{userAccountName},</if>
             <if test="userAccount != null">user_account=#{userAccount},</if>
+            <if test="userAccountNameZhibu != null">user_account_name_zhibu=#{userAccountNameZhibu},</if>
+            <if test="userAccountZhibu != null">user_account_zhibu=#{userAccountZhibu},</if>
             <if test="userYggh != null">user_yggh=#{userYggh},</if>
             <if test="state != null">state=#{state},</if>
             <if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>

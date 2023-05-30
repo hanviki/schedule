@@ -45,6 +45,24 @@
           ]"
         />
       </a-form-item>
+       <a-form-item v-bind="formItemLayout" label="ICD编码">
+        <a-input
+          placeholder="请输入ICD编码"
+          v-decorator="[
+            'icdCode',
+            { rules: [{ }] },
+          ]"
+        />
+      </a-form-item>
+      <a-form-item v-bind="formItemLayout" label="ICD手术操作名称">
+        <a-input
+          placeholder="请输入ICD手术操作名称"
+          v-decorator="[
+            'icdName',
+            { rules: [{ }] },
+          ]"
+        />
+      </a-form-item>
       <a-form-item v-bind="formItemLayout" label="手术等级">
            <a-select  v-decorator="[
             'level',
@@ -71,6 +89,25 @@
                   >
                    四级
                   </a-select-option>
+                </a-select>
+      </a-form-item>
+        <a-form-item v-bind="formItemLayout" label="手术类别">
+         <a-select   v-decorator="[
+            'shlb',
+            { rules: [{  }] },
+          ]"
+                 >
+                   <a-select-option
+                    value="一类"
+                  >
+                   一类
+                  </a-select-option>
+                   <a-select-option
+                    value="二类"
+                  >
+                  二类
+                  </a-select-option>
+                 
                 </a-select>
       </a-form-item>
       <a-form-item v-bind="formItemLayout" label="手术切口类别">
@@ -216,7 +253,10 @@ export default {
         "level",
         "lb",
         "note",
-        "startDate"
+        "startDate",
+        "icdCode",
+        "icdName",
+        "shlb"
       ]);
       if (typeof values !== "undefined") {
         Object.keys(values).forEach((_key) => {

@@ -61,13 +61,13 @@ export default {
           title: "申请科室",
           dataIndex: "deptNew",
           fixed: "left",
-          width: 120,
+          width: 100,
         },
         {
           title: "项目名称",
           dataIndex: "projectName",
           fixed: "left",
-          width: 200,
+          width: 300,
         },
         {
           title: "是否为限制类医疗技术",

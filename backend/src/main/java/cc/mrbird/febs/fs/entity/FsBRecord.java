@@ -54,7 +54,7 @@ private static final long serialVersionUID=1L;
      * 操作时间
      */
         
-        @ExcelField(value ="操作时间", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
+        @ExcelField(value ="操作时间", writeConverter = DateConverter.class,readConverter = DateReadConverter2.class)
     private Date operationDate;
     private transient String operationDateFrom;
     private transient String operationDateTo;

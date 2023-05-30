@@ -9,6 +9,7 @@ import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
 import cc.mrbird.febs.common.utils.ExportExcelUtils;
+import cc.mrbird.febs.fs.entity.FsBExameImport;
 import cc.mrbird.febs.fs.entity.FsBUser;
 import cc.mrbird.febs.fs.service.IFsBExameService;
 import cc.mrbird.febs.fs.entity.FsBExame;
@@ -175,7 +176,7 @@ public class FsBExameController extends BaseController {
     @RequestMapping(value = "downTemplate", method = RequestMethod.POST)
     public void downTemplate(HttpServletResponse response) {
         List<FsBExame> publishList = new ArrayList<>();
-        ExcelKit.$Export(FsBExame.class, response).downXlsx(publishList, true);
+        ExcelKit.$Export(FsBExameImport.class, response).downXlsx(publishList, true);
     }
 
     @RequestMapping(value = "import", method = RequestMethod.POST)
@@ -183,18 +184,18 @@ public class FsBExameController extends BaseController {
             throws IOException {
         long beginMillis = System.currentTimeMillis();
 
-        List<FsBExame> successList = Lists.newArrayList();
+        List<FsBExameImport> successList = Lists.newArrayList();
         List<Map<String, Object>> errorList = Lists.newArrayList();
         List<Map<String, Object>> resultList = Lists.newArrayList();
 
         User currentUser = FebsUtil.getCurrentUser();
 
 
-        ExcelKit.$Import(FsBExame.class)
-                .readXlsx(file.getInputStream(), new ExcelReadHandler<FsBExame>() {
+        ExcelKit.$Import(FsBExameImport.class)
+                .readXlsx(file.getInputStream(), new ExcelReadHandler<FsBExameImport>() {
 
                     @Override
-                    public void onSuccess(int sheetIndex, int rowIndex, FsBExame entity) {
+                    public void onSuccess(int sheetIndex, int rowIndex, FsBExameImport entity) {
                         successList.add(entity); // 单行读取成功，加入入库队列。
                     }
 
@@ -210,13 +211,15 @@ public class FsBExameController extends BaseController {
 
         // TODO: 执行successList的入库操作。
         if (CollectionUtil.isEmpty(errorList)) {
-            for (FsBExame fsBExameImport : successList
+            for (FsBExameImport fsBExameImport : successList
             ) {
-                fsBExameImport.setCreateUserId(currentUser.getUserId());
-                fsBExameImport.setUserNo(currentUser.getUsername());
-                //  FsBExame fsBExame =new FsBExame();
-                //   BeanUtil.copyProperties(fsBExameImport,fsBExame, CopyOptions.create().setIgnoreNullValue(true));
-                this.iFsBExameService.createFsBExame(fsBExameImport);
+
+                  FsBExame fsBExame =new FsBExame();
+                   BeanUtil.copyProperties(fsBExameImport,fsBExame, CopyOptions.create().setIgnoreNullValue(true));
+                fsBExame.setCreateUserId(currentUser.getUserId());
+                fsBExame.setUserNo(currentUser.getUsername());
+
+                this.iFsBExameService.createFsBExame(fsBExame);
             }
         }
 

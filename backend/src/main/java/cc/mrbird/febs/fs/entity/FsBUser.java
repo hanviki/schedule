@@ -90,7 +90,7 @@ private static final long serialVersionUID=1L;
      * 开始从事放射工作时间
      */
         
-        @ExcelField(value ="开始从事放射工作时间", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
+        @ExcelField(value ="开始从事放射工作时间", writeConverter = DateConverter.class,readConverter = DateReadConverter2.class)
     private Date fsDate;
     private transient String fsDateFrom;
     private transient String fsDateTo;
@@ -99,7 +99,7 @@ private static final long serialVersionUID=1L;
      * 开始从事放射工作时间
      */
         
-        @ExcelField(value ="开始从事放射工作时间", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
+        @ExcelField(value ="开始从事放射工作时间", writeConverter = DateConverter.class,readConverter = DateReadConverter2.class)
     private Date jcksDate;
     private transient String jcksDateFrom;
     private transient String jcksDateTo;
@@ -115,7 +115,7 @@ private static final long serialVersionUID=1L;
      * 办证时间
      */
         
-        @ExcelField(value ="办证时间", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
+        @ExcelField(value ="办证时间", writeConverter = DateConverter.class,readConverter = DateReadConverter2.class)
     private Date bzDate;
     private transient String bzDateFrom;
     private transient String bzDateTo;
@@ -176,7 +176,7 @@ private static final long serialVersionUID=1L;
      */
     @TableField("CREATE_TIME")
         
-        @ExcelField(value ="创建时间", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
+        @ExcelField(value ="创建时间", writeConverter = DateConverter.class,readConverter = DateReadConverter2.class)
     private Date createTime;
     private transient String createTimeFrom;
     private transient String createTimeTo;
@@ -193,7 +193,7 @@ private static final long serialVersionUID=1L;
      */
     @TableField("MODIFY_TIME")
         
-        @ExcelField(value ="修改时间", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
+        @ExcelField(value ="修改时间", writeConverter = DateConverter.class,readConverter = DateReadConverter2.class)
     private Date modifyTime;
     private transient String modifyTimeFrom;
     private transient String modifyTimeTo;

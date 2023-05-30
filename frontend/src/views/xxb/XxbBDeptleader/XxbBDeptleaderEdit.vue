@@ -11,25 +11,55 @@
   >
     <a-form :form="form">
       <a-col :sm="6">
-        <a-form-item v-bind="formItemLayout" label="部门名称">
-          <a-select
-          option-filter-prop="children"
+        <a-form :form="form">
+      <a-form-item v-bind="formItemLayout" label="科室名称">
+        <a-input
+        
           placeholder="请选择科室名称"
           v-decorator="[
             'deptName',
             { rules: [{ required: true, message: '科室名称不能为空' }] },
           ]"
-          show-search
-        >
-          <a-select-option
-            v-for="d in deptData"
-            :key="d.deptId"
-            :value="`${d.deptId}`"
-          >
-            {{ d.deptName }}
-          </a-select-option>
-        </a-select>
-        </a-form-item>
+         
+        />
+      </a-form-item>
+      <a-form-item v-bind="formItemLayout" label="姓名">
+        <a-input
+          placeholder="请输入姓名"
+          v-decorator="[
+            'userAccountName',
+            { rules: [{ required: true, message: '姓名不能为空' }] },
+          ]"
+        />
+      </a-form-item>
+      <a-form-item v-bind="formItemLayout" label="人事编号">
+        <a-input
+          placeholder="请输入人事编号"
+          v-decorator="[
+            'userAccount',
+            { rules: [{ required: true, message: '人事编号不能为空' }] },
+          ]"
+        />
+      </a-form-item>
+      <a-form-item v-bind="formItemLayout" label="党书记姓名">
+        <a-input
+          placeholder="请输入党书记姓名"
+          v-decorator="[
+            'userAccountNameZhibu',
+            { rules: [{ required: true, message: '党书记姓名不能为空' }] },
+          ]"
+        />
+      </a-form-item>
+      <a-form-item v-bind="formItemLayout" label="党书记人事编号">
+        <a-input
+          placeholder="请输入人事编号"
+          v-decorator="[
+            'userAccountZhibu',
+            { rules: [{ required: true, message: '人事编号不能为空' }] },
+          ]"
+        />
+      </a-form-item>
+    </a-form>
       </a-col>
       <a-col :sm="6">
         <a-form-item v-bind="formItemLayout" label="姓名">
@@ -107,7 +137,7 @@ export default {
     },
     setFormValues(xxbBDeptleader, deptData) {
       this.deptData = deptData
-      let fields = ["deptName", "userAccountName", "userAccount"];
+      let fields = ["deptName", "userAccountName", "userAccount", "userAccountNameZhibu", "userAccountZhibu"];
       let fieldDates = [];
       Object.keys(xxbBDeptleader).forEach((key) => {
         if (fields.indexOf(key) !== -1) {

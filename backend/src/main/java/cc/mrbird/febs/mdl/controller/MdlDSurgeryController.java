@@ -10,6 +10,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.common.utils.TreeUtil;
 import cc.mrbird.febs.mdl.entity.MdlBSurgeryinfoD;
 import cc.mrbird.febs.mdl.entity.MdlDSurgeryImport;
@@ -307,10 +308,14 @@ public void deleteMdlDSurgerys(@NotBlank(message = "{required}") @PathVariable S
         }
 @PostMapping("excel")
 //@RequiresPermissions("mdlDSurgery:export")
-public void export(QueryRequest request, MdlDSurgery mdlDSurgery, HttpServletResponse response) throws FebsException {
+public void export(QueryRequest request ,String dataJson,MdlDSurgery mdlDSurgery, HttpServletResponse response) throws FebsException {
         try {
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            request.setIsSearchCount(false);
         List<MdlDSurgery> mdlDSurgerys = this.iMdlDSurgeryService.findMdlDSurgerys(request, mdlDSurgery).getRecords();
-        ExcelKit.$Export(MdlDSurgery.class, response).downXlsx(mdlDSurgerys, false);
+        //ExcelKit.$Export(MdlDSurgery.class, response).downXlsx(mdlDSurgerys, false);
+            ExportExcelUtils.exportCustomExcel_han(response, mdlDSurgerys,dataJson,"");
         } catch (Exception e) {
         message = "导出Excel失败";
         log.error(message, e);

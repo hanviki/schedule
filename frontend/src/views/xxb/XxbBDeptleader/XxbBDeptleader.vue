@@ -181,12 +181,22 @@ export default {
           width: 100,
         },
         {
-          title: "姓名",
+          title: "科室主任姓名",
           dataIndex: "userAccountName",
           width: 100,
         },
         {
-          title: "人事编号",
+          title: "科室主任人事编号",
+          dataIndex: "userAccount",
+          width: 100,
+        },
+        {
+          title: "党支部书记",
+          dataIndex: "userAccountName",
+          width: 100,
+        },
+        {
+          title: "党支部书记编号",
           dataIndex: "userAccount",
           width: 100,
         },

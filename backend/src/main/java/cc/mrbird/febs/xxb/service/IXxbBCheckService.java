@@ -57,4 +57,6 @@ public interface IXxbBCheckService extends IService<XxbBCheck> {
 
         XxbBCheckD addCheckData(XxbBCheckD xxbBCheckD);
 
+        List<SendUser> findSendUser(List<String> ids);
+
         }

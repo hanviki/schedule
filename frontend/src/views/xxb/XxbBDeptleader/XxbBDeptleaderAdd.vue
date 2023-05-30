@@ -47,6 +47,24 @@
           ]"
         />
       </a-form-item>
+      <a-form-item v-bind="formItemLayout" label="党书记姓名">
+        <a-input
+          placeholder="请输入党书记姓名"
+          v-decorator="[
+            'userAccountNameZhibu',
+            { rules: [{ required: true, message: '党书记姓名不能为空' }] },
+          ]"
+        />
+      </a-form-item>
+      <a-form-item v-bind="formItemLayout" label="党书记人事编号">
+        <a-input
+          placeholder="请输入人事编号"
+          v-decorator="[
+            'userAccountZhibu',
+            { rules: [{ required: true, message: '人事编号不能为空' }] },
+          ]"
+        />
+      </a-form-item>
     </a-form>
     <div class="drawer-bootom-button" style="z-index:999999">
       <a-popconfirm
@@ -124,6 +142,8 @@ export default {
         "deptName",
         "userAccountName",
         "userAccount",
+        "userAccountNameZhibu",
+        "userAccountZhibu",
       ]);
       if (typeof values !== "undefined") {
         Object.keys(values).forEach((_key) => {

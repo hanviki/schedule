@@ -10,6 +10,10 @@
                     <result column="name" property="name"/>
                     <result column="level" property="level"/>
                     <result column="lb" property="lb"/>
+
+            <result column="icdCode" property="icdCode"/>
+            <result column="icdName" property="icdName"/>
+            <result column="shlb" property="shlb"/>
                     <result column="note" property="note"/>
                     <result column="start_date" property="startDate"/>
                     <result column="end_date" property="endDate"/>
@@ -23,7 +27,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, dept_new, code, name, level, lb, note, start_date, end_date, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+        id, dept_new, code, name, level,icd_code,icd_name,shlb, lb, note, start_date, end_date, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
     </sql>
     <update id="updateMdlDSurgery" parameterType="cc.mrbird.febs.mdl.entity.MdlDSurgery">
         update mdl_d_surgery
@@ -33,6 +37,9 @@
 <if test="name != null">name=#{name},</if>
 <if test="level != null">level=#{level},</if>
 <if test="lb != null">lb=#{lb},</if>
+            <if test="icdCode != null">icd_code=#{icdCode},</if>
+            <if test="icdName != null">icd_name=#{icdName},</if>
+            <if test="shlb != null">shlb=#{shlb},</if>
 <if test="note != null">note=#{note},</if>
 <if test="startDate != null">start_date=#{startDate},</if>
 <if test="endDate != null">end_date=#{endDate},</if>

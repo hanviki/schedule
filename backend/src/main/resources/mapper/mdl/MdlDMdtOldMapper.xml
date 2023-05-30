@@ -6,6 +6,7 @@
         <resultMap id="BaseResultMap" type="cc.mrbird.febs.mdl.entity.MdlDMdtOld">
                     <id column="id" property="id"/>
                     <result column="dept_new" property="deptNew"/>
+            <result column="user_account" property="userAccount"/>
                     <result column="fzr" property="fzr"/>
                     <result column="zhicheng" property="zhicheng"/>
                     <result column="cy1" property="cy1"/>
@@ -31,7 +32,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, dept_new, fzr, zhicheng, cy1, cy2, cy3, cy4, cy5, cy6, cy7, cy8, cy9, cy10, xmmc, year, xmsp, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+        id, dept_new,user_account, fzr, zhicheng, cy1, cy2, cy3, cy4, cy5, cy6, cy7, cy8, cy9, cy10, xmmc, year, xmsp, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
     </sql>
     <update id="updateMdlDMdtOld" parameterType="cc.mrbird.febs.mdl.entity.MdlDMdtOld">
         update mdl_d_mdt_old

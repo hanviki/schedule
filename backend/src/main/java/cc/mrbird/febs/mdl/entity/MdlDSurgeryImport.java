@@ -30,12 +30,18 @@ public class MdlDSurgeryImport {
     @ExcelField(value ="手术名称")
     private String name;
 
+    @ExcelField(value ="ICD编码")
+    private String icdCode;
+    @ExcelField(value ="ICD手术操作名称")
+    private String icdName;
     /**
      * 手术等级
      */
 
     @ExcelField(value ="手术等级")
     private String level;
+    @ExcelField(value ="手术类别")
+    private String shlb;
 
     /**
      * 手术切口类别

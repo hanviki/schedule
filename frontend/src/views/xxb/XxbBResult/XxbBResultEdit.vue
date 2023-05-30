@@ -73,7 +73,7 @@
                       &nbsp;
                     </a-col>
                     <a-col :span="4">
-                  <a-button @click="selectProject" v-show="drawerTitle !='查看' && xxbBResult.state == 0 ? true: false">
+                  <a-button type="primary" @click="selectProject" v-show="drawerTitle !='查看' && xxbBResult.state == 0 ? true: false">
                     选择项目
                   </a-button>
                   </a-col>
@@ -117,26 +117,8 @@
                     />
                   </a-form-item>
                 </td>
-                <td class="tdRight" style="width: 12%">
-                  <font class="fontColor">*</font>开展例数：
-                </td>
-                <td style="width: 20%">
-                  <a-form-item>
-                    <a-input-number
-                      :min="0"
-                      :step="1"
-                      v-decorator="[
-                        'kzls',
-                        {
-                          rules: [
-                            { required: true, message: '开展例数不能为空' },
-                          ],
-                        },
-                      ]"
-                    >
-                    </a-input-number>
-                  </a-form-item>
-                </td>
+               
+                <td colspan="2"></td>
               </tr>
             </table>
           </a-col>
@@ -298,7 +280,7 @@
             <table class="formtab">
               <tr>
                 <td colspan="2" style="width:100%"><font class="fontColor">*</font>
-                <b>一、项目主要内容、目标和意义（摘要），重点是对学科的推动力：</b>
+                <b>一、项目主要内容、目标和意义（摘要）：</b>
                 </td>
               </tr>
               <tr>
@@ -307,7 +289,7 @@
                     <a-textarea
                       :rows="8"
                       :maxLength="txtLength500"
-                      placeholder="请输入项目的主要内容及意义"
+                      placeholder="请输入项目的主要内容及意义（备注：字数限制2000，如有需要可上传附件）"
                       v-decorator="[
                         'projectcontent',
                         {
@@ -321,6 +303,14 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                    ref="xmzynrFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmzynr"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -334,7 +324,7 @@
                     <a-textarea
                       :rows="8"
                       :maxLength="txtLength500"
-                      placeholder="请输入项目的科学依据"
+                      placeholder="请输入项目的科学依据（备注：字数限制2000，如有需要可上传附件）"
                       v-decorator="[
                         'projectkxyj',
                         {
@@ -348,6 +338,14 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                    ref="xmkxyjFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmkxyj"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -361,7 +359,7 @@
                     <a-textarea
                       :rows="8"
                       :maxLength="txtLength500"
-                      placeholder="请输入项目采取的方法、技术路线"
+                      placeholder="请输入项目采取的方法、技术路线（备注：字数限制2000，如有需要可上传附件）"
                       v-decorator="[
                         'projectffjslx',
                         {
@@ -375,6 +373,14 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                    ref="xmjslxFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmjslx"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -388,7 +394,7 @@
                     <a-textarea
                       :rows="8"
                       :maxLength="txtLength500"
-                      placeholder="请输入项目解决的关键问题"
+                      placeholder="请输入项目解决的关键问题（备注：字数限制2000，如有需要可上传附件）"
                       v-decorator="[
                         'projectkey',
                         {
@@ -402,6 +408,14 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                    ref="xmgjwtFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmgjwt"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -415,7 +429,7 @@
                     <a-textarea
                       :rows="8"
                       :maxLength="txtLength500"
-                      placeholder="请输入技术存在的主要风险"
+                      placeholder="请输入技术存在的主要风险（备注：字数限制2000，如有需要可上传附件）"
                       v-decorator="[
                         'jsfxya',
                         {
@@ -429,6 +443,14 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                    ref="xmzyfxFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmzyfx"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -442,7 +464,7 @@
                     <a-textarea
                       :rows="8"
                       :maxLength="txtLength500"
-                      placeholder="请输入项目产生的经济效益、社会效益"
+                      placeholder="请输入项目产生的经济效益、社会效益（备注：字数限制2000，如有需要可上传附件）"
                       v-decorator="[
                         'projectjjshxy',
                         {
@@ -456,6 +478,14 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                    ref="xmjjxyFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmjjxy"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -469,7 +499,7 @@
                     <a-textarea
                       :rows="8"
                       :maxLength="txtLength500"
-                      placeholder="请输入主要技术文献目录及出处"
+                      placeholder="请输入主要技术文献目录及出处（备注：字数限制2000，如有需要可上传附件）"
                       v-decorator="[
                         'jswxmlcc',
                         {
@@ -483,6 +513,14 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                    ref="xmwxmlFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmwxml"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -496,7 +534,7 @@
                     <a-textarea
                       :rows="8"
                       :maxLength="txtLength500"
-                      placeholder="请输入新闻报道情况"
+                      placeholder="请输入新闻报道情况（备注：字数限制2000，如有需要可上传附件）"
                       v-decorator="[
                         'newbdqk',
                         {
@@ -510,6 +548,14 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                    ref="xmbdqkFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmbdqk"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -523,7 +569,7 @@
                     <a-textarea
                       :rows="8"
                       :maxLength="txtLength500"
-                      placeholder="请输入项目开展情况"
+                      placeholder="请输入项目开展情况（备注：字数限制2000，如有需要可上传附件）"
                       v-decorator="[
                         'projectkzqk',
                         {
@@ -537,10 +583,40 @@
                       ]"
                     />
                   </a-form-item>
+                  <upload-file
+                    ref="xmkzqkpdfFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmkzqkpdf"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
-                <td colspan="2" style="width:100%">
+                <td colspan="2" style="width:100%"><font class="fontColor">*</font>
+                <b>十、项目开展明细：</b>
+                </td>
+              </tr>
+              <tr>
+                <td style="width:20%">
+                  <a-form-item  v-bind="formItemLayout2" label="开展例数">
+                    <a-input-number
+                      :min="0"
+                      :step="1"
+                      v-decorator="[
+                        'kzls',
+                        {
+                          rules: [
+                            { required: true, message: '开展例数不能为空' },
+                          ],
+                        },
+                      ]"
+                    >
+                    </a-input-number>
+                  </a-form-item>
+                </td>
+                <td  style="width:80%">
                   <a-form-item>
                   <a-row>
                     <a-col :span=8>
@@ -567,6 +643,28 @@
                   </a-form-item>
                 </td>
               </tr>
+              <tr>
+              <td class="tdRight" style="width:20%;padding:10px 5px"><font  class="fontColor">*</font>项目查新报告：</td>
+              <td style="width:80%">
+                <a-form-item>
+                  <upload-file
+                    ref="xmcxbgFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传项目查新报告PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmcxbg"
+                    :isCallback="true"
+                      @fileData="fileDatabg"
+                      v-decorator="[
+                          'filexmcxbg',
+                          {rules: [{required: isXmcxbg,message: '未上传项目查新报告PDF'}]},
+                        ]"
+                  >
+                  </upload-file>
+                  </a-form-item>
+
+              </td>
+            </tr>
             </table>
           </a-col>
         </a-row>
@@ -677,11 +775,12 @@ export default {
       isEdit: false,
       isDeptNew: true,
       txtLength50: 50,
-      txtLength500: 500,
+      txtLength500:2000,
       txtLength30: 30,
       drawerTitle: "新增",
       colSpan: 23,
       isXmkzqk: false,
+      isXmcxbg: false,
       xxbBResult: {},
     };
   },
@@ -776,6 +875,27 @@ export default {
       this.$download('xxbBResult/downXmkzqkTemplate', {
       }, `新技术新业务临床应用病例汇总表${new Date().getTime()}.xlsx`)
     },
+    fileDatabg (fileList) {
+      if(fileList.length == 0) {
+        this.isXmcxbg = true
+        this.$nextTick(() => {
+          this.form.validateFields(['filexmcxbg'], { force: this.isXmcxbg })
+        })
+        this.form.getFieldDecorator("filexmcxbg");
+        this.form.setFieldsValue({
+          filexmcxbg: ''
+        });
+      } else {
+        this.isXmcxbg = false
+        this.$nextTick(() => {
+          this.form.validateFields(['filexmcxbg'], { force: this.isXmcxbg })
+        })
+        this.form.getFieldDecorator("filexmcxbg");
+        this.form.setFieldsValue({
+          filexmcxbg: '1'
+        });
+      }
+    },
     fileData (fileList) {
       if(fileList.length == 0) {
         this.isXmkzqk = true
@@ -852,6 +972,7 @@ export default {
     setFormValues(xxbBResult, tit) {
       this.isDeptNew = true;
       this.isXmkzqk = true;
+      this.isXmcxbg = true;
       this.visibleCheckSelect = false
       this.drawerTitle = tit;
       if (tit == "查看") {
@@ -924,7 +1045,8 @@ export default {
           "jswxmlcc",
           "newbdqk",
           "projectkzqk",
-          "filexmkzqk"
+          "filexmkzqk",
+          "filexmcxbg"
           
         ];
         let fieldDates = ["applydat", "kzsrtdat"];

@@ -41,6 +41,13 @@ private static final long serialVersionUID=1L;
         @ExcelField(value ="科室")
     private String deptNew;
 
+
+    /**
+     * 发薪号
+     */
+
+    @ExcelField(value ="发薪号")
+    private String userAccount;
     /**
      * 项目负责人
      */

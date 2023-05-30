@@ -456,7 +456,7 @@ public class XxbBResultServiceImpl extends ServiceImpl<XxbBResultMapper, XxbBRes
 
             XxbBResult update = new XxbBResult();
             update.setId(obj.getId());
-            if (obj.getFlownum() == 1) {
+            if (obj.getFlownum().equals(1) ) {
                 update.setFlownum(obj.getFlownum() + 1);
                 update.setGjlx(resultFlow.getGjlx());
                 update.setGjxj(resultFlow.getGjxj());
@@ -522,7 +522,7 @@ public class XxbBResultServiceImpl extends ServiceImpl<XxbBResultMapper, XxbBRes
 
             XxbBResultF newFlow = null;
             // state 0 只查询 1做业务
-            if (state == 1 && obj.getState() == 1) {
+            if (state == 1 && obj.getState().equals(1)) {
                 if (list.size() > 0) {
                     List<XxbBResultF> query = new ArrayList<>();
                     query = list.stream().filter(s -> s.getFlownum() == flowNum).collect(Collectors.toList());
@@ -557,7 +557,7 @@ public class XxbBResultServiceImpl extends ServiceImpl<XxbBResultMapper, XxbBRes
                 list.add(newFlow);
             }
 
-            if (state == 1 && obj.getState() == 1 && list.size() > 0) {
+            if (state == 1 && obj.getState() .equals(1)  && list.size() > 0) {
                 if (flowNum == 1) {
                     list = list.stream().filter(s -> s.getFlownum() == 1 && s.getFlowAccount().equals(user.getUsername())).sorted(Comparator.comparing(XxbBResultF::getFlownum)).collect(Collectors.toList());
                 } else {

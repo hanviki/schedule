@@ -135,7 +135,7 @@
     </update>
     <select id="findXxbBCheck" resultType="cc.mrbird.febs.xxb.entity.XxbBCheck" parameterType="cc.mrbird.febs.xxb.entity.XxbBCheck">
         select  *  from xxb_b_check
-        where  1=1
+        where  IS_DELETEMARK=1
             <if test="xxbBCheck.id != null and xxbBCheck.id != ''"> and  xxb_b_check.id =#{ xxbBCheck.id} </if>
             <if test="xxbBCheck.deptNew != null and xxbBCheck.deptNew != ''"> and  xxb_b_check.dept_new like concat('%', #{ xxbBCheck.deptNew} ,'%')</if>
             <if test="xxbBCheck.projectName != null and xxbBCheck.projectName != ''"> and  xxb_b_check.project_name like concat('%', #{ xxbBCheck.projectName} ,'%')</if>
@@ -164,7 +164,9 @@
             <if test="xxbBCheck.sexName != null and xxbBCheck.sexName != ''"> and  xxb_b_check.sex_name like concat('%', #{ xxbBCheck.sexName} ,'%')</if>
             <if test="xxbBCheck.birthday != null and xxbBCheck.birthday != ''"> and  xxb_b_check.birthday like concat('%', #{ xxbBCheck.birthday} ,'%')</if>
             <if test="xxbBCheck.userdept != null and xxbBCheck.userdept != ''"> and  xxb_b_check.userdept like concat('%', #{ xxbBCheck.userdept} ,'%')</if>
-            <if test="xxbBCheck.edu != null and xxbBCheck.edu != ''"> and  xxb_b_check.edu like concat('%', #{ xxbBCheck.edu} ,'%')</if>
+            <if test="xxbBCheck.edu != null and xxbBCheck.edu != ''"> and
+                xxb_b_check.id in (select b.pid from xxb_b_deptflow b where b.STATE=0 and b.flow_account!='ywcgl'  )
+            </if>
             <if test="xxbBCheck.zhicheng != null and xxbBCheck.zhicheng != ''"> and  xxb_b_check.zhicheng like concat('%', #{ xxbBCheck.zhicheng} ,'%')</if>
             <if test="xxbBCheck.zhichenglc != null and xxbBCheck.zhichenglc != ''"> and  xxb_b_check.zhichenglc like concat('%', #{ xxbBCheck.zhichenglc} ,'%')</if>
             <if test="xxbBCheck.zhiwu != null and xxbBCheck.zhiwu != ''"> and  xxb_b_check.zhiwu like concat('%', #{ xxbBCheck.zhiwu} ,'%')</if>
@@ -252,4 +254,146 @@
         <if test="xxbBCheck.flownum != null"> and  xxb_b_check.flownum =#{ xxbBCheck.flownum} </if>
 </select>
 
+    <select id="findSendUser" resultType="cc.mrbird.febs.xxb.entity.SendUser">
+	select DISTINCT m.user_account,m.user_account_name,m.telephone from xxb_b_deptflow a,xxb_b_check b,sdl_b_user_mg m
+	where a.pid=b.id and b.STATE=1 and a.flownum=b.flownum  and b.user_account=m.user_account and a.flow_account!='ywcgl'
+	and a.STATE=0
+	<if  test="ids.size()>0">
+        and b.id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </if>
+    </select>
+    <select id="selectXm" resultType="cc.mrbird.febs.xxb.entity.XxbBCheck" >
+        SELECT
+xxb_b_check.id,
+xxb_b_check.yuanqu,
+xxb_b_check.dept_new,
+xxb_b_check.project_name,
+xxb_b_check.project_level,
+xxb_b_check.project_type,
+xxb_b_check.project_lb,
+xxb_b_check.isxzyljs,
+xxb_b_check.applydat,
+xxb_b_check.user_account_name,
+xxb_b_check.user_account,
+xxb_b_check.yggh,
+xxb_b_check.zhuany,
+xxb_b_check.zhuanc,
+xxb_b_check.lev,
+xxb_b_check.typ,
+xxb_b_check.projectcontent,
+xxb_b_check.lincaqfx,
+xxb_b_check.lincyyfx,
+xxb_b_check.lincjssb,
+xxb_b_check.syz,
+xxb_b_check.jjz,
+xxb_b_check.czgz,
+xxb_b_check.srtdat,
+xxb_b_check.enddat,
+xxb_b_check.yanzhan_date,
+xxb_b_check.zq_date,
+xxb_b_check.mq_date,
+xxb_b_check.archive_id,
+xxb_b_check.file_id,
+xxb_b_check.file_url,
+xxb_b_check.ycdat,
+xxb_b_check.shstate,
+xxb_b_check.xmjdstate,
+xxb_b_check.COMMENTS,
+xxb_b_check.STATE,
+xxb_b_check.IS_DELETEMARK,
+xxb_b_check.MODIFY_TIME,
+xxb_b_check.CREATE_TIME,
+xxb_b_check.CREATE_USER_ID,
+xxb_b_check.MODIFY_USER_ID,
+xxb_b_check.projectmdyycx,
+xxb_b_check.gnwyjyygk,
+xxb_b_check.kxxfxssjh,
+xxb_b_check.projectlcwtxyfx,
+xxb_b_check.ryjjpxgwzzqk,
+xxb_b_check.blhgbfzffcs,
+xxb_b_check.zkcs,
+xxb_b_check.sfwyzlkmfw,
+xxb_b_check.flownum,
+sdl_b_user.sex_name,
+sdl_b_user.birthday,
+sdl_b_user.dept_new userdept,
+sdl_b_user.edu,
+sdl_b_user.zhicheng,
+sdl_b_user.zyjsgw_lc zhichenglc,
+sdl_b_user.renshizifw zhiwu,
+sdl_b_user.telephone
+
+FROM
+xxb_b_check inner join
+sdl_b_user on xxb_b_check.user_account=sdl_b_user.user_account
+
+union all
+SELECT
+mdl_d_mdt_old.id,
+'' yuanqu,
+sdl_b_user.dept_new,
+mdl_d_mdt_old.xmmc as project_name,
+'' project_level,
+'' project_type,
+'' project_lb,
+'' isxzyljs,
+'' applydat,
+sdl_b_user.user_account_name,
+sdl_b_user.user_account,
+sdl_b_user.yggh,
+'' zhuany,
+'' zhuanc,
+'' lev,
+'' typ,
+'' projectcontent,
+'' lincaqfx,
+'' lincyyfx,
+'' lincjssb,
+'' syz,
+'' jjz,
+'' czgz,
+'' srtdat,
+'' enddat,
+'' yanzhan_date,
+'' zq_date,
+'' mq_date,
+'' archive_id,
+'' file_id,
+'' file_url,
+'' ycdat,
+'' shstate,
+'' xmjdstate,
+'' COMMENTS,
+'' STATE,
+'' IS_DELETEMARK,
+'' MODIFY_TIME,
+'' CREATE_TIME,
+'' CREATE_USER_ID,
+'' MODIFY_USER_ID,
+'' projectmdyycx,
+'' gnwyjyygk,
+'' kxxfxssjh,
+'' projectlcwtxyfx,
+'' ryjjpxgwzzqk,
+'' blhgbfzffcs,
+'' zkcs,
+'' sfwyzlkmfw,
+'' flownum,
+sdl_b_user.sex_name,
+sdl_b_user.birthday,
+sdl_b_user.dept_new userdept,
+sdl_b_user.edu,
+sdl_b_user.zhicheng,
+sdl_b_user.zyjsgw_lc zhichenglc,
+sdl_b_user.renshizifw zhiwu,
+sdl_b_user.telephone
+
+FROM
+mdl_d_mdt_old inner join
+sdl_b_user on mdl_d_mdt_old.user_account=sdl_b_user.user_account
+
+    </select>
 </mapper>

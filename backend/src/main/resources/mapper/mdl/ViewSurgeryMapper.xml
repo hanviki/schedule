@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.mdl.dao.ViewSurgeryMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.mdl.entity.ViewSurgery">
+                    <result column="id" property="id"/>
+                    <result column="dept_name" property="deptName"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="zhicheng" property="zhicheng"/>
+                    <result column="sex_name" property="sexName"/>
+                    <result column="birthday" property="birthday"/>
+                    <result column="jb" property="jb"/>
+                    <result column="valid_date" property="validDate"/>
+                    <result column="note" property="note"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dept_name, user_account_name, user_account, zhicheng, sex_name, birthday, jb, valid_date, note, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateViewSurgery" parameterType="cc.mrbird.febs.mdl.entity.ViewSurgery">
+        update view_surgery
+        <trim prefix="set" suffixOverrides=",">
+<if test="id != null">id=#{id},</if>
+<if test="deptName != null">dept_name=#{deptName},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="zhicheng != null">zhicheng=#{zhicheng},</if>
+<if test="sexName != null">sex_name=#{sexName},</if>
+<if test="birthday != null">birthday=#{birthday},</if>
+<if test="jb != null">jb=#{jb},</if>
+<if test="validDate != null">valid_date=#{validDate},</if>
+<if test="note != null">note=#{note},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+
+    </update>
+    <select id="findViewSurgery" resultType="cc.mrbird.febs.mdl.entity.ViewSurgery" parameterType="cc.mrbird.febs.mdl.entity.ViewSurgery">
+        select  *  from view_surgery
+        where  1=1
+            <if test="viewSurgery.deptName != null and viewSurgery.deptName != ''"> and  view_surgery.dept_name like concat('%', #{ viewSurgery.deptName} ,'%')</if>
+            <if test="viewSurgery.userAccountName != null and viewSurgery.userAccountName != ''"> and  view_surgery.user_account_name like concat('%', #{ viewSurgery.userAccountName} ,'%')</if>
+            <if test="viewSurgery.userAccount != null and viewSurgery.userAccount != ''"> and  view_surgery.user_account like concat('%', #{ viewSurgery.userAccount} ,'%')</if>
+            <if test="viewSurgery.zhicheng != null and viewSurgery.zhicheng != ''"> and  view_surgery.zhicheng like concat('%', #{ viewSurgery.zhicheng} ,'%')</if>
+            <if test="viewSurgery.sexName != null and viewSurgery.sexName != ''"> and  view_surgery.sex_name like concat('%', #{ viewSurgery.sexName} ,'%')</if>
+            <if test="viewSurgery.birthday != null and viewSurgery.birthday != ''"> and  view_surgery.birthday like concat('%', #{ viewSurgery.birthday} ,'%')</if>
+            <if test="viewSurgery.jb != null and viewSurgery.jb != ''"> and  view_surgery.jb like concat('%', #{ viewSurgery.jb} ,'%')</if>
+        <if test="viewSurgery.validDateFrom!= null">
+            AND view_surgery.valid_date <![CDATA[ >= ]]>  #{viewSurgery.validDateFrom}
+        </if>
+        <if test="viewSurgery.validDateTo!= null">
+            AND  view_surgery.valid_date <![CDATA[ <= ]]>  #{viewSurgery.validDateTo}
+        </if>
+            <if test="viewSurgery.note != null and viewSurgery.note != ''"> and  view_surgery.note like concat('%', #{ viewSurgery.note} ,'%')</if>
+        <if test="viewSurgery.state != null"> and  view_surgery.state =#{ viewSurgery.state} </if>
+        <if test="viewSurgery.isDeletemark != null"> and  view_surgery.IS_DELETEMARK =#{ viewSurgery.isDeletemark} </if>
+        <if test="viewSurgery.createTimeFrom!= null">
+            AND view_surgery.CREATE_TIME <![CDATA[ >= ]]>  #{viewSurgery.createTimeFrom}
+        </if>
+        <if test="viewSurgery.createTimeTo!= null">
+            AND  view_surgery.CREATE_TIME <![CDATA[ <= ]]>  #{viewSurgery.createTimeTo}
+        </if>
+        <if test="viewSurgery.modifyTimeFrom!= null">
+            AND view_surgery.MODIFY_TIME <![CDATA[ >= ]]>  #{viewSurgery.modifyTimeFrom}
+        </if>
+        <if test="viewSurgery.modifyTimeTo!= null">
+            AND  view_surgery.MODIFY_TIME <![CDATA[ <= ]]>  #{viewSurgery.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

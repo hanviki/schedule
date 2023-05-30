@@ -2,6 +2,9 @@ package cc.mrbird.febs.xxb.service.impl;
 
 import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.utils.SortUtil;
+import cc.mrbird.febs.mdl.entity.MdlDMdtOld;
+import cc.mrbird.febs.mdl.service.IMdlDMdtOldService;
+import cc.mrbird.febs.sdl.entity.SdlBUser;
 import cc.mrbird.febs.sdl.entity.SdlBUserMg;
 import cc.mrbird.febs.sdl.entity.SdlBUserSearch;
 import cc.mrbird.febs.sdl.service.ISdlBUserMgService;
@@ -57,6 +60,9 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
     @Autowired
     ISdlBUserMgService iSdlBUserMgService;
 
+    @Autowired
+    IMdlDMdtOldService iMdlDMdtOldService;
+
     public IPage<XxbBCheck> mqList(QueryRequest request, XxbBCheck xxbBCheck) {
         try {
             LambdaQueryWrapper<XxbBCheck> queryWrapper = new LambdaQueryWrapper<>();
@@ -80,6 +86,9 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
 
     @Override
     public List<XxbBCheck> findUserCreateCheck(String projectName, User user){
+
+        List<XxbBCheck> arr= new ArrayList<>();
+
         LambdaQueryWrapper<XxbBCheck> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(XxbBCheck::getIsDeletemark,1);
         wrapper.eq(XxbBCheck::getShstate,1);
@@ -87,7 +96,44 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
         if(StringUtil.isNotBlank(projectName)) {
             wrapper.like(XxbBCheck::getProjectName, projectName);
         }
-        return this.list(wrapper);
+        List<XxbBCheck> checkList= this.list(wrapper);
+        if(checkList.size()>0){
+            arr.addAll(checkList);
+        }
+
+        LambdaQueryWrapper<MdlDMdtOld> wrapper2 = new LambdaQueryWrapper<>();
+        wrapper2.eq(MdlDMdtOld::getUserAccount,user.getUsername());
+        List<MdlDMdtOld> oldList= this.iMdlDMdtOldService.list(wrapper2);
+        for (MdlDMdtOld old:oldList
+             ) {
+            XxbBCheck xxbBCheck= new XxbBCheck();
+            xxbBCheck.setId(old.getId().toString());
+            xxbBCheck.setProjectName(old.getXmmc());
+            xxbBCheck.setUserAccount(old.getUserAccount());
+            xxbBCheck.setUserAccountName(old.getFzr());
+            arr.add(xxbBCheck);
+        }
+        if(arr.size()>0) {
+            List<String> accounts = arr.stream().map(p -> p.getUserAccount()).collect(Collectors.toList());
+            LambdaQueryWrapper<SdlBUserMg> bUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            bUserLambdaQueryWrapper.in(SdlBUserMg::getUserAccount, accounts);
+            List<SdlBUserMg> users= this.iSdlBUserMgService.list(bUserLambdaQueryWrapper);
+            for (XxbBCheck ck:arr
+                 ) {
+                SdlBUserMg mg= users.stream().filter(p->p.getUserAccount().equals(ck.getUserAccount())).findFirst().get();
+                ck.setBirthday(mg.getBirthday());
+                ck.setDeptNew(mg.getDeptNew());
+                ck.setSexName(mg.getSexName());
+                ck.setTelephone(mg.getTelephone());
+                ck.setYggh(mg.getYggh());
+                ck.setEdu(mg.getEdu());
+                ck.setZhiwu(mg.getRenshizifw());
+                ck.setZhicheng(mg.getZhicheng());
+                ck.setZhichenglc(mg.getZyjsgwLc());
+            }
+        }
+
+        return  arr;
     }
     @Override
     public List<XxbBCheckD> selectUserCheckD(String baseId) {
@@ -350,6 +396,21 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
     @Override
     public IPage<XxbBCheck> findXxbBCheckList(QueryRequest request, XxbBCheck xxbBCheck) {
         try {
+            List<String> pidLists= new ArrayList<>();
+            if(org.apache.commons.lang3.StringUtils.isNotEmpty(xxbBCheck.getYggh())){
+                LambdaQueryWrapper<XxbBDeptflow> xxbBDeptflowLambdaQueryWrapper= new LambdaQueryWrapper<>();
+                xxbBDeptflowLambdaQueryWrapper.eq(XxbBDeptflow::getFlowAccount,xxbBCheck.getYggh());
+                xxbBDeptflowLambdaQueryWrapper.eq(XxbBDeptflow::getIsDeletemark,1);
+                List<XxbBDeptflow> xxbBDeptflows= this.iXxbBDeptflowService.list(xxbBDeptflowLambdaQueryWrapper);
+                if(xxbBDeptflows.size()>0){
+                    List<String> pids= xxbBDeptflows.stream().map(p->p.getPid()).collect(Collectors.toList());
+                    pidLists.addAll(pids);
+                }
+            }
+
+            if(pidLists.size()>0){
+                xxbBCheck.setIdList(pidLists);
+            }
             Page<XxbBCheck> page = new Page<>();
             SortUtil.handlePageSort(request, page, false);//true 是属性  false是数据库字段可两个
             //return this.baseMapper.findXxbBCheck(page, xxbBCheck);
@@ -783,7 +844,7 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
 
             XxbBDeptflow newFlow = null;
             // state 0 只查询 1做业务
-            if (state == 1 && obj.getState() == 1) {
+            if (state == 1 && obj.getState().equals(1)) {
                 if (list.size() > 0) {
                     List<XxbBDeptflow> query = new ArrayList<>();
                     query = list.stream().filter(s -> s.getFlownum() == flowNum).collect(Collectors.toList());
@@ -794,7 +855,7 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
                         }
                     }
                     // 多科 科主任
-                    if (obj.getProjectType() == 2 && flowNum == 2) {
+                    if (obj.getProjectType().equals(2) && flowNum == 2) {
                         List<XxbBDeptleader> deptLeaderList = this.getDeptLeaderList(user.getUsername(), null);
                         if (deptLeaderList.size() > 0 && StringUtils.isNotBlank(deptLeaderList.get(0).getDeptName())) {
                             XxbBDeptleader deptleader = deptLeaderList.get(0);
@@ -843,13 +904,13 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
                 list.add(newFlow);
             }
 
-            if (state == 1 && obj.getState() == 1 && list.size() > 0) {
+            if (state == 1 && obj.getState().equals(1) && list.size() > 0) {
                 if (flowNum == 1) {
-                    list = list.stream().filter(s -> s.getFlownum() == 1 && s.getFlowAccount().equals(user.getUsername())).sorted(Comparator.comparing(XxbBDeptflow::getFlownum)).collect(Collectors.toList());
+                    list = list.stream().filter(s -> s.getFlownum().equals(1) && s.getFlowAccount().equals(user.getUsername())).sorted(Comparator.comparing(XxbBDeptflow::getFlownum)).collect(Collectors.toList());
                 }
                 if (flowNum == 2) {
-                    list = list.stream().filter(s -> s.getFlownum() == 1 || (
-                            s.getFlownum() == 2 && s.getFlowAccount().equals(user.getUsername())
+                    list = list.stream().filter(s -> s.getFlownum().equals(1) || (
+                            s.getFlownum().equals(2) && s.getFlowAccount().equals(user.getUsername())
                     )).sorted(Comparator.comparing(XxbBDeptflow::getFlownum)).collect(Collectors.toList());
                 }
                 if (flowNum == 3) {
@@ -880,7 +941,7 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
             if (obj.getProjectType() != 2) {
                 XxbBCheck update = new XxbBCheck();
                 update.setId(obj.getId());
-                if (obj.getFlownum() == 1) {
+                if (obj.getFlownum().equals(1) ) {
                     update.setFlownum(obj.getFlownum() + 1);
                 }
                 if (obj.getFlownum() > 1) {
@@ -888,8 +949,8 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
                 }
                 this.updateById(update);
             }
-            if (obj.getProjectType() == 2) {
-                if (obj.getFlownum() == 1) {
+            if (obj.getProjectType().equals(2)) {
+                if (obj.getFlownum().equals(1)) {
                     LambdaQueryWrapper<XxbBProjdept> wrapperProjDept = new LambdaQueryWrapper<>();
                     wrapperProjDept.eq(XxbBProjdept::getPid, obj.getId());
                     wrapperProjDept.eq(XxbBProjdept::getIsDeletemark, 1);
@@ -933,7 +994,7 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
                     }
                     this.updateById(update);
                 }
-                if (obj.getFlownum() == 2) {
+                if (obj.getFlownum().equals(2)) {
                     LambdaQueryWrapper<XxbBProjdept> wrapperProjDept = new LambdaQueryWrapper<>();
                     wrapperProjDept.eq(XxbBProjdept::getPid, obj.getId());
                     wrapperProjDept.eq(XxbBProjdept::getIsDeletemark, 1);
@@ -945,7 +1006,7 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
                             updateProjectDept.setId(item.getId());
                             count += 1;
                         } else {
-                            if (item.getState() != null && item.getState() == 1) {
+                            if (item.getState() != null && item.getState() .equals(1)) {
                                 count += 1;
                             }
                         }
@@ -965,7 +1026,7 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
                     }
                 }
 
-                if (obj.getFlownum() == 3) {
+                if (obj.getFlownum().equals(3)) {
                     XxbBCheck update = new XxbBCheck();
                     update.setId(obj.getId());
                     update.setState(2);
@@ -985,7 +1046,7 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
             update.setState(3);
             this.updateById(update);
 
-            if (obj.getProjectType() == 2) {
+            if (obj.getProjectType().equals(2)) {
                 LambdaQueryWrapper<XxbBProjdept> pdWrapper = new LambdaQueryWrapper<>();
                 pdWrapper.eq(XxbBProjdept::getPid, obj.getId());
                 pdWrapper.eq(XxbBProjdept::getIsDeletemark, 1);
@@ -1108,4 +1169,9 @@ public class XxbBCheckServiceImpl extends ServiceImpl<XxbBCheckMapper, XxbBCheck
 //        this.baseMapper.deleteBatchIds(list);
     }
 
+    @Override
+    @Transactional
+    public List<SendUser> findSendUser(List<String> ids){
+        return  this.baseMapper.findSendUser(ids);
+    }
 }

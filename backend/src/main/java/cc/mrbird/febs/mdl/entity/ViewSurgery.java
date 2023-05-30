@@ -1,8 +1,6 @@
 package cc.mrbird.febs.mdl.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDate;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -17,22 +15,20 @@ import cc.mrbird.febs.common.converter.*;
 
 /**
  * <p>
- * 手术目录
+ * VIEW
  * </p>
  *
  * @author viki
- * @since 2022-05-27
+ * @since 2023-04-20
  */
 
-@Excel("mdl_d_surgery")
+@Excel("view_surgery")
 @Data
-@Accessors(chain = true)
-public class MdlDSurgery implements Serializable{
+public class ViewSurgery implements Serializable{
 
 private static final long serialVersionUID=1L;
 
-                    @TableId(value = "id" , type = IdType.AUTO)
-                
+        
     private Long id;
 
     /**
@@ -40,43 +36,60 @@ private static final long serialVersionUID=1L;
      */
         
         @ExcelField(value ="科室")
-    private String deptNew;
+    private String deptName;
 
     /**
-     * 编码
+     * 姓名
      */
         
-        @ExcelField(value ="编码")
-    private String code;
+        @ExcelField(value ="姓名")
+    private String userAccountName;
 
     /**
-     * 手术名称
+     * 发薪号
      */
         
-        @ExcelField(value ="手术名称")
-    private String name;
-
-    @ExcelField(value ="ICD编码")
-    private String icdCode;
-    @ExcelField(value ="ICD手术操作名称")
-    private String icdName;
+        @ExcelField(value ="发薪号")
+    private String userAccount;
 
     /**
-     * 手术等级
+     * 职称
      */
         
-        @ExcelField(value ="手术等级")
-    private String level;
-
-    @ExcelField(value ="手术类别")
-    private String shlb;
+        @ExcelField(value ="职称")
+    private String zhicheng;
 
     /**
-     * 手术切口类别
+     * 性别
      */
         
-        @ExcelField(value ="手术切口类别")
-    private String lb;
+        @ExcelField(value ="性别")
+    private String sexName;
+
+    /**
+     * 生日
+     */
+        
+        @ExcelField(value ="生日")
+    private String birthday;
+
+    /**
+     * 级别
+     */
+        
+        @ExcelField(value ="级别")
+    private String jb;
+
+    /**
+     * 生效时间
+     */
+        
+        @ExcelField(value ="生效时间", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
+    private Date validDate;
+    private transient String validDateFrom;
+    private transient String validDateTo;
+
+    private transient String validDatePot;
 
     /**
      * 备注
@@ -84,24 +97,6 @@ private static final long serialVersionUID=1L;
         
         @ExcelField(value ="备注")
     private String note;
-
-    /**
-     * 启用时间
-     */
-        
-        @ExcelField(value ="启用时间", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
-    private Date startDate;
-    private transient String startDateFrom;
-    private transient String startDateTo;
-
-    /**
-     * 停用时间
-     */
-        
-        @ExcelField(value ="停用时间", writeConverter = DateConverter.class,readConverter = DateReadConverter.class)
-    private Date endDate;
-    private transient String endDateFrom;
-    private transient String endDateTo;
 
     /**
      * 状态
@@ -158,21 +153,23 @@ private static final long serialVersionUID=1L;
 
     public static final String ID ="id" ;
 
-    public static final String DEPT_NEW ="dept_new" ;
+    public static final String DEPT_NAME ="dept_name" ;
 
-    public static final String CODE ="code" ;
+    public static final String USER_ACCOUNT_NAME ="user_account_name" ;
 
-    public static final String NAME ="name" ;
+    public static final String USER_ACCOUNT ="user_account" ;
 
-    public static final String LEVEL ="level" ;
+    public static final String ZHICHENG ="zhicheng" ;
 
-    public static final String LB ="lb" ;
+    public static final String SEX_NAME ="sex_name" ;
+
+    public static final String BIRTHDAY ="birthday" ;
+
+    public static final String JB ="jb" ;
+
+    public static final String VALID_DATE ="valid_date" ;
 
     public static final String NOTE ="note" ;
-
-    public static final String START_DATE ="start_date" ;
-
-    public static final String END_DATE ="end_date" ;
 
     public static final String STATE ="state" ;
 

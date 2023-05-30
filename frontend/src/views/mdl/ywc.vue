@@ -25,7 +25,7 @@
           </router-link>
         </a-card>
       </a-col>
-      <a-col :span="6" >
+      <a-col :span="6" v-hasNoPermission="['xfk:yes']">
         <a-card class="card card3">
           <router-link :to="{ path: '/fs/FsShow', query: { type: 1 } }">
             <div>

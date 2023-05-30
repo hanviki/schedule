@@ -45,12 +45,8 @@
                 <td style="width: 20%">
                   {{ dateformat(xxbBResult.kzsrtdat) }}
                 </td>
-                <td class="tdRight" style="width: 12%">
-                  开展例数：
-                </td>
-                <td style="width: 20%">
-                  {{ xxbBResult.kzls }}
-                </td>
+                
+                <td colspan="2"></td>
               </tr>
             </table>
           </a-col>
@@ -154,6 +150,18 @@
                 </td>
               </tr>
               <tr>
+                <td colspan="2" style="width:100%;padding:20px 5px">
+                  <upload-file
+                    ref="xmzynrFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmzynr"
+                  >
+                  </upload-file>
+                </td>
+              </tr>
+              <tr>
                 <td colspan="2" style="width:100%;padding:10px 5px">
                 <b>二、项目的科学依据（包括国内外进展、新颖性和创新性）：</b>
                 </td>
@@ -161,6 +169,18 @@
               <tr>
                 <td colspan="2" style="width:100%;padding:20px 5px">
                   {{ xxbBResult.projectkxyj }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="width:100%;padding:20px 5px">
+                  <upload-file
+                    ref="xmkxyjFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmkxyj"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -174,6 +194,18 @@
                 </td>
               </tr>
               <tr>
+                <td colspan="2" style="width:100%;padding:20px 5px">
+                  <upload-file
+                    ref="xmjslxFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmjslx"
+                  >
+                  </upload-file>
+                </td>
+              </tr>
+              <tr>
                 <td colspan="2" style="width:100%;padding:10px 5px">
                 <b>四、项目解决的关键问题：</b>
                 </td>
@@ -181,6 +213,18 @@
               <tr>
                 <td colspan="2" style="width:100%;padding:20px 5px">
                   {{ xxbBResult.projectkey }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="width:100%;padding:20px 5px">
+                  <upload-file
+                    ref="xmgjwtFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmgjwt"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -194,6 +238,18 @@
                 </td>
               </tr>
               <tr>
+                <td colspan="2" style="width:100%;padding:20px 5px">
+                  <upload-file
+                    ref="xmzyfxFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmzyfx"
+                  >
+                  </upload-file>
+                </td>
+              </tr>
+              <tr>
                 <td colspan="2" style="width:100%;padding:10px 5px">
                 <b>六、项目产生的经济效益、社会效益：</b>
                 </td>
@@ -201,6 +257,18 @@
               <tr>
                 <td colspan="2" style="width:100%;padding:20px 5px">
                   {{ xxbBResult.projectjjshxy }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="width:100%;padding:20px 5px">
+                  <upload-file
+                    ref="xmjjxyFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmjjxy"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -214,6 +282,18 @@
                 </td>
               </tr>
               <tr>
+                <td colspan="2" style="width:100%;padding:20px 5px">
+                  <upload-file
+                    ref="xmwxmlFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmwxml"
+                  >
+                  </upload-file>
+                </td>
+              </tr>
+              <tr>
                 <td colspan="2" style="width:100%;padding:10px 5px">
                 <b>八、新闻报道情况：</b>
                 </td>
@@ -221,6 +301,18 @@
               <tr>
                 <td colspan="2" style="width:100%;padding:20px 5px">
                   {{ xxbBResult.newbdqk }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="width:100%;padding:20px 5px">
+                  <upload-file
+                    ref="xmbdqkFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmbdqk"
+                  >
+                  </upload-file>
                 </td>
               </tr>
               <tr>
@@ -234,8 +326,33 @@
                 </td>
               </tr>
               <tr>
+                <td colspan="2" style="width:100%;padding:20px 5px">
+                  <upload-file
+                    ref="xmkzqkpdfFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传相关的PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmkzqkpdf"
+                  >
+                  </upload-file>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="width:100%;padding:10px 5px">
+                <b>十、项目开展明细：</b>
+                </td>
+              </tr>
+              <tr>
+              <td class="tdRight" style="width: 12%">
+                  开展例数：
+            
+                  {{ xxbBResult.kzls }}
+                </td>
                 <td colspan="2" style="width:100%">
                   <a-row>
+                    <a-col :span=4>
+                      项目开展情况：
+                    </a-col>
                     <a-col :span=8>
                       <upload-file
                         ref="xmkzqkFile"
@@ -245,9 +362,30 @@
                         refTab="xxbresult_xmkzqk"
                       >
                       </upload-file>
+                     
                     </a-col>
                   </a-row>
                 </td>
+              </tr>
+              <tr>
+                <td style="width:20%" class="tdRight">项目查新报告：</td>
+                <td  style="width:100%;padding:20px 5px">
+                  <a-row>
+                    <a-col :span=8>
+                      <upload-file
+                    ref="xmcxbgFile"
+                    :baseId="xxbBResult.id"
+                    btnTitle="上传项目查新报告PDF"
+                    :isEdit="isEdit"
+                    refTab="xxbresult_xmcxbg"
+                   
+                    
+                  >
+                  </upload-file>
+                    </a-col>
+                  </a-row>
+                </td>
+
               </tr>
             </table>
           </a-col>

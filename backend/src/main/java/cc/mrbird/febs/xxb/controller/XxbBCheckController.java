@@ -10,6 +10,7 @@ import cc.mrbird.febs.common.domain.QueryRequest;
 
 import cc.mrbird.febs.common.properties.FebsProperties;
 import cc.mrbird.febs.common.utils.ExportExcelUtils;
+import cc.mrbird.febs.common.utils.SendMessUtil;
 import cc.mrbird.febs.export.pdf.XxbBPdfInfo;
 import cc.mrbird.febs.scm.entity.ComFile;
 import cc.mrbird.febs.scm.service.IComFileService;
@@ -22,7 +23,9 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ZipUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -111,16 +114,7 @@ public class XxbBCheckController extends BaseController {
     @GetMapping("report")
     public Map<String, Object> List10(QueryRequest request, XxbBCheck xxbBCheck) {
         User currentUser = FebsUtil.getCurrentUser();
-        if(org.apache.commons.lang3.StringUtils.isNotEmpty(xxbBCheck.getYggh())){
-            LambdaQueryWrapper<XxbBDeptflow> xxbBDeptflowLambdaQueryWrapper= new LambdaQueryWrapper<>();
-            xxbBDeptflowLambdaQueryWrapper.eq(XxbBDeptflow::getFlowAccount,xxbBCheck.getYggh());
-            xxbBDeptflowLambdaQueryWrapper.eq(XxbBDeptflow::getIsDeletemark,1);
-           List<XxbBDeptflow> xxbBDeptflows= this.iXxbBDeptflowService.list(xxbBDeptflowLambdaQueryWrapper);
-            if(xxbBDeptflows.size()>0){
-                List<String> pids= xxbBDeptflows.stream().map(p->p.getPid()).collect(Collectors.toList());
-                xxbBCheck.setIdList(pids);
-            }
-        }
+
         return getDataTable(this.iXxbBCheckService.findXxbBCheckList(request, xxbBCheck));
     }
     @GetMapping("zqList")
@@ -424,16 +418,18 @@ public class XxbBCheckController extends BaseController {
     @PostMapping("excel")
     public void export(QueryRequest request, XxbBCheck xxbBCheck, HttpServletResponse response) throws FebsException {
         try {
-            if(org.apache.commons.lang3.StringUtils.isNotEmpty(xxbBCheck.getYggh())){
-                LambdaQueryWrapper<XxbBDeptflow> xxbBDeptflowLambdaQueryWrapper= new LambdaQueryWrapper<>();
-                xxbBDeptflowLambdaQueryWrapper.eq(XxbBDeptflow::getFlowAccount,xxbBCheck.getYggh());
-                xxbBDeptflowLambdaQueryWrapper.eq(XxbBDeptflow::getIsDeletemark,1);
-                List<XxbBDeptflow> xxbBDeptflows= this.iXxbBDeptflowService.list(xxbBDeptflowLambdaQueryWrapper);
-                if(xxbBDeptflows.size()>0){
-                    List<String> pids= xxbBDeptflows.stream().map(p->p.getPid()).collect(Collectors.toList());
-                    xxbBCheck.setIdList(pids);
-                }
-            }
+            request.setPageSize(Integer.MAX_VALUE);
+            request.setPageNum(1);
+//            if(org.apache.commons.lang3.StringUtils.isNotEmpty(xxbBCheck.getYggh())){
+//                LambdaQueryWrapper<XxbBDeptflow> xxbBDeptflowLambdaQueryWrapper= new LambdaQueryWrapper<>();
+//                xxbBDeptflowLambdaQueryWrapper.eq(XxbBDeptflow::getFlowAccount,xxbBCheck.getYggh());
+//                xxbBDeptflowLambdaQueryWrapper.eq(XxbBDeptflow::getIsDeletemark,1);
+//                List<XxbBDeptflow> xxbBDeptflows= this.iXxbBDeptflowService.list(xxbBDeptflowLambdaQueryWrapper);
+//                if(xxbBDeptflows.size()>0){
+//                    List<String> pids= xxbBDeptflows.stream().map(p->p.getPid()).collect(Collectors.toList());
+//                    xxbBCheck.setIdList(pids);
+//                }
+//            }
             List<XxbBCheck> xxbBChecks= this.iXxbBCheckService.findXxbBCheckList(request, xxbBCheck).getRecords();
           //  List<XxbBCheck> xxbBChecks = this.iXxbBCheckService.findXxbBChecks(request, xxbBCheck, null).getRecords();
 
@@ -470,8 +466,10 @@ public class XxbBCheckController extends BaseController {
                     row.put("项目类别","治疗操作类");
                 }
                 else{
-                    row.put("项目类别","其他类");
+                    row.put("项目","其他类");
                 }
+                row.put("项目级别",getStringLevel(check.getProjectLevel()));
+                row.put("审核状态",getState(check.getState()));
                 row.put("是否为限制类医疗技术",check.getIsxzyljs().equals(1)?"是":"否");
                 /**
                  * c参与者姓名
@@ -498,6 +496,7 @@ public class XxbBCheckController extends BaseController {
                 row.put("是否上交查新报告",isNew);
 
 
+
                 rows.add(row);
                 index+=1;
             }
@@ -508,6 +507,51 @@ public class XxbBCheckController extends BaseController {
             log.error(message, e);
             throw new FebsException(message);
         }
+    }
+    private String getState(int state){
+        String str;
+        switch(state) {
+            case 0:
+                str = "未提交";
+                break;
+            case 1:
+                str = "已提交";
+                break;
+            case 2:
+                str = "已审核";
+                break;
+            case 3:
+                str = "已退回";
+                break;
+            case 9:
+                str = "终止申报";
+                break;
+            default:
+                str = "";
+                break;
+        }
+        return str;
+    }
+     private   String getStringLevel(int num) {
+        String str;
+        switch(num) {
+            case 1:
+                str = "一级";
+                break;
+            case 2:
+                str = "二级";
+                break;
+            case 3:
+                str = "三级";
+                break;
+            case 4:
+                str = "四级";
+                break;
+            default:
+                str = "";
+                break;
+        }
+        return str;
     }
 
     @PostMapping("downloadFile")
@@ -525,6 +569,8 @@ public class XxbBCheckController extends BaseController {
                 LambdaQueryWrapper<XxbBCheckD> renyWrapper = new LambdaQueryWrapper<>();
                 renyWrapper.eq(XxbBCheckD::getPid, xxbBCheck.getId());
                 List<XxbBCheckD> renyList = iXxbBCheckDService.list(renyWrapper);
+                renyList.sort(Comparator.nullsLast(Comparator.comparing(XxbBCheckD::getDisplayIndex,Comparator.nullsLast(Integer::compareTo))));
+
                 List<XxbBProjdept> projDeptList = new ArrayList<>();
                 if (xxbBCheck.getProjectType() == 2) {
                     LambdaQueryWrapper<XxbBProjdept> pdWrapper = new LambdaQueryWrapper<>();
@@ -578,7 +624,14 @@ public class XxbBCheckController extends BaseController {
         }
     }
 
-    @PostMapping("downloadFile2")
+    /**
+     * 下载文件  合并各个pdf文件
+     * @param request
+     * @param id
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("downloadFile26")
     public void findFiles3(QueryRequest request, String id, HttpServletResponse response) throws Exception {
         String filePath = febsProperties.getUploadPath(); // 上传后的路径
         String fileName = filePath + "down/" + UUID.randomUUID().toString() + ".pdf";
@@ -643,6 +696,105 @@ public class XxbBCheckController extends BaseController {
         }
     }
 
+    /**
+     * 下载文件  pdf合成一个zip文件下载
+     * @param request
+     * @param id
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("downloadFile2")
+    public void findFiles38(QueryRequest request, String id, HttpServletResponse response) throws Exception {
+        String filePath = febsProperties.getUploadPath(); // 上传后的路径
+        String fileName = filePath + "down/" + UUID.randomUUID().toString() + ".zip";
+        String destDir = filePath + "down2/";
+        String name = UUID.randomUUID().toString() + ".zip";
+        List<File> mergeAddPdfList = new ArrayList<>();
+
+        List<String> deleteFilePath= new ArrayList<>();
+        try {
+            XxbBCheck xxbBCheck = this.iXxbBCheckService.getById(id);
+            int count=1;
+            if (xxbBCheck != null) {
+                XxbBPdfInfo pdf = new XxbBPdfInfo();
+                LambdaQueryWrapper<ComFile> fileWrapper = new LambdaQueryWrapper<>();
+                fileWrapper.eq(ComFile::getRefTabId, xxbBCheck.getId());
+                List<ComFile> fileList = iComFileService.list(fileWrapper);
+                List<ComFile> fileQuery = new ArrayList<>();
+
+                // xxbcheck_aqxfx 技术临床应用安全性分析
+                fileQuery = fileList.stream().filter(s -> s.getRefTabTable() != null &&
+                        s.getRefTabTable().equals("xxbcheck_aqxfx")).collect(Collectors.toList());
+                if (fileQuery.size() > 0) {
+                    count+=1;
+                    String delPath=destDir+xxbBCheck.getUserAccountName()+"_"+count+"_"+fileQuery.get(0).getClientName();
+                    deleteFilePath.add(delPath);
+                    mergeAddPdfList.add(FileUtil.copyFile(filePath + fileQuery.get(0).getServerName(),delPath));
+                }
+                //xxbcheck_yxxfx  技术临床应用有效性分析
+                fileQuery = fileList.stream().filter(s -> s.getRefTabTable() != null &&
+                        s.getRefTabTable().equals("xxbcheck_yxxfx")).collect(Collectors.toList());
+                if (fileQuery.size() > 0) {
+                    count+=1;
+                    String delPath=destDir+xxbBCheck.getUserAccountName()+"_"+count+"_"+fileQuery.get(0).getClientName();
+                    deleteFilePath.add(delPath);
+                    mergeAddPdfList.add(FileUtil.copyFile(filePath + fileQuery.get(0).getServerName(),delPath));
+                }
+                //xxbcheck_xmcxbg 项目查新报告
+                fileQuery = fileList.stream().filter(s -> s.getRefTabTable() != null &&
+                        s.getRefTabTable().equals("xxbcheck_xmcxbg")).collect(Collectors.toList());
+                if (fileQuery.size() > 0) {
+                    count+=1;
+                    String delPath=destDir+xxbBCheck.getUserAccountName()+"_"+count+"_"+fileQuery.get(0).getClientName();
+                    deleteFilePath.add(delPath);
+                    mergeAddPdfList.add(FileUtil.copyFile(filePath + fileQuery.get(0).getServerName(),delPath));
+                }
+                //xxbcheck_lcyyzqtys 新技术新业务临床应用
+                fileQuery = fileList.stream().filter(s -> s.getRefTabTable() != null &&
+                        s.getRefTabTable().equals("xxbcheck_lcyyzqtys")).collect(Collectors.toList());
+                if (fileQuery.size() > 0) {
+                    count+=1;
+                    String delPath=destDir+xxbBCheck.getUserAccountName()+"_"+count+"_"+fileQuery.get(0).getClientName();
+                    deleteFilePath.add(delPath);
+                    mergeAddPdfList.add(FileUtil.copyFile(filePath + fileQuery.get(0).getServerName(),delPath));
+                }
+                //xxbcheck_lcyyzqtys 新技术新业务临床应用
+                fileQuery = fileList.stream().filter(s -> s.getRefTabTable() != null &&
+                        s.getRefTabTable().equals("xxbcheck_czgz")).collect(Collectors.toList());
+                if (fileQuery.size() > 0) {
+                    count+=1;
+                    String delPath=destDir+xxbBCheck.getUserAccountName()+"_"+count+"_"+fileQuery.get(0).getClientName();
+                    deleteFilePath.add(delPath);
+                    mergeAddPdfList.add(FileUtil.copyFile(filePath + fileQuery.get(0).getServerName(),delPath));
+                }
+
+                //xxbcheck_lcyyzqtys 新技术新业务临床应用
+                fileQuery = fileList.stream().filter(s -> s.getRefTabTable() != null &&
+                        s.getRefTabTable().equals("xxbcheck_jyygk")).collect(Collectors.toList());
+                if (fileQuery.size() > 0) {
+                    count+=1;
+                    String delPath=destDir+xxbBCheck.getUserAccountName()+"_"+count+"_"+fileQuery.get(0).getClientName();
+                    deleteFilePath.add(delPath);
+                    mergeAddPdfList.add(FileUtil.copyFile(filePath + fileQuery.get(0).getServerName(),delPath));
+                }
+
+
+                 Object[] objects= mergeAddPdfList.toArray();
+                ZipUtil.zip(FileUtil.file(fileName), false,Arrays.copyOf(objects,objects.length,File[].class));
+
+                this.downFile(response, fileName, name, true);
+                this.deleteFile(fileName);
+                for (String delepth:deleteFilePath
+                     ) {
+                    this.deleteFile(delepth);
+                }
+            }
+        } catch (Exception e) {
+            message = "下载失败.";
+            log.error(message, e);
+            throw new FebsException(message);
+        }
+    }
 
     @RequestMapping(value = "downTemplate", method = RequestMethod.POST)
     @RequiresPermissions("xxbBCheck:import")
@@ -752,5 +904,27 @@ public class XxbBCheckController extends BaseController {
             flag = true;
         }
         return flag;
+    }
+
+
+    @PostMapping("sendData")
+    public void SendData(String sendInfo,String ids){
+        List<String> listIds= new ArrayList<>();
+        if(org.apache.commons.lang3.StringUtils.isNotEmpty(ids)){
+           String[] arr= ids.split(",");
+            for (String id:arr
+                 ) {
+                listIds.add(id);
+            }
+        }
+        List<SendUser> sendUserList= this.iXxbBCheckService.findSendUser(listIds);
+        if(sendUserList.size()>0) {
+            SendMessUtil sendMessUtil = new SendMessUtil();
+           // sendMessUtil.SendMessByTel("15927041507", sendInfo);
+            for (SendUser person : sendUserList
+            ) {
+                sendMessUtil.SendMessByTel(person.getTelephone(), sendInfo);
+            }
+        }
     }
 }

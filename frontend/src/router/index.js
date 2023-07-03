@@ -121,14 +121,11 @@ router.beforeEach((to, from, next) => {
                 if (ele.name == '主页') {
                   ele.redirect = '/personalManagement'
                   ele.children.push(
-                    {name: '个人管理', path: '/personalManagement', component: 'mdl/PersonalManagement',
+                    {name: '个人信息查询及维护', path: '/personalManagement', component: 'mdl/PersonalManagement',
                       // children : [
                       //   {name: '个人资料', path: '/mdl/PersonalInfo', component: 'mdl/PersonalInfo'},
-                      //   {name: '资质管理', path: '/mdl/MdlYwc/ManageInfo', component: 'mdl/MdlBManager/ManageInfo'},
-                      //   {name: '业务资质管理', path: '/mdl/MdlYwc/AdminShow', component: 'mdl/AdminShow'},
-                      //   {name: '技术资质管理', path: '/mdl/MdlYwc/AdminTecShow', component: 'mdl/AdminTecShow'},
-                      //   {name: '不良记分管理', path: '/mdl/MdlYwc/AdminBL', component: 'mdl/AdminBL'},
-                      //   {name: '应急保障管理', path: '/mdl/MdlYwc/MdlBForeign', component: 'mdl/MdlBForeign'}
+                      //   {name: '放射辐射甲状腺屏蔽维护', path: '/mdl/MdlYwc/ManageInfo', component: 'mdl/MdlBManager/ManageInfo'},
+                      //   {name: '放射辐射考试记录维护', path: '/fs/FsBExameSingle/FsBExame', component: 'fs/FsBExameSingle/FsBExame'},
                       // ]
                     }
                   )

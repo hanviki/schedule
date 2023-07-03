@@ -236,11 +236,31 @@ export default {
           title: "原监测状态",
           dataIndex: "stateOld",
           width: 100,
+          customRender: (text, row, index) => {
+            switch (text) {
+              case '0':
+                return <a-tag color="green">开始监测</a-tag>;
+              case '1':
+                return <a-tag color="red">暂停监测</a-tag>;
+              default :
+                return ''
+            }
+          },
         },
         {
           title: "新监测状态",
           dataIndex: "stateNew",
           width: 100,
+          customRender: (text, row, index) => {
+            switch (text) {
+              case '0':
+                return <a-tag color="green">开始监测</a-tag>;
+              case '1':
+                return <a-tag color="red">暂停监测</a-tag>;
+              default :
+                return ''
+            }
+          },
         },
         // {
         //   title: "状态变更日期",

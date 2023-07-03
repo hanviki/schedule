@@ -699,13 +699,13 @@ export default {
       }
     
       if(params.isDf5=="有"){
-         params.state=5
+         params.state2=5
       }
       if(params.isDf5=="无"){
-         params.state=4
+         params.state2=4
       }
        if(params.isDf5=="-1"){
-         delete params.state
+         delete params.state2
       }
 
        if(params.isFsz=="有"){
@@ -747,54 +747,7 @@ export default {
         sortOrder = sortedInfo.order;
       }
       let params ={...this.queryParams}
-       if (params.jcState=="-1"){
-        delete params.jcState
-      }
-       if (params.state=="-1"){
-        delete params.state
-      }
-      if(params.isDf2=="有"){
-         params.hdjlpgs=2
-      }
-      if(params.isDf2=="无"){
-         params.hdjlpgs=1
-      }
-       if(params.isDf2=="-1"){
-         delete params.hdjlpgs
-      }
     
-      if(params.isDf5=="有"){
-         params.state=5
-      }
-      if(params.isDf5=="无"){
-         params.state=4
-      }
-       if(params.isDf5=="-1"){
-         delete params.state
-      }
-
-       if(params.isFsz=="有"){
-         params.displayIndex=1
-      }
-      if(params.isFsz=="无"){
-         params.displayIndex=0
-      }
-       if(params.isFsz=="-1"){
-         delete params.displayIndex
-      }
-        if(params.isTj=="有"){
-         params.jiguan='2'
-      }
-      if(params.isTj=="无"){
-         params.jiguan='1'
-      }
-       if(params.isTj=="-1"){
-         delete params.jiguan
-      }
-        if(params.yuanqu=="-1"){
-         delete params.yuanqu
-      }
-      
 
       this.fetch({
         sortField: sortField,
@@ -857,15 +810,25 @@ export default {
       }
     
       if(params.isDf5=="有"){
-         params.state=5
+         params.state2=5
       }
       if(params.isDf5=="无"){
-         params.state=4
+         params.state2=4
       }
        if(params.isDf5=="-1"){
-         delete params.state
+         delete params.state2
       }
-       if(params.isTj=="有"){
+
+       if(params.isFsz=="有"){
+         params.displayIndex=1
+      }
+      if(params.isFsz=="无"){
+         params.displayIndex=0
+      }
+       if(params.isFsz=="-1"){
+         delete params.displayIndex
+      }
+        if(params.isTj=="有"){
          params.jiguan='2'
       }
       if(params.isTj=="无"){
@@ -874,6 +837,10 @@ export default {
        if(params.isTj=="-1"){
          delete params.jiguan
       }
+        if(params.yuanqu=="-1"){
+         delete params.yuanqu
+      }
+      
       this.$get("fsBUser/dept", {
         ...params,
       }).then((r) => {

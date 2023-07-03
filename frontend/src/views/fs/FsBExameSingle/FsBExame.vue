@@ -4,51 +4,32 @@
       <a-form layout="horizontal">
         <a-row>
           <div :class="advanced ? null : 'fold'">
-            <a-col :md="8" :sm="24">
-              <a-form-item label="姓名/发薪号" v-bind="formItemLayout">
-                <a-input v-model="queryParams.userAccount" />
-              </a-form-item>
-            </a-col>
-            <a-col :md="4" :sm="24">
-              <a-form-item label="科室变化" v-bind="formItemLayout">
-                <a-select v-model="queryParams.isDept">
-                <a-select-option value="是">是
-                </a-select-option>
-                 <a-select-option value="否">否
-                </a-select-option>
+           
+            
+             <a-col :md="6" :sm="24">
+              <a-form-item label="考试类型" v-bind="formItemLayout">
+                <a-select v-model="queryParams.exameType" >
+                   <a-select-option value="-1">
+                全部
+            </a-select-option>
+                  <a-select-option value="环保考试">
+                环保考试
+            </a-select-option>
+            <a-select-option value="卫生考试">
+                卫生考试
+            </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="4" :sm="24">
-              <a-form-item label="岗位类别变化" v-bind="formItemLayout">
-                <a-select v-model="queryParams.isGwlb">
-                <a-select-option value="是">是
-                </a-select-option>
-                 <a-select-option value="否">否
-                </a-select-option>
-                </a-select>
+             <a-col :md="8" :sm="24">
+             <a-form-item label="考试日期" v-bind="formItemLayout">
+                 <a-date-picker style="width:48%;"
+                  @change="handleStartDateChange"
+                       />-<a-date-picker style="width:48%;"
+                  @change="handleEndDateChange"
+                       />
               </a-form-item>
-            </a-col>
-            <a-col :md="4" :sm="24">
-             <a-form-item label="牌个数变化" v-bind="formItemLayout">
-                <a-select v-model="queryParams.isNumber">
-                <a-select-option value="是">是
-                </a-select-option>
-                 <a-select-option value="否">否
-                </a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="4" :sm="24">
-             <a-form-item label="检测状态变化" v-bind="formItemLayout">
-                <a-select v-model="queryParams.isState">
-                <a-select-option value="是">是
-                </a-select-option>
-                 <a-select-option value="否">否
-                </a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
+             </a-col>
           </div>
           <span style="float: right; margin-top: 3px">
             <a-button type="primary" @click="search">查询</a-button>
@@ -62,20 +43,35 @@
       </a-form>
     </div>
     <div>
+    <div style="color:red;font-weight: bold;" v-show="show==1">
+    重要消息提示： {{name}}（身份证号:{{idCard}},联系电话：{{tel}}）,系协和医院职工，已经完成对应卫生、环保考试，请阅读《体检须知》，前往湖北省中西医结合医院完成岗前体检。
+    <div style="height:80px; overflow: auto;color:black;margin-bottom: 5px;">
+      <span style="text-align: center;">体检须知</span>
+      <span>1、体检地点：湖北省中西医结合医院德泰楼三楼体检中心（武汉市江汉区菱角湖路11号）。体检时间：正常工作日及周六上午7:30-10:30，周日和国家法定节假日除外； </span>
+        <span>2、体检当天须空腹；请体检者携带身份证原件至三楼前台登记，领取体检导检单，凭导检单进入体检区开始体检；</span>
+          <span>3、抽血项目务必在拍片之前完成！否则会因拍片影响血液学结果；</span>
+            <span>4、接受X线检查，请勿穿着带有金属饰物或配件的衣物；</span>
+              <span>5、备孕或已经怀孕女性请和主管科室提前沟通，建议暂缓全部检查，待生育结束后再体检；</span>
+                <span>6、所有体检项目务必在我院完成，不得漏项或者拒做！尤其是拍片，否则会被要求回我院补检。请认真、完整填写《放射工作人员职业健康检查表》上的基本信息、职业史、既往史、自觉症状等内容（参见服务台模板）；</span>
+                  <span>7、体检项目全部完成后，请将体检手册和导检单交回前台，经确认无误后方可离开；</span>
+                    <span>8、体检现场若有体检相关事情咨询或疑问，请联系黄医生，电话:13667169143，陈医生，15902705887.办公地点：三楼312室。</span>
+
+                      <span style="text-align: center;">湖北省中西医结合医院体检中心</span>
+
+    </div>  
+  </div>
       <div class="operator">
         <a-button
-         
-          type="primary"
-          ghost
+          icon="plus"
+         style="color: #fff;background-color: #1890ff;border-color: #1890ff;box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);"
           @click="add"
           >新增</a-button
         >
-        <a-button
-         
-          @click="batchDelete"
+        <a-button @click="batchDelete"
+         icon="delete"
+         style="color: #fff;background-color: #f5222d;border-color: #f5f5f5;box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);"
           >删除</a-button
         >
-      
       </div>
       <!-- 表格区域 -->
       <a-table
@@ -103,38 +99,36 @@
         </template>
         <template slot="operation" slot-scope="text, record">
           <a-icon
-          v-show="record.state == 0 ||record.state == 2"
             type="setting"
             theme="twoTone"
             twoToneColor="#4a9ff5"
             @click="edit(record)"
             title="修改"
           ></a-icon>
-          
         </template>
       </a-table>
     </div>
     <!-- 新增字典 -->
-    <fsBChangerecord-add
+    <fsBExame-add
       @close="handleAddClose"
       @success="handleAddSuccess"
       :addVisiable="addVisiable"
     >
-    </fsBChangerecord-add>
+    </fsBExame-add>
     <!-- 修改字典 -->
-    <fsBChangerecord-edit
-      ref="fsBChangerecordEdit"
+    <fsBExame-edit
+      ref="fsBExameEdit"
       @close="handleEditClose"
       @success="handleEditSuccess"
       :editVisiable="editVisiable"
     >
-    </fsBChangerecord-edit>
+    </fsBExame-edit>
   </a-card>
 </template>
 
 <script>
-import FsBChangerecordAdd from "./FsBChangerecordAdd";
-import FsBChangerecordEdit from "./FsBChangerecordEdit";
+import FsBExameAdd from "./FsBExameAdd";
+import FsBExameEdit from "./FsBExameEdit";
 import moment from "moment";
 
 const formItemLayout = {
@@ -142,8 +136,8 @@ const formItemLayout = {
   wrapperCol: { span: 15, offset: 1 },
 };
 export default {
-  name: "FsBChangerecord",
-  components: { FsBChangerecordAdd, FsBChangerecordEdit },
+  name: "FsBExame",
+  components: { FsBExameAdd, FsBExameEdit },
   data() {
     return {
       advanced: false,
@@ -166,6 +160,10 @@ export default {
       editVisiable: false,
       loading: false,
       bordered: true,
+      show: 0,
+      idCard: '',
+      name: '',
+      tel: ''
     };
   },
   computed: {
@@ -173,6 +171,7 @@ export default {
       let { sortedInfo } = this;
       sortedInfo = sortedInfo || {};
       return [
+       
         {
           title: "姓名",
           dataIndex: "userAccountName",
@@ -184,155 +183,63 @@ export default {
           width: 100,
         },
         {
-          title: "原科室",
-          dataIndex: "deptOld",
+          title: "计量牌编号",
+          dataIndex: "number",
           width: 100,
         },
         {
-          title: "新科室",
-          dataIndex: "deptNew",
-          width: 100,
-        },
-        
-        {
-          title: "原岗位类别",
-          dataIndex: "gwlbOld",
+          title: "考试类型",
+          dataIndex: "exameType",
           width: 100,
         },
         {
-          title: "新岗位类别",
-          dataIndex: "gwlbNew",
-          width: 100,
-        },
-        {
-          title: "原核定计量牌个数",
-          dataIndex: "numberOld",
-          width: 100,
-        },
-        {
-          title: "新核定计量牌个数",
-          dataIndex: "numberNew",
-          width: 100,
-        },
-        {
-          title: "原监测状态",
-          dataIndex: "stateOld",
-          width: 100,
+          title: "考试时间",
+          dataIndex: "exameDate",
           customRender: (text, row, index) => {
-            switch (text) {
-              case '0':
-                return <a-tag color="green">开始监测</a-tag>;
-              case '1':
-                return <a-tag color="red">暂停监测</a-tag>;
-              default :
-                return ''
-            }
+            if (text == null) return "";
+            return moment(text).format("YYYY-MM-DD");
           },
+          width: 100,
         },
         {
-          title: "新监测状态",
-          dataIndex: "stateNew",
+          title: "考试编号",
+          dataIndex: "exameNum",
           width: 100,
+        },
+        {
+          title: "考试成绩",
+          dataIndex: "exameScore",
+          width: 100,
+        },
+        {
+          title: "考试总分",
+          dataIndex: "exameTotal",
+          width: 100,
+        },
+        {
+          title: "考试专业",
+          dataIndex: "exameZy",
+          width: 100,
+        },
+        {
+          title: "有效截至日期",
+          dataIndex: "valid",
+          width: 100,
+        },
+        {
+          title: "附件",
+          dataIndex: "fileId",
           customRender: (text, row, index) => {
-            switch (text) {
-              case '0':
-                return <a-tag color="green">开始监测</a-tag>;
-              case '1':
-                return <a-tag color="red">暂停监测</a-tag>;
-              default :
-                return ''
+            if (text != null && text != "") {
+              return (
+                <a href={this.$baseUrl + row.fileUrl} target="_blank">
+                  查看
+                </a>
+              );
             }
+            return "";
           },
-        },
-        // {
-        //   title: "状态变更日期",
-        //   dataIndex: "changeDate",
-        //   customRender: (text, row, index) => {
-        //     if (text == null) return "";
-        //     return moment(text).format("YYYY-MM-DD");
-        //   },
-        //   width: 100,
-        // },
-        {
-          title: "科室是否变化",
-          dataIndex: "isDept",
           width: 100,
-           customRender: (text, row, index) => {
-            switch (text) {
-              case '是':
-                return <a-tag color="green">是</a-tag>;
-              case '否':
-                return <a-tag color="purple">否</a-tag>;
-              default:
-                return text;
-            }
-          },
-        },
-        {
-          title: "岗位类别是否变化",
-          dataIndex: "isGwlb",
-          width: 100,
-           customRender: (text, row, index) => {
-            switch (text) {
-              case '是':
-                return <a-tag color="green">是</a-tag>;
-              case '否':
-                return <a-tag color="purple">否</a-tag>;
-              default:
-                return text;
-            }
-          },
-        },
-        {
-          title: "剂量牌个数是否变化",
-          dataIndex: "isNumber",
-          width: 100,
-           customRender: (text, row, index) => {
-            switch (text) {
-              case '是':
-                return <a-tag color="green">是</a-tag>;
-              case '否':
-                return <a-tag color="purple">否</a-tag>;
-              default:
-                return text;
-            }
-          },
-        },
-        {
-          title: "检测状态是否变化",
-          dataIndex: "isState",
-          width: 100,
-          customRender: (text, row, index) => {
-            switch (text) {
-              case '是':
-                return <a-tag color="green">是</a-tag>;
-              case '否':
-                return <a-tag color="purple">否</a-tag>;
-              default:
-                return text;
-            }
-          },
-        },
-       
-        {
-          title: "状态",
-          dataIndex: "state",
-          width: 100,
-          customRender: (text, row, index) => {
-            switch (text) {
-              case 0:
-                return <a-tag color="green">未提交</a-tag>;
-              case 1:
-                return <a-tag color="purple">已提交</a-tag>;
-              case 3:
-                return <a-tag color="orange">已审核</a-tag>;
-                case 2:
-                return <a-tag color="red">审核不通过</a-tag>;
-              default:
-                return text;
-            }
-          },
-          fixed: "right",
         },
         {
           title: "操作",
@@ -381,33 +288,38 @@ export default {
       this.editVisiable = false;
     },
     edit(record) {
-      this.$refs.fsBChangerecordEdit.setFormValues(record);
+      this.$refs.fsBExameEdit.setFormValues(record);
       this.editVisiable = true;
+    },
+    handleStartDateChange(value) {
+      if(value==null){
+        delete this.queryParams.exameDateFrom
+      }
+      else{
+        this.queryParams.exameDateFrom = moment(value).format("YYYY-MM-DD");
+      }
+    },
+    handleEndDateChange(value) {
+      if(value==null){
+        delete this.queryParams.exameDateTo
+      }
+      else{
+        this.queryParams.exameDateTo = moment(value).format("YYYY-MM-DD");
+      }
     },
     batchDelete() {
       if (!this.selectedRowKeys.length) {
         this.$message.warning("请选择需要删除的记录");
         return;
       }
-      if (this.selectedRowKeys.length>1) {
-        this.$message.warning("请选择一条需要删除的记录");
-        return;
-      }
-      const dataSource = this.dataSource;
       let that = this;
-      let rows= dataSource.filter(p=>p.id==that.selectedRowKeys[0])
-     if(rows[0].state==1||rows[0].state==3){
-        this.$message.warning("已经提交或者审核就不能删除");
-     }
-     else{
-      
       this.$confirm({
         title: "确定删除所选中的记录?",
         content: "当您点击确定按钮后，这些记录将会被彻底删除",
         centered: true,
         onOk() {
-          let fsBChangerecordIds = that.selectedRowKeys.join(",");
-          that.$delete("fsBChangerecord/" + fsBChangerecordIds).then(() => {
+          let fsBExameIds = that.selectedRowKeys.join(",");
+          that.$delete("fsBExame/" + fsBExameIds).then(() => {
             that.$message.success("删除成功");
             that.selectedRowKeys = [];
             that.search();
@@ -417,7 +329,6 @@ export default {
           that.selectedRowKeys = [];
         },
       });
-     }
     },
     exportExcel() {
       let { sortedInfo } = this;
@@ -427,10 +338,20 @@ export default {
         sortField = sortedInfo.field;
         sortOrder = sortedInfo.order;
       }
-      this.$export("fsBChangerecord/excel", {
+     
+       let json = [...this.columns]
+      json.splice(json.length-1,1);
+     
+      let dataJson = JSON.stringify(json)
+      let params= this.queryParams
+  if(params.exameType=="-1"){
+        delete params.exameType;
+      }
+      this.$export("fsBExame/excel", {
         sortField: sortField,
         sortOrder: sortOrder,
-        ...this.queryParams,
+         dataJson: dataJson,
+        ...params
       });
     },
     search() {
@@ -488,10 +409,11 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.pagination.defaultCurrent;
       }
-      params.submitUser= this.$store.state.account.user.username
-      params.sortField= "create_time"
-      params.sortOrder= "descend"
-      this.$get("fsBChangerecord", {
+      if(params.exameType=="-1"){
+        delete params.exameType;
+      }
+      params.userAccount=  this.$store.state.account.user.username;
+      this.$get("fsBExame/note", {
         ...params,
       }).then((r) => {
         let data = r.data;
@@ -499,6 +421,10 @@ export default {
         pagination.total = data.total;
         this.loading = false;
         this.dataSource = data.rows;
+        this.show= data.info;
+        this.idCard= data.idCard;
+        this.tel= data.tel;
+        this.name= data.name;
         this.pagination = pagination;
       });
     },

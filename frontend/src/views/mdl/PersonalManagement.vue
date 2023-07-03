@@ -3,8 +3,17 @@
     <a-row class="row" :gutter="40">
       <a-col :span="6">
         <div class="cuDiv"  style="background-color: #1c998c; cursor: pointer;">
-          <div class="bigDiv" @click="$router.push({path: '/mdl/PersonalInfo'})">
-            <div class="titleDiv">个人资料</div>
+          <div class="bigDiv" >
+            <div class="titleDiv">个人信息查询及维护</div>
+            <div class="subDiv" @click="$router.push({path: '/mdl/PersonalInfo'})">
+              个人资料
+            </div>
+            <div class="subDiv" @click="$router.push({path: '/fs/FsBQy/FsBQySingle'})">
+              放射辐射甲状腺屏蔽维护
+            </div>
+            <div class="subDiv" @click="$router.push({path: '/fs/FsBExameSingle/FsBExame'})">
+              放射辐射考试记录维护
+            </div>
           </div>
           <div class="imageDiv"><a-avatar :size="60" style=" backgroundColor:white;" ><a-icon type="user"  style="font-size: 30px;color:green" :bordered="false" /></a-avatar></div>
         </div>

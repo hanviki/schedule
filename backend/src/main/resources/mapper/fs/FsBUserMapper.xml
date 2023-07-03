@@ -211,6 +211,7 @@
 	`fs_b_user`.`note` AS `note`
 FROM
     `sdl_b_user_mg` inner  JOIN  `fs_b_user` ON  `fs_b_user`.`user_account` = `sdl_b_user_mg`.`user_account`
+   -- inner join `t_code` on `fs_b_user`.`user_account`= `t_code`.`id`
     where 1=1
 	<if test="user.jcState != null and user.jcState > -1">
       and exists (
@@ -230,7 +231,7 @@ FROM
 
     <if test="user.userAccount != null">and (sdl_b_user_mg.user_account_name like concat('%', #{user.userAccount},'%') or sdl_b_user_mg.user_account=#{user.userAccount}) </if>
     <if test="user.deptName != null">and fs_b_user.dept_name like concat('%',#{user.deptName},'%') </if>
-
+	<if test="user.state != null"> and  sdl_b_user_mg.state =#{ user.state} </if>
 	<if test="user.yuanqu != null">and fs_b_user.yuanqu =#{user.yuanqu}</if>
 	<if test="user.displayIndex != null and user.displayIndex==0">and (length(fs_b_user.fsgzzh)=0 or fs_b_user.fsgzzh is NULL)</if>
 	<if test="user.displayIndex != null and user.displayIndex==1">and length(fs_b_user.fsgzzh)>0</if>
@@ -251,7 +252,7 @@ FROM
 		)
 		)
 	</if>
-	<if test="user.state!= null and user.state==5">
+	<if test="user.state2!= null and user.state2==5">
 		and  sdl_b_user_mg.user_account  in (
 		select fs_b_user.user_account from fs_b_exame
 		inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
@@ -261,7 +262,7 @@ FROM
 		)
 
 	</if>
-	<if test="user.state!= null and user.state==4">
+	<if test="user.state2!= null and user.state2==4">
 		and  sdl_b_user_mg.user_account not in (
 		select fs_b_user.user_account from fs_b_exame
 		inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
@@ -699,7 +700,7 @@ FROM
 		a.*
 		FROM
 		fs_b_health a
-		INNER JOIN ( SELECT pernr, max( rq ) rq FROM fs_b_health GROUP BY pernr, rq ) b ON a.pernr = b.pernr
+		INNER JOIN ( SELECT pernr, max( rq ) rq FROM fs_b_health GROUP BY pernr ) b ON a.pernr = b.pernr
 		AND a.rq = b.rq
 		) p ON sdl_b_user_mg.yggh = p.pernr
 		left join (
@@ -847,7 +848,7 @@ FROM
 		a.*
 		FROM
 		fs_b_health a
-		INNER JOIN ( SELECT pernr, max( rq ) rq FROM fs_b_health GROUP BY pernr, rq ) b ON a.pernr = b.pernr
+		INNER JOIN ( SELECT pernr, max( rq ) rq FROM fs_b_health GROUP BY pernr ) b ON a.pernr = b.pernr
 		AND a.rq = b.rq
 		) p ON sdl_b_user_mg.yggh = p.pernr
 		left join (

@@ -89,6 +89,17 @@ public class FsBExameServiceImpl extends ServiceImpl<FsBExameMapper, FsBExame> i
             return null;
         }
     }
+    @Override
+    public IPage<FsBExame> findExameNote(QueryRequest request, FsBExame fsBExame) {
+        try {
+            Page<FsBExame> page = new Page<>();
+            SortUtil.handlePageSort(request, page, false);//true 是属性  false是数据库字段可两个
+            return this.baseMapper.findExameNote(page, fsBExame);
+        } catch (Exception e) {
+            log.error("获取失败", e);
+            return null;
+        }
+    }
 
     @Override
     @Transactional
@@ -118,6 +129,13 @@ public class FsBExameServiceImpl extends ServiceImpl<FsBExameMapper, FsBExame> i
     public List<FsBExame> findExameAccounts( List<String> accountList){
         return  this.baseMapper.findExameAccounts(accountList);
     }
+
+    @Override
+    @Transactional
+    public List<FsBExame> findExameAccountsNote( List<String> accountList){
+        return  this.baseMapper.findExameAccountsNote(accountList);
+    }
+
     @Override
     @Transactional
     public List<FsBExame> findExameAccountsAll( List<String> accountList){

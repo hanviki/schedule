@@ -196,6 +196,24 @@
         </foreach>
         order  by exame_date desc
     </select>
+    <select id="findExameAccountsNote" resultType="cc.mrbird.febs.fs.entity.FsBExame" >
+        select fs_b_user.user_account,fs_b_exame.exame_type,fs_b_exame.exame_num ,fs_b_exame.file_id  from fs_b_exame
+        inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh  and fs_b_user.user_account is null )or fs_b_exame.user_account=fs_b_user.user_account
+        where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 2 year) and fs_b_exame.exame_type='卫生考试')
+        or  (fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试'))
+        and fs_b_user.user_account in
+        <foreach item="item" index="index" collection="accountList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        union
+        select fs_b_exame.user_account,fs_b_exame.exame_type,fs_b_exame.exame_num ,fs_b_exame.file_id  from fs_b_exame
+       where ((fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 2 year) and fs_b_exame.exame_type='卫生考试')
+        or  (fs_b_exame.exame_date  > DATE_SUB(CURDATE(), interval 5 year) and fs_b_exame.exame_type='环保考试'))
+        and fs_b_exame.user_account in
+        <foreach item="item" index="index" collection="accountList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
     <select id="findExameAccountsAll" resultType="cc.mrbird.febs.fs.entity.FsBExame" >
         select fs_b_user.user_account,fs_b_exame.exame_type,fs_b_user.grjlbh number,fs_b_exame.exame_num ,fs_b_exame.file_id from fs_b_exame
         inner join fs_b_user on (fs_b_exame.number= fs_b_user.grjlbh and fs_b_user.user_account is null) or fs_b_exame.user_account=fs_b_user.user_account
@@ -204,5 +222,13 @@
             #{item}
         </foreach>
         order  by exame_date desc
+    </select>
+    <select id="findExameNote" resultType="cc.mrbird.febs.fs.entity.FsBExame" parameterType="cc.mrbird.febs.fs.entity.FsBExame">
+           SELECT * FROM
+	fs_b_exame
+	where fs_b_exame.user_account=#{ fsBExame.userAccount}
+        <if test="fsBExame.number!= null">
+	 or fs_b_exame.number= #{ fsBExame.number}
+        </if>
     </select>
 </mapper>

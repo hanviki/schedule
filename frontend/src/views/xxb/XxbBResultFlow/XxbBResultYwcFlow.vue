@@ -165,7 +165,7 @@ export default {
           customRender: (text, row, index) => {
             return row.userAccountName + ' ' + row.userAccount + ' ' + row.yggh
           },
-          width: 200,
+          
         },
         {
           title: "开展日期",

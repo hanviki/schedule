@@ -282,6 +282,9 @@ public class FsBChangerecordController extends BaseController {
     @PostMapping("excel")
     public void export(QueryRequest request, FsBChangerecord fsBChangerecord,String dataJson, HttpServletResponse response) throws FebsException {
         try {
+            request.setPageNum(1);
+            request.setPageSize(100000);
+            request.setIsSearchCount(false);
             List<FsBChangerecord> fsBChangerecords = this.iFsBChangerecordService.findFsBChangerecords(request, fsBChangerecord).getRecords();
 
             ExportExcelUtils.exportCustomExcel_han(response, fsBChangerecords,dataJson,"");

@@ -24,4 +24,8 @@ public interface FsBExameMapper extends BaseMapper<FsBExame> {
     List<FsBExame> findExameAccounts(@Param("accountList") List<String> accountList);
 
     List<FsBExame> findExameAccountsAll(@Param("accountList") List<String> accountList);
+
+    Page<FsBExame> findExameNote(Page page, @Param("fsBExame") FsBExame fsBExame);
+    List<FsBExame> findExameAccountsNote(@Param("accountList") List<String> accountList);
+
 }

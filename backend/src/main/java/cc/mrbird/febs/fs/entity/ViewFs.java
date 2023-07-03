@@ -771,6 +771,8 @@ private static final long serialVersionUID=1L;
     @ExcelField(value ="岗位类别修改原因")
     private String note;
 
+    private transient Integer state2;
+
     public static final String ID ="id" ;
 
     public static final String USER_ACCOUNT_NAME ="user_account_name" ;

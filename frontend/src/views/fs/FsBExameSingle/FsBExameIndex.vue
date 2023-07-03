@@ -1,68 +1,7 @@
 <template>
-  <a-card :bordered="false" class="card-area">
-    <div :class="advanced ? 'search' : null">
-      <a-form layout="horizontal">
-        <a-row>
-          <div :class="advanced ? null : 'fold'">
-            <a-col :md="8" :sm="24">
-              <a-form-item label="发薪号\姓名" v-bind="formItemLayout">
-                <a-input v-model="queryParams.userAccount" />
-              </a-form-item>
-            </a-col>
-             <a-col :md="8" :sm="24">
-              <a-form-item label="科室" v-bind="formItemLayout">
-                <a-input v-model="queryParams.deptName" />
-              </a-form-item>
-            </a-col>
-          </div>
-          <span style="float: right; margin-top: 3px">
-            <a-button type="primary" @click="search">查询</a-button>
-            <a-button style="margin-left: 8px" @click="reset">重置</a-button>
-            <a @click="toggleAdvanced" style="margin-left: 8px">
-              {{ advanced ? "收起" : "展开" }}
-              <a-icon :type="advanced ? 'up' : 'down'" />
-            </a>
-          </span>
-        </a-row>
-      </a-form>
-    </div>
+  <a-card :bordered="true" class="card-area" title="考试" head-style="font-weight:bold;color:blue;">
+  
     <div>
-      <div class="operator">
-        <a-button
-        icon="plus"
-          v-hasPermission="['xxbBDeptleader:add']"
-         style="color: #fff;background-color: #1890ff;border-color: #1890ff;box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);"
- 
-          @click="add"
-          >新增</a-button
-        >
-        <a-button
-        icon="delete"
-          v-hasPermission="['xxbBDeptleader:delete']"
-          style="color: #fff;background-color: #f5222d;border-color: #f5f5f5;box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);"
- 
-          @click="batchDelete"
-          >删除</a-button
-        >
-        <a-dropdown v-hasPermission="['xxbBDeptleader:export']">
-          <a-menu slot="overlay">
-            <a-menu-item key="export-data" @click="exportExcel"
-              >导出Excel</a-menu-item
-            >
-          </a-menu>
-          <a-button>
-            更多操作
-            <a-icon type="down" />
-          </a-button>
-        </a-dropdown>
-        <import-excel
-          v-hasPermission="['xxbBDeptleader:import']"
-          templateUrl="xxbBDeptleader/downTemplate"
-          @succ="handleRefesh"
-          url="xxbBDeptleader/import"
-        >
-        </import-excel>
-      </div>
       <!-- 表格区域 -->
       <a-table
         ref="TableInfo"
@@ -79,72 +18,22 @@
         :bordered="bordered"
         :scroll="{ x: 900 }"
       >
-        <template slot="remark" slot-scope="text, record">
-          <a-popover placement="topLeft">
-            <template slot="content">
-              <div style="max-width: 200px">{{ text }}</div>
-            </template>
-            <p style="width: 200px; margin-bottom: 0">{{ text }}</p>
-          </a-popover>
-        </template>
-        <template slot="operation" slot-scope="text, record">
-          <a-icon
-            v-hasPermission="['xxbBDeptleader:update']"
-            type="setting"
-            theme="twoTone"
-            twoToneColor="#4a9ff5"
-            @click="edit(record)"
-            title="修改"
-          ></a-icon>
-          <a-badge
-            v-hasNoPermission="['xxbBDeptleader:update']"
-            status="warning"
-            text="无权限"
-          ></a-badge>
-        </template>
+        
       </a-table>
     </div>
-    <!-- 新增字典 -->
-    <xxbBDeptleader-add
-      ref="xxbBDeptleaderAdd"
-      @close="handleAddClose"
-      @success="handleAddSuccess"
-      :addVisiable="addVisiable"
-    >
-    </xxbBDeptleader-add>
-    <!-- 修改字典 -->
-    <xxbBDeptleader-edit
-      ref="xxbBDeptleaderEdit"
-      @close="handleEditClose"
-      @success="handleEditSuccess"
-      :editVisiable="editVisiable"
-    >
-    </xxbBDeptleader-edit>
   </a-card>
 </template>
 
 <script>
-import XxbBDeptleaderAdd from "./XxbBDeptleaderAdd";
-import XxbBDeptleaderEdit from "./XxbBDeptleaderEdit";
-import ImportExcel from "../../common/ImportExcel";
 import moment from "moment";
 
 const formItemLayout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 15,
-    offset: 1,
-  },
+  labelCol: { span: 8 },
+  wrapperCol: { span: 15, offset: 1 },
 };
 export default {
-  name: "XxbBDeptleader",
-  components: {
-    XxbBDeptleaderAdd,
-    XxbBDeptleaderEdit,
-    ImportExcel,
-  },
+  name: "FsBExame",
+  components: { },
   data() {
     return {
       advanced: false,
@@ -165,7 +54,6 @@ export default {
       queryParams: {},
       addVisiable: false,
       editVisiable: false,
-      deptData: [],
       loading: false,
       bordered: true,
     };
@@ -175,46 +63,100 @@ export default {
       let { sortedInfo } = this;
       sortedInfo = sortedInfo || {};
       return [
+       
         {
-          title: "科室名称",
-          dataIndex: "deptName",
-          width: 100,
-        },
-        {
-          title: "科室主任姓名",
+          title: "姓名",
           dataIndex: "userAccountName",
           width: 100,
         },
         {
-          title: "科室主任人事编号",
+          title: "发薪号",
           dataIndex: "userAccount",
           width: 100,
         },
         {
-          title: "党支部书记",
-          dataIndex: "userAccountNameZhibu",
+          title: "计量牌编号",
+          dataIndex: "number",
           width: 100,
         },
         {
-          title: "党支部书记编号",
-          dataIndex: "userAccountZhibu",
+          title: "考试类型",
+          dataIndex: "exameType",
           width: 100,
         },
         {
-          title: "操作",
-          dataIndex: "operation",
-          scopedSlots: {
-            customRender: "operation",
+          title: "考试时间",
+          dataIndex: "exameDate",
+          customRender: (text, row, index) => {
+            if (text == null) return "";
+            return moment(text).format("YYYY-MM-DD");
           },
-          fixed: "right",
+          width: 100,
+        },
+        {
+          title: "考试编号",
+          dataIndex: "exameNum",
+          width: 100,
+        },
+        {
+          title: "考试成绩",
+          dataIndex: "exameScore",
+          width: 100,
+        },
+        {
+          title: "考试总分",
+          dataIndex: "exameTotal",
+          width: 100,
+        },
+        {
+          title: "考试专业",
+          dataIndex: "exameZy",
+          width: 100,
+        },
+        {
+          title: "有效截至日期",
+          dataIndex: "valid",
+          width: 100,
+        },
+        {
+          title: "附件",
+          dataIndex: "fileId",
+          customRender: (text, row, index) => {
+            if (text != null && text != "") {
+              return (
+                <a href={this.$baseUrl + row.fileUrl} target="_blank">
+                  查看
+                </a>
+              );
+            }
+            return "";
+          },
           width: 100,
         },
       ];
     },
   },
-  mounted() {
-    this.fetch();
-    this.fetchDept()
+  props: {
+    userAccount: {
+      default: "",
+    },
+    userAccountName: {
+      default: "",
+    },
+    viewVisiable: {
+      default: false,
+    },
+  },
+  watch: {
+    'viewVisiable': {
+      handler (e) {
+        if(e){
+        this.fetch()
+        }
+      },
+      immediate: true,
+      deep: true
+    }
   },
   methods: {
     moment,
@@ -230,12 +172,6 @@ export default {
         this.queryParams.comments = "";
       }
     },
-    fetchDept() {
-      this.$get("sdlBUser/deptNew", {}).then((res) => {
-        this.deptData = [];
-        this.deptData.push(...res.data);
-      });
-    },
     handleAddSuccess() {
       this.addVisiable = false;
       this.$message.success("新增成功");
@@ -246,7 +182,6 @@ export default {
     },
     add() {
       this.addVisiable = true;
-      this.$refs.xxbBDeptleaderAdd.setFormValues(this.deptData);
     },
     handleEditSuccess() {
       this.editVisiable = false;
@@ -257,7 +192,7 @@ export default {
       this.editVisiable = false;
     },
     edit(record) {
-      this.$refs.xxbBDeptleaderEdit.setFormValues(record,this.deptData);
+      this.$refs.fsBExameEdit.setFormValues(record);
       this.editVisiable = true;
     },
     batchDelete() {
@@ -271,8 +206,8 @@ export default {
         content: "当您点击确定按钮后，这些记录将会被彻底删除",
         centered: true,
         onOk() {
-          let xxbBDeptleaderIds = that.selectedRowKeys.join(",");
-          that.$delete("xxbBDeptleader/" + xxbBDeptleaderIds).then(() => {
+          let fsBExameIds = that.selectedRowKeys.join(",");
+          that.$delete("fsBExame/" + fsBExameIds).then(() => {
             that.$message.success("删除成功");
             that.selectedRowKeys = [];
             that.search();
@@ -291,7 +226,7 @@ export default {
         sortField = sortedInfo.field;
         sortOrder = sortedInfo.order;
       }
-      this.$export("xxbBDeptleader/excel", {
+      this.$export("fsBExame/excel", {
         sortField: sortField,
         sortOrder: sortOrder,
         ...this.queryParams,
@@ -352,13 +287,12 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.pagination.defaultCurrent;
       }
-      this.$get("xxbBDeptleader", {
+      params.userAccount= this.userAccount
+      this.$get("fsBExame", {
         ...params,
       }).then((r) => {
         let data = r.data;
-        const pagination = {
-          ...this.pagination,
-        };
+        const pagination = { ...this.pagination };
         pagination.total = data.total;
         this.loading = false;
         this.dataSource = data.rows;

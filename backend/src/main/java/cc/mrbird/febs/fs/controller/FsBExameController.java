@@ -9,13 +9,15 @@ import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
 import cc.mrbird.febs.common.utils.ExportExcelUtils;
-import cc.mrbird.febs.fs.entity.FsBExameImport;
-import cc.mrbird.febs.fs.entity.FsBUser;
+import cc.mrbird.febs.fs.entity.*;
 import cc.mrbird.febs.fs.service.IFsBExameService;
-import cc.mrbird.febs.fs.entity.FsBExame;
 
 import cc.mrbird.febs.common.utils.FebsUtil;
+import cc.mrbird.febs.fs.service.IFsBHealthService;
+import cc.mrbird.febs.fs.service.IFsBRecordService;
 import cc.mrbird.febs.fs.service.IFsBUserService;
+import cc.mrbird.febs.sdl.entity.SdlBUserMg;
+import cc.mrbird.febs.sdl.service.ISdlBUserMgService;
 import cc.mrbird.febs.system.domain.User;
 import cn.hutool.Hutool;
 import cn.hutool.core.bean.BeanUtil;
@@ -23,7 +25,9 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ReUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.beust.jcommander.internal.Lists;
 import com.wuwenze.poi.ExcelKit;
@@ -45,6 +49,7 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author viki
@@ -63,6 +68,16 @@ public class FsBExameController extends BaseController {
 
     @Autowired
     public IFsBUserService iFsBUserService;
+
+    @Autowired
+    public IFsBRecordService
+            iFsBRecordService;
+
+    @Autowired
+    public IFsBHealthService iFsBHealthService;
+
+    @Autowired
+    public ISdlBUserMgService iSdlBUserMgService;
 
 /**
  INSERT into t_menu(parent_id,menu_name,path,component,perms,icon,type,order_num,CREATE_time)
@@ -92,7 +107,73 @@ public class FsBExameController extends BaseController {
         }
         return getDataTable(this.iFsBExameService.findFsBExameList(request, fsBExame));
     }
+    @GetMapping("note")
+    public Map<String, Object> List2(QueryRequest request, FsBExame fsBExame) {
 
+        List<String> accounts= new ArrayList<>();
+        accounts.add(fsBExame.getUserAccount());
+
+        LambdaQueryWrapper<SdlBUserMg> ln=new LambdaQueryWrapper<>();
+        ln.eq(SdlBUserMg::getUserAccount,fsBExame.getUserAccount());
+        List<SdlBUserMg> mgList= this.iSdlBUserMgService.list(ln);
+
+        SdlBUserMg mg= mgList.get(0);
+        LambdaQueryWrapper<FsBUser> ln2=new LambdaQueryWrapper<>();
+        ln2.eq(FsBUser::getUserAccount,fsBExame.getUserAccount());
+        List<FsBUser> fsBUserList= this.iFsBUserService.list(ln2);
+        if(fsBUserList.size()>0){
+            fsBExame.setNumber(fsBUserList.get(0).getGrjlbh());
+        }
+
+
+        IPage<FsBExame> page = this.iFsBExameService.findExameNote(request, fsBExame);
+        int flag=1;
+        if (accounts.size() > 0) {
+
+            List<FsBHealth> healthList = this.iFsBHealthService.findHByAccounts(accounts);
+            List<FsBExame> exameList = this.iFsBExameService.findExameAccountsNote(accounts);
+
+            if(page!=null) {
+
+                List<FsBHealth> health = healthList.stream().filter(p -> p.getUserAccount().equals(fsBExame.getUserAccount())).collect(Collectors.toList());
+
+                if (health.size() > 0) {
+                    flag= 0;
+                }
+
+
+                List<FsBExame> exam = exameList.stream().filter(p -> p.getUserAccount().equals(fsBExame.getUserAccount()) && p.getExameType().equals("卫生考试")
+                        && p.getExameNum() != null && regStr(p.getExameNum(), "H[0-9]{8}$") && p.getFileId() != null && p.getFileId() != ""
+                ).collect(Collectors.toList());
+                if (exam.size() <= 0) {
+                    flag=0;
+                }
+                List<FsBExame> exam2 = exameList.stream().filter(p -> p.getUserAccount().equals(fsBExame.getUserAccount()) && p.getExameType().equals("环保考试")
+                        && p.getExameNum() != null && regStr(p.getExameNum(), "FS[0-9]{2}HB[0-9]{7}$") && p.getFileId() != null && p.getFileId() != ""
+                ).collect(Collectors.toList());
+                if (exam2.size() <= 0) {
+                    flag=0;
+                }
+            }
+            else{
+                flag=0;
+            }
+        }
+        Map<String, Object> rspData= getDataTable(page);
+
+        rspData.put("info", flag);
+        rspData.put("idCard", mg.getIdCard());
+        rspData.put("name", mg.getUserAccountName());
+        rspData.put("tel", mg.getTelephone());
+
+        return rspData;
+    }
+    public  Boolean regStr(String gf,String reg){
+        if(gf!=null && gf.indexOf("参加医院组织的使用")==0){
+            return  true;
+        }
+        return ReUtil.isMatch(reg,gf);
+    }
     /**
      * 添加
      *
@@ -110,7 +191,9 @@ public class FsBExameController extends BaseController {
             LambdaQueryWrapper<FsBUser> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
             userLambdaQueryWrapper.eq(FsBUser::getUserAccount, fsBExame.getUserAccount());
             FsBUser user = this.iFsBUserService.getOne(userLambdaQueryWrapper);
-            fsBExame.setNumber(user.getGrjlbh());
+            if(user!=null) {
+                fsBExame.setNumber(user.getGrjlbh());
+            }
 
             this.iFsBExameService.createFsBExame(fsBExame);
         } catch (Exception e) {

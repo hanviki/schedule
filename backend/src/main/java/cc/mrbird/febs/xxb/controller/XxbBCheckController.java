@@ -477,6 +477,7 @@ public class XxbBCheckController extends BaseController {
                 LambdaQueryWrapper<XxbBCheckD> xxbBCheckDLambdaQueryWrapper= new LambdaQueryWrapper<>();
                 xxbBCheckDLambdaQueryWrapper.eq(XxbBCheckD::getPid,check.getId());
                 List<XxbBCheckD> xxbBCheckDList= this.iXxbBCheckDService.list(xxbBCheckDLambdaQueryWrapper);
+                xxbBCheckDList=xxbBCheckDList.stream().sorted(Comparator.comparing(XxbBCheckD::getDisplayIndex)).collect(Collectors.toList());
                 int dx=1;
                 for (XxbBCheckD checkD:xxbBCheckDList
                      ) {

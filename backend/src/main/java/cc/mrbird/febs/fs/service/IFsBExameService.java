@@ -31,4 +31,8 @@ public interface IFsBExameService extends IService<FsBExame> {
         List<FsBExame> findExameAccounts( List<String> accountList);
 
         List<FsBExame> findExameAccountsAll( List<String> accountList);
+        IPage<FsBExame> findExameNote(QueryRequest request, FsBExame fsBExame);
+
+        List<FsBExame> findExameAccountsNote( List<String> accountList);
+
         }

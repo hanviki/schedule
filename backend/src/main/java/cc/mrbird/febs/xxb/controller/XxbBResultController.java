@@ -10,6 +10,7 @@ import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
 import cc.mrbird.febs.common.properties.FebsProperties;
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.export.pdf.XxbBPdfInfo;
 import cc.mrbird.febs.scm.entity.ComFile;
 import cc.mrbird.febs.scm.service.IComFileService;
@@ -1007,6 +1008,22 @@ public class XxbBResultController extends BaseController {
             User currentUser = FebsUtil.getCurrentUser();
             List<XxbBResult> xxbBResults = this.iXxbBResultService.findXxbBResults(request, xxbBResult, currentUser).getRecords();
             ExcelKit.$Export(XxbBResult.class, response).downXlsx(xxbBResults, false);
+        } catch (Exception e) {
+            message = "导出Excel失败";
+            log.error(message, e);
+            throw new FebsException(message);
+        }
+    }
+
+    @PostMapping("excelAll")
+    public void export32(QueryRequest request, XxbBResult xxbBResult,String dataJson, HttpServletResponse response,boolean isDf) throws FebsException {
+        try {
+            request.setIsSearchCount(false);
+            request.setPageSize(10000);
+            request.setPageNum(1);
+            User currentUser = FebsUtil.getCurrentUser();
+            List<XxbBResult> xxbBResults = this.iXxbBResultService.findXxbBResultReports(request, xxbBResult,isDf).getRecords();
+            ExportExcelUtils.exportCustomExcel_han(response, xxbBResults,dataJson,"");
         } catch (Exception e) {
             message = "导出Excel失败";
             log.error(message, e);

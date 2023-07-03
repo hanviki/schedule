@@ -859,7 +859,7 @@ public class XxbBPdfInfo {
             String title3_4 = "项目级别";
             String title3_5 = "项目的主要内容及意义";
             String title3_6 = "临床应用安全性分析及佐证资料";
-            String title3_7 = "技术临床应用安全性分析及佐证资料";
+            String title3_7 = "技术临床应用有效性分析及佐证资料";
             String title3_8 = "科室已具备的技术和设备条件";
             String title3_9 = "适应症";
             String title3_10 = "禁忌症";
@@ -1932,7 +1932,7 @@ public class XxbBPdfInfo {
 
             String title3_5 = "项目的主要内容";
             String title3_6 = "临床应用安全性分析及佐证资料";
-            String title3_7 = "技术临床应用安全性分析及佐证资料";
+            String title3_7 = "技术临床应用有效性分析及佐证资料";
             String title3_8 = "科室已具备的技术和设备条件";
             String title3_9 = "适应症";
             String title3_10 = "禁忌症";

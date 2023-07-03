@@ -123,7 +123,8 @@ public class SdlBUserMgServiceImpl extends ServiceImpl<SdlBUserMgMapper, SdlBUse
 
             }
 
-                queryWrapper.ne(SdlBUserMg::getState, 0);//只显示2或者3的
+        // queryWrapper.ne(SdlBUserMg::getState, 0);//只显示2或者3的
+
 
            // queryWrapper.eq(SdlBUserMg::getRylx,"职工");
           //  queryWrapper.apply("sdl_b_user_mg.yuangongzu!='规培' and sdl_b_user_mg.yuangongzu!='博士后' and (sdl_b_user_mg.renshizifw ='医师' or  (sdl_b_user_mg.renshizifw='技术' and sdl_b_user_mg.renshizfenlei='卫生'))");

@@ -137,6 +137,7 @@
           >
           </importResult-data>
         </div>
+        
        
        
         <div style="width: 170px; float: left; margin-bottom: 5px">
@@ -148,7 +149,10 @@
             <a-button style="color: #fff;background-color: #faad14;border-color: #faad14;box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);"> <a-icon type="upload" /> 上传批量关联文件 </a-button>
           </a-upload>
         </div>
-        
+        <div style="width: 170px; float: left; margin-bottom: 5px">
+        <a-button @click="exportExcel" 
+          style="color: #fff;background-color: #faad14;border-color: #faad14;box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);"><a-icon type="download" />导出新技术成果奖</a-button>
+        </div>
       
         
 
@@ -501,6 +505,35 @@ export default {
         .catch(() => {
           this.$message.error("关联文件上传失败.");
         });
+    },
+    exportExcel() {
+      let { sortedInfo } = this;
+      let sortField, sortOrder;
+      // 获取当前列的排序和列的过滤规则
+      if (sortedInfo) {
+        sortField = sortedInfo.field;
+        sortOrder = sortedInfo.order;
+      }
+       let json = [...this.columns]
+      json.splice(json.length-1,1);
+     
+      let dataJson = JSON.stringify(json)
+      let params= this.queryParams
+      params.sortField = "create_Time";
+      params.sortOrder = "descend";
+      params.isDf = this.isDf;
+      if (params.deptNew == undefined) {
+        params.deptNew = null;
+      }
+      if (params.state == undefined) {
+        params.state = null;
+      }
+      this.$export("xxbBResult/excelAll", {
+        sortField: sortField,
+        sortOrder: sortOrder,
+        dataJson: dataJson,
+        ...params
+      });
     },
     exportCgj() {
       if (!this.selectedRowKeys.length) {
